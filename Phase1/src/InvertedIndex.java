@@ -1,12 +1,18 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
-public class Inve {
+public class InvertedIndex {
     private String query;
     private ArrayList<String> essentialQuery;
     private ArrayList<String> optionalQuery;
     private ArrayList<String> forbiddenQuery;
 
-    public Search(String query) {
+    public InvertedIndex(String query) {
+        essentialQuery = new ArrayList<>();
+        optionalQuery = new ArrayList<>();
+        forbiddenQuery = new ArrayList<>();
         this.query = query;
         String[] temp;
         temp = query.split(" ");
@@ -18,9 +24,14 @@ public class Inve {
             else
                 essentialQuery.add(word);
         }
+        HashMap<String , ArrayList<String>> map = FileReaderClass.map;
+        Set<String> ans = new HashSet<>();
+        for(String word : essentialQuery){
+            ans.addAll(map.get(word));
+        }
+        for(String word : optionalQuery) {
+
+        }
     }
 
-    private void invertedIndex(){
-
-    }
 }
