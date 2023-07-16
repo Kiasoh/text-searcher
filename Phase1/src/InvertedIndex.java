@@ -5,7 +5,7 @@ public class InvertedIndex {
     private ArrayList<String> essentialQuery;
     private ArrayList<String> optionalQuery;
     private ArrayList<String> forbiddenQuery;
-    public static Set<String> ans;
+    public static Set<String> ans = new HashSet<>();
 
     public InvertedIndex(String query) {
         essentialQuery = new ArrayList<>();
@@ -24,12 +24,15 @@ public class InvertedIndex {
         }
         HashMap<String , ArrayList<String>> map = FileReaderClass.map;
         Set<String> ans = new HashSet<>();
+//        System.out.println(ans);
         for(String word : essentialQuery){
             ans.addAll(map.get(word));
         }
+        System.out.println(ans);
         boolean flag = false;
         Iterator<String> it = ans.iterator();
         while (it.hasNext()){
+            flag = false;
             String doc = it.next();
             for(String word : optionalQuery){
                 if(map.get(word) == null)
@@ -38,19 +41,22 @@ public class InvertedIndex {
                     flag = true;
             }
             if(!flag){
-                ans.remove(doc);
+                it.remove();
             }
         }
-        it = ans.iterator();
-        while (it.hasNext()){
-            String doc = it.next();
-            for(String word : forbiddenQuery){
-                if(map.get(word).contains(doc)) {
-                    ans.remove(doc);
-                    break;
+        try {
+            it = ans.iterator();
+            while (it.hasNext()){
+                String doc = it.next();
+                for(String word : forbiddenQuery){
+                    if(map.get(word).contains(doc)) {
+                        it.remove();
+                        break;
+                    }
                 }
             }
-        }
+        } catch(NullPointerException n) {};
+
     }
 
 }
