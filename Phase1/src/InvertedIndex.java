@@ -1,13 +1,11 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class InvertedIndex {
     private String query;
     private ArrayList<String> essentialQuery;
     private ArrayList<String> optionalQuery;
     private ArrayList<String> forbiddenQuery;
+    public static Set<String> ans;
 
     public InvertedIndex(String query) {
         essentialQuery = new ArrayList<>();
@@ -29,8 +27,29 @@ public class InvertedIndex {
         for(String word : essentialQuery){
             ans.addAll(map.get(word));
         }
-        for(String word : optionalQuery) {
-
+        boolean flag = false;
+        Iterator<String> it = ans.iterator();
+        while (it.hasNext()){
+            String doc = it.next();
+            for(String word : optionalQuery){
+                if(map.get(word) == null)
+                    continue;
+                else if(map.get(word).contains(doc))
+                    flag = true;
+            }
+            if(!flag){
+                ans.remove(doc);
+            }
+        }
+        it = ans.iterator();
+        while (it.hasNext()){
+            String doc = it.next();
+            for(String word : forbiddenQuery){
+                if(map.get(word).contains(doc)) {
+                    ans.remove(doc);
+                    break;
+                }
+            }
         }
     }
 
