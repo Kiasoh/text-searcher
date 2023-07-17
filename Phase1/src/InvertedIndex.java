@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.*;
 
 public class InvertedIndex {
@@ -5,7 +6,7 @@ public class InvertedIndex {
     private ArrayList<String> essentialQuery;
     private ArrayList<String> optionalQuery;
     private ArrayList<String> forbiddenQuery;
-    public static Set<String> ans = new HashSet<>();
+    private Set<String> ans;
 
     public InvertedIndex(String query) {
         essentialQuery = new ArrayList<>();
@@ -23,40 +24,54 @@ public class InvertedIndex {
                 essentialQuery.add(word);
         }
         HashMap<String , ArrayList<String>> map = FileReaderClass.map;
-        Set<String> ans = new HashSet<>();
-//        System.out.println(ans);
-        for(String word : essentialQuery){
-            ans.addAll(map.get(word));
-        }
-        System.out.println(ans);
-        boolean flag = false;
+        File file = new File ("./books/");
+        String[] fileNames = file.list();
+        ans =new HashSet<>(Arrays.asList(fileNames));
         Iterator<String> it = ans.iterator();
+        while (it.hasNext()){
+            String doc = it.next();
+            for(String word : essentialQuery) {
+                if (map.get(word) == null || !map.get(word).contains(doc)){
+                    it.remove();
+                    break;
+                }
+            }
+        }
+        //System.out.println(ans);
+        boolean flag;
+        it = ans.iterator();
         while (it.hasNext()){
             flag = false;
             String doc = it.next();
             for(String word : optionalQuery){
                 if(map.get(word) == null)
                     continue;
-                else if(map.get(word).contains(doc))
+                else if(map.get(word).contains(doc)) {
                     flag = true;
+                    break;
+                }
             }
-            if(!flag){
+            if(!flag && optionalQuery.size()!=0){
                 it.remove();
             }
         }
-        try {
+
             it = ans.iterator();
+
             while (it.hasNext()){
+
                 String doc = it.next();
                 for(String word : forbiddenQuery){
-                    if(map.get(word).contains(doc)) {
+                    if(map.get(word) != null && map.get(word).contains(doc)) {
                         it.remove();
                         break;
                     }
                 }
             }
-        } catch(NullPointerException n) {};
-
     }
 
-}
+        public Set<String> getAns(){
+            return ans;
+        }
+    }
+

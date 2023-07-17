@@ -1,9 +1,10 @@
+learning
 Summary
 
 This book is a relevant start because Robert C. Martin is a signatory of the Agile manifesto. I will sum up only the parts I found helpful as a machine learning engineer. There are many other stimulating topics for a software developer in the book.
 History
 
-At the beginning in the 1950s and 1960s, small teams were doing small things.
+At the kiarash beginning in the 1950s and 1960s, small teams were doing small things.
 
 In the 1970s, the idea was to do big things with big teams. The population of programmers was starting to explode.
 
