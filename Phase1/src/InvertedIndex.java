@@ -3,34 +3,29 @@ import java.util.*;
 
 public class InvertedIndex {
     private String[] query;
-    private ArrayList<String> essentialQuery;
-    private ArrayList<String> optionalQuery;
-    private ArrayList<String> forbiddenQuery;
+    private QueryLists queryLists = new QueryLists();
     private Set<String> ans;
 
     public InvertedIndex(String query) {
-        essentialQuery = new ArrayList<>();
-        optionalQuery = new ArrayList<>();
-        forbiddenQuery = new ArrayList<>();
+
         this.query = query.split(" ");
     }
-
         public Set<String> getAns(){
-            search();
+            Search();
             return ans;
         }
 
-        private void search(){
+        private void Search(){
             for (String word : this.query) {
                 word = FileReaderClass.normalize(word);
                 if(word.equals(""))
                     continue;
                 if (word.charAt(0) == '+')
-                    optionalQuery.add(word.substring(1));
+                    queryLists.optional.add(word.substring(1));
                 else if (word.charAt(0) == '-')
-                    forbiddenQuery.add(word.substring(1));
+                    queryLists.forbidden.add(word.substring(1));
                 else
-                    essentialQuery.add(word);
+                    queryLists.essential.add(word);
             }
             HashMap<String , ArrayList<String>> map = FileReaderClass.map;
             File file = new File ("./books/");
@@ -41,7 +36,7 @@ public class InvertedIndex {
             Iterator<String> it = ans.iterator();
             while (it.hasNext()){
                 String doc = it.next();
-                for(String word : essentialQuery) {
+                for(String word : queryLists.essential) {
                     if (map.get(word) == null || !map.get(word).contains(doc)){
                         it.remove();
                         break;
@@ -53,7 +48,7 @@ public class InvertedIndex {
             while (it.hasNext()){
                 flag = false;
                 String doc = it.next();
-                for(String word : optionalQuery){
+                for(String word : queryLists.optional){
                     if(map.get(word) == null)
                         continue;
                     else if(map.get(word).contains(doc)) {
@@ -61,7 +56,7 @@ public class InvertedIndex {
                         break;
                     }
                 }
-                if(!flag && optionalQuery.size()!=0){
+                if(!flag && queryLists.optional.size()!=0){
                     it.remove();
                 }
             }
@@ -71,7 +66,7 @@ public class InvertedIndex {
             while (it.hasNext()){
 
                 String doc = it.next();
-                for(String word : forbiddenQuery){
+                for(String word : queryLists.forbidden){
                     if(map.get(word) != null && map.get(word).contains(doc)) {
                         it.remove();
                         break;
