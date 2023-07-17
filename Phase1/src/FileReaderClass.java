@@ -1,16 +1,24 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 
 public class FileReaderClass {
     private FileReader fileReader;
     public static HashMap<String, ArrayList<String>> map;
-
+    private static final ArrayList<String> prepositions = new ArrayList<>(List.of("of","with","at","from","into",
+            "during","including","until","against","among","through","despite","towards","upon",
+            "concerning","to","in","for","on","by","about","like","through","over","before",
+            "between","after","since","without","under","within","along","following","across",
+            "behind","beyond","plus","except","but","up","out","around","down","off","above","near","the"));
 
     public FileReaderClass() throws IOException {
         map = new HashMap<>();
+    }
+
+    private boolean isAlphabetic(char c) {
+        return c >= 'a' && c <= 'z';
+    }
+
+    public void createMap() throws IOException {
         File file = new File("./books/");
         String[] fileNames = file.list();
         for (String fileName : fileNames) {
@@ -18,7 +26,7 @@ public class FileReaderClass {
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String curLine;
             String word = "";
-            Stemmer s;
+            Stemmer stemmer;
             while ((curLine = bufferedReader.readLine()) != null) {
                 curLine = curLine.toLowerCase();
                 curLine += '/';
@@ -28,21 +36,15 @@ public class FileReaderClass {
                         word += c.toString();
                         continue;
                     }
-                    if (word.length() <= 2 || word.equals("the") || word.equals("and") || word.equals("into")) {
-                        word = "";
-                        continue;
-                    }
-//                        System.out.println(word);
-                    char[] wordCharArray = word.toCharArray();
-                    s = new Stemmer();
-                    s.add(wordCharArray, wordCharArray.length);
-                    s.stem();
-                    word = s.toString();
+                    else
+                    word = normalize(word);
                     ArrayList<String> temp;
                     if (map.containsKey(word)) {
                         temp = map.get(word);
-                        if (temp.contains(fileName))
+                        if (temp.contains(fileName)) {
+                            word = "";
                             continue;
+                        }
                         else {
                             temp.add(fileName);
                             map.put(word, temp);
@@ -50,10 +52,7 @@ public class FileReaderClass {
                     } else {
                         temp = new ArrayList<>();
                         temp.add(fileName);
-                        char[] boz = word.toCharArray();
-
-//                        System.out.println(s);
-                        map.put(s.toString(), temp);
+                        map.put(word, temp);
                     }
                     word = "";
                 }
@@ -62,7 +61,16 @@ public class FileReaderClass {
         fileReader.close();
     }
 
-    private boolean isAlphabetic(char c) {
-        return c >= 'a' && c <= 'z';
+    public static String normalize(String word){
+        if (word.length() <= 2 || prepositions.contains(word)) {
+            word = "";
+            return word;
+        }
+        char[] wordCharArray = word.toCharArray();
+        Stemmer stemmer = new Stemmer();
+        stemmer.add(wordCharArray, wordCharArray.length);
+        stemmer.stem();
+        word = stemmer.toString();
+        return word;
     }
 }
