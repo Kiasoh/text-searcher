@@ -9,10 +9,13 @@ public class Main {
         FileReaderClass f = new FileReaderClass();
         f.createMap();
         Scanner in = new Scanner(System.in);
-        String query = in.nextLine();
-        InvertedIndex invertedIndex = new InvertedIndex(query);
-        for (String ss : invertedIndex.getAns()) {
-            System.out.println(ss);
+        while (true){
+            String query = in.nextLine();
+            InvertedIndex invertedIndex = new InvertedIndex(query);
+            for (String ss : invertedIndex.getAns()) {
+                System.out.println(ss);
+            }
         }
+
     }
 }
