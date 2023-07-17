@@ -17,7 +17,7 @@ public class Main {
         }
     }
     public static void main(String[] args) throws IOException {
-        FileReaderClass f = new FileReaderClass();
+        FileReaderClass f = new FileReaderClass(new Map());
         f.createMap();
         Scanner in = new Scanner(System.in);
         GetInput(in);

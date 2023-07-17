@@ -17,7 +17,7 @@ public class InvertedIndex {
 
         private void Search(){
             for (String word : this.query) {
-                word = FileReaderClass.normalize(word);
+                word = WordManipulation.normalize(word);
                 if(word.equals(""))
                     continue;
                 if (word.charAt(0) == '+')
