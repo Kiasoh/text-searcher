@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,16 +13,18 @@ public class InvertedIndex {
     }
 
 
-    public void AddToMapByLine(String Line , String fileName)
+    public void addToMapByLine(String Line , String fileName)
     {
         String word = "";
-        for (Character c : readPrinciple.PrepareForScan(Line)) {
+        for (Character c : readPrinciple.prepareForScan(Line)) {
             if (readPrinciple.splitBy(c)) {
                 word += c.toString();
                 continue;
             }
-            else
-                word = WordManipulation.normalize(word);
+            else {
+                WordManipulation wordManipulation = new WordManipulation();
+                word = wordManipulation.normalize(word);
+            }
             if (map.containsKey(word)) {
                 if (map.get(word).contains(fileName)) {
                     word = "";

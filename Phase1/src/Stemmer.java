@@ -480,7 +480,8 @@ class Stemmer {
      * from the input.  You can retrieve the result with
      * getResultLength()/getResultBuffer() or toString().
      */
-    public void stem() {
+    public String normalize(String s) {
+        add(s.toCharArray(), s.length());
         k = i - 1;
         if (k > 1) {
             step1();
@@ -492,6 +493,8 @@ class Stemmer {
         }
         i_end = k + 1;
         i = 0;
+        return this.toString();
     }
+
 }
 

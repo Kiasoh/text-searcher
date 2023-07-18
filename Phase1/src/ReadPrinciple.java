@@ -8,7 +8,7 @@ public class ReadPrinciple {
         splitMarks = new ArrayList<>();
     }
 
-    public char[] PrepareForScan(String Line)
+    public char[] prepareForScan(String Line)
     {
         Line = Line.toLowerCase();
         Line += '/';

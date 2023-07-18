@@ -7,36 +7,36 @@ public class SearchProcess {
 
     public SearchProcess(String query, InvertedIndex invertedIndex) {
         this.invertedIndex = invertedIndex;
-        queryLists.Categorization(query.split(" "));
+        queryLists.categorization(query.split(" "));
     }
 
     public Set<String> getAns() {
-        Search();
+        search();
         return ans;
     }
 
-    public boolean IsThereFiles(String[] fileNames) {
+    public boolean isThereFiles(String[] fileNames) {
         return (fileNames == null || fileNames.length == 0);
     }
 
-    private Iterator<String> SetIterator() {
+    private Iterator<String> setIterator() {
         return ans.iterator();
     }
 
-    private boolean IsEssentialWaste(String word, String doc) {
+    private boolean isEssentialWaste(String word, String doc) {
         return (invertedIndex.map.get(word) == null || !invertedIndex.map.get(word).contains(doc));
     }
 
-    private boolean IsOptionalWaste(Boolean flag) {
+    private boolean isOptionalWaste(Boolean flag) {
         return (!flag && queryLists.getOptional().size() != 0);
     }
 
-    private void CheckForced(boolean isEssential, ArrayList<String> query) {
-        Iterator<String> it = SetIterator();
+    private void checkForced(boolean isEssential, ArrayList<String> query) {
+        Iterator<String> it = setIterator();
         while (it.hasNext()) {
             String doc = it.next();
             for (String word : query) {
-                if (IsEssentialWaste(word, doc) == isEssential) {
+                if (isEssentialWaste(word, doc) == isEssential) {
                     it.remove();
                     break;
                 }
@@ -44,8 +44,8 @@ public class SearchProcess {
         }
     }
 
-    private void CheckOptional() {
-        Iterator<String> it = SetIterator();
+    private void checkOptional() {
+        Iterator<String> it = setIterator();
         boolean flag;
         while (it.hasNext()) {
             flag = false;
@@ -58,19 +58,19 @@ public class SearchProcess {
                     break;
                 }
             }
-            if (IsOptionalWaste(flag)) {
+            if (isOptionalWaste(flag)) {
                 it.remove();
             }
         }
     }
 
-    private void Search() {
-        String[] fileNames = FileReaderClass.GetFilesName();
-        if (IsThereFiles(fileNames))
+    private void search() {
+        String[] fileNames = FileReaderClass.getFilesName();
+        if (isThereFiles(fileNames))
             ans.add("THERE IS NO FILE");
         ans = new HashSet<>(Arrays.asList(fileNames));
-        CheckForced(true, queryLists.getEssential());
-        CheckOptional();
-        CheckForced(false, queryLists.getForbidden());
+        checkForced(true, queryLists.getEssential());
+        checkOptional();
+        checkForced(false, queryLists.getForbidden());
     }
 }

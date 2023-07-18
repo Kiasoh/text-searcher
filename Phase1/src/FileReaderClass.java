@@ -7,19 +7,19 @@ public class FileReaderClass {
     public FileReaderClass() {
     }
 
-    public static String[] GetFilesName() {
+    public static String[] getFilesName() {
         File file = new File("./books/");
         return file.list();
     }
 
     public InvertedIndex createMap(ReadPrinciple readPrinciple) throws IOException {
         invertedIndex = new InvertedIndex(readPrinciple);
-        for (String fileName : GetFilesName()) {
+        for (String fileName : getFilesName()) {
             fileReader = new FileReader("./books/" + fileName);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String curLine;
             while ((curLine = bufferedReader.readLine()) != null) {
-                invertedIndex.AddToMapByLine(curLine, fileName);
+                invertedIndex.addToMapByLine(curLine, fileName);
             }
         }
         fileReader.close();
