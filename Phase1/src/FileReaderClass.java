@@ -4,8 +4,7 @@ public class FileReaderClass {
     private FileReader fileReader;
     private InvertedIndex invertedIndex;
 
-    public FileReaderClass(InvertedIndex invertedIndex) {
-        this.invertedIndex = invertedIndex;
+    public FileReaderClass() {
     }
 
     public static String[] GetFilesName() {
@@ -13,7 +12,8 @@ public class FileReaderClass {
         return file.list();
     }
 
-    public InvertedIndex createMap() throws IOException {
+    public InvertedIndex createMap(ReadPrinciple readPrinciple) throws IOException {
+        invertedIndex = new InvertedIndex(readPrinciple);
         for (String fileName : GetFilesName()) {
             fileReader = new FileReader("./books/" + fileName);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
