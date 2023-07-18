@@ -12,7 +12,7 @@ public class Main {
             if(temp > 0){
                 readPrinciple.setSplitMarks(query.substring(temp+4));
             }
-            SearchProcess searchProcess = new SearchProcess(query , fileReaderClass.createMap(readPrinciple));
+            SearchProcess searchProcess = new SearchProcess(query.substring(0,temp) , fileReaderClass.createMap(readPrinciple));
             for (String s : searchProcess.getAns()) {
                 System.out.println(s);
             }

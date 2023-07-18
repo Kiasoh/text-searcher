@@ -24,6 +24,5 @@ public class ReadPrinciple {
     }
     public void setSplitMarks(String splitMarks) {
         this.splitMarks = new ArrayList<>(Arrays.asList(splitMarks.split("")));
-        System.out.println(splitMarks);
     }
 }
