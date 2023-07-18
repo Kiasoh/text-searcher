@@ -2,56 +2,51 @@ import java.io.File;
 import java.util.*;
 
 public class InvertedIndex {
-    private String[] query;
+    Navigator navigator;
     private QueryLists queryLists = new QueryLists();
     private Set<String> ans;
 
-    public InvertedIndex(String query) {
-
-        this.query = query.split(" ");
+    public InvertedIndex(String query ,Navigator navigator) {
+        this.navigator = navigator;
+        queryLists.Catagorization(query.split(" "));
     }
         public Set<String> getAns(){
             Search();
             return ans;
         }
+        public boolean IsThereFiles (String[] fileNames)
+        {
+            return (fileNames == null || fileNames.length == 0);
+        }
 
-        private void Search(){
-            for (String word : this.query) {
-                word = WordManipulation.normalize(word);
-                if(word.equals(""))
-                    continue;
-                if (word.charAt(0) == '+')
-                    queryLists.optional.add(word.substring(1));
-                else if (word.charAt(0) == '-')
-                    queryLists.forbidden.add(word.substring(1));
-                else
-                    queryLists.essential.add(word);
-            }
-            HashMap<String , ArrayList<String>> map = FileReaderClass.map;
-            File file = new File ("./books/");
-            String[] fileNames = file.list();
-            if(fileNames == null || fileNames.length == 0)
-                ans.add("THERE IS NO FILE");
-            ans = new HashSet<>(Arrays.asList(fileNames));
-            Iterator<String> it = ans.iterator();
+        private Iterator<String> SetIterator()
+        {
+            return ans.iterator();
+        }
+        private void CheckEssentials()
+        {
+            Iterator<String> it = SetIterator();
             while (it.hasNext()){
                 String doc = it.next();
                 for(String word : queryLists.essential) {
-                    if (map.get(word) == null || !map.get(word).contains(doc)){
+                    if (navigator.map.get(word) == null || !navigator.map.get(word).contains(doc)){
                         it.remove();
                         break;
                     }
                 }
             }
+        }
+        private void CheckOptional()
+        {
+            Iterator<String> it = SetIterator();
             boolean flag;
-            it = ans.iterator();
             while (it.hasNext()){
                 flag = false;
                 String doc = it.next();
                 for(String word : queryLists.optional){
-                    if(map.get(word) == null)
+                    if(navigator.map.get(word) == null)
                         continue;
-                    else if(map.get(word).contains(doc)) {
+                    else if(navigator.map.get(word).contains(doc)) {
                         flag = true;
                         break;
                     }
@@ -60,19 +55,29 @@ public class InvertedIndex {
                     it.remove();
                 }
             }
-
-            it = ans.iterator();
-
+        }
+        private void CheckForbidden()
+        {
+            Iterator<String> it = SetIterator();
             while (it.hasNext()){
 
                 String doc = it.next();
                 for(String word : queryLists.forbidden){
-                    if(map.get(word) != null && map.get(word).contains(doc)) {
+                    if(navigator.map.get(word) != null && navigator.map.get(word).contains(doc)) {
                         it.remove();
                         break;
                     }
                 }
             }
+        }
+        private void Search(){
+            String[] fileNames = FileReaderClass.GetFilesName();
+            if(IsThereFiles(fileNames))
+                ans.add("THERE IS NO FILE");
+            ans = new HashSet<>(Arrays.asList(fileNames));
+            CheckEssentials();
+            CheckOptional();
+            CheckForbidden();
         }
     }
 

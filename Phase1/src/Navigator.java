@@ -3,9 +3,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class Map {
+public class Navigator {
     public HashMap<String, ArrayList<String>> map;
-    public Map ()
+    public Navigator ()
     {
         map = new HashMap<>();
     }
