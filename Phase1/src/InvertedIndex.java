@@ -24,7 +24,7 @@ public class InvertedIndex {
             return ans.iterator();
         }
         private boolean IsEssentialWaste(String word, String doc) {return (navigator.map.get(word) == null || !navigator.map.get(word).contains(doc));}
-        private boolean IsOptionalWaste
+        private boolean IsOptionalWaste(Boolean flag) {return (!flag && queryLists.optional.size()!=0);}
 
         private void CheckEssentials()
         {
@@ -54,7 +54,7 @@ public class InvertedIndex {
                         break;
                     }
                 }
-                if(!flag && queryLists.optional.size()!=0){
+                if(IsOptionalWaste(flag)){
                     it.remove();
                 }
             }
@@ -63,10 +63,9 @@ public class InvertedIndex {
         {
             Iterator<String> it = SetIterator();
             while (it.hasNext()){
-
                 String doc = it.next();
                 for(String word : queryLists.forbidden){
-                    if(navigator.map.get(word) != null && navigator.map.get(word).contains(doc)) {
+                    if(!IsEssentialWaste(word , doc)) {
                         it.remove();
                         break;
                     }
