@@ -3,7 +3,8 @@ import java.util.Scanner;
 import java.util.Set;
 
 /**
- * Execute class to get query and do search
+ * Execute class
+ * get query and sop marks and do search
  */
 public class Execute {
     public static Set<String> run(String query, ReadPrinciple readPrinciple) throws IOException {

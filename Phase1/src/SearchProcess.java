@@ -1,5 +1,8 @@
 import java.util.*;
 
+/**
+ * do the search with processed inverted index and processed query
+ */
 public class SearchProcess {
     private InvertedIndex invertedIndex;
     private QueryLists queryLists = new QueryLists();
@@ -15,8 +18,8 @@ public class SearchProcess {
         return ans;
     }
 
-    public boolean isThereFiles(String[] fileNames) {
-        return (fileNames == null || fileNames.length == 0);
+    public boolean isThereFiles(ArrayList<String> fileNames) {
+        return (fileNames == null || fileNames.isEmpty());
     }
 
     private Iterator<String> setIterator() {
@@ -65,10 +68,10 @@ public class SearchProcess {
     }
 
     private void search() {
-        String[] fileNames = FileReaderClass.getFilesName();
+        ArrayList<String> fileNames = FileReaderClass.getFilesName();
         if (isThereFiles(fileNames))
             ans.add("THERE IS NO FILE");
-        ans = new HashSet<>(Arrays.asList(fileNames));
+        ans = new HashSet<>(fileNames);
         checkForced(true, queryLists.getEssential());
         checkOptional();
         checkForced(false, queryLists.getForbidden());

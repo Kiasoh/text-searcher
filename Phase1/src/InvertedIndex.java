@@ -2,6 +2,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * create the hashmap in which each word is mapped to a list of document names that the word is in that
+ */
 public class InvertedIndex {
     public HashMap<String, ArrayList<String>> map;
     private ReadPrinciple readPrinciple;

@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * split and normalization
+ */
 public class ReadPrinciple {
     private ArrayList<String> splitMarks;
     public Normalization normalization;

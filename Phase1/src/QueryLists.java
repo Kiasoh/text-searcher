@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+/**
+ * categorize query based on their prefixes( '+' , '-' ro nothing)
+ */
 public class QueryLists {
     private ArrayList<String> essential;
     private ArrayList<String> optional;
