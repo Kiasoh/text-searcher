@@ -10,7 +10,6 @@ public class Main {
         ReadPrinciple readPrinciple = new ReadPrinciple();
         readPrinciple.setSplitMarks(" s");
         readPrinciple.normalization = new Stemmer();
-        Execute execute = new Execute();
-        Execute.run("mall" , new FileReaderClass() , readPrinciple);
+        System.out.print(Execute.run("mall" , readPrinciple).toString().replaceAll(",","\n"));;
     }
 }

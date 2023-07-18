@@ -1,18 +1,19 @@
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.Set;
 
+/**
+ * Execute class to get query and do search
+ */
 public class Execute {
-    public static void run(String query, FileReaderClass fileReaderClass, ReadPrinciple readPrinciple) throws IOException {
-        if (query.equals(":q"))
-            return;
+    public static Set<String> run(String query, ReadPrinciple readPrinciple) throws IOException {
+        FileReaderClass fileReaderClass = new FileReaderClass();
         SearchProcess searchProcess = new SearchProcess(trimQuery(query, readPrinciple), fileReaderClass.createMap(readPrinciple), readPrinciple);
-        for (String s : searchProcess.getAns()) {
-            System.out.println("\u001B[32m" + s);
-        }
+        return searchProcess.getAns();
     }
-    public static void run(Scanner in, FileReaderClass fileReaderClass , ReadPrinciple readPrinciple) throws IOException {
+    public static Set<String> run(Scanner in, ReadPrinciple readPrinciple) throws IOException {
         String query = in.nextLine();
-        run(query,fileReaderClass , readPrinciple);
+        return run(query, readPrinciple);
     }
     private static String trimQuery(String query, ReadPrinciple readPrinciple) {
         int temp = query.lastIndexOf("/sm");

@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class SearchProcess {
-    InvertedIndex invertedIndex;
+    private InvertedIndex invertedIndex;
     private QueryLists queryLists = new QueryLists();
     private Set<String> ans;
 

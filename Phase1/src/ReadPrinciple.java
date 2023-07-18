@@ -15,7 +15,6 @@ public class ReadPrinciple {
     public char[] prepareForScan(String Line)
     {
         Line = Line.toLowerCase();
-        Line += '/';
         return Line.toCharArray();
     }
     public boolean splitBy(Character c){
