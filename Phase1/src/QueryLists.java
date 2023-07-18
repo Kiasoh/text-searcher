@@ -1,16 +1,16 @@
 import java.util.ArrayList;
 
 public class QueryLists {
-    public ArrayList<String> essential;
-    public ArrayList<String> optional;
-    public ArrayList<String> forbidden;
+    private ArrayList<String> essential;
+    private ArrayList<String> optional;
+    private ArrayList<String> forbidden;
     public QueryLists()
     {
         essential = new ArrayList<>();
         optional = new ArrayList<>();
         forbidden = new ArrayList<>();
     }
-    public void Catagorization(String[] query)
+    public void Categorization(String[] query)
     {
         for (String word : query) {
             word = WordManipulation.normalize(word);
@@ -23,5 +23,17 @@ public class QueryLists {
             else
                 essential.add(word);
         }
+    }
+
+    public ArrayList<String> getEssential() {
+        return essential;
+    }
+
+    public ArrayList<String> getForbidden() {
+        return forbidden;
+    }
+
+    public ArrayList<String> getOptional() {
+        return optional;
     }
 }

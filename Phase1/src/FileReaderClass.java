@@ -1,31 +1,28 @@
-import javax.management.InvalidAttributeValueException;
 import java.io.*;
-import java.util.*;
 
 public class FileReaderClass {
     private FileReader fileReader;
-    private Navigator navigator;
-    public FileReaderClass(Navigator navigator)
-    {
-        this.navigator = navigator;
+    private InvertedIndex invertedIndex;
+
+    public FileReaderClass(InvertedIndex invertedIndex) {
+        this.invertedIndex = invertedIndex;
     }
 
-    public static String[] GetFilesName()
-    {
+    public static String[] GetFilesName() {
         File file = new File("./books/");
         return file.list();
     }
 
-    public Navigator createMap() throws IOException {
+    public InvertedIndex createMap() throws IOException {
         for (String fileName : GetFilesName()) {
             fileReader = new FileReader("./books/" + fileName);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String curLine;
             while ((curLine = bufferedReader.readLine()) != null) {
-                navigator.AddToMapByLine(curLine , fileName);
+                invertedIndex.AddToMapByLine(curLine, fileName);
             }
         }
         fileReader.close();
-        return navigator;
+        return invertedIndex;
     }
 }
