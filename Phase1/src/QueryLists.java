@@ -10,11 +10,10 @@ public class QueryLists {
         optional = new ArrayList<>();
         forbidden = new ArrayList<>();
     }
-    public void categorization(String[] query)
+    public void categorization(String[] query, ReadPrinciple readPrinciple)
     {
         for (String word : query) {
-            WordManipulation wordManipulation = new WordManipulation();
-            word = wordManipulation.normalize(word);
+            word = readPrinciple.normalization.normalize(word);
             if(word.equals(""))
                 continue;
             if (word.charAt(0) == '+')

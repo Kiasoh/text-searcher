@@ -2,7 +2,6 @@ import java.io.*;
 
 public class FileReaderClass {
     private FileReader fileReader;
-    private InvertedIndex invertedIndex;
 
     public FileReaderClass() {
     }
@@ -12,17 +11,19 @@ public class FileReaderClass {
         return file.list();
     }
 
-    public InvertedIndex createMap(ReadPrinciple readPrinciple) throws IOException {
-        invertedIndex = new InvertedIndex(readPrinciple);
-        for (String fileName : getFilesName()) {
-            fileReader = new FileReader("./books/" + fileName);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            String curLine;
-            while ((curLine = bufferedReader.readLine()) != null) {
-                invertedIndex.addToMapByLine(curLine, fileName);
+    public InvertedIndex createMap(ReadPrinciple readPrinciple){
+        InvertedIndex invertedIndex = new InvertedIndex(readPrinciple);
+        try {
+            for (String fileName : getFilesName()) {
+                fileReader = new FileReader("./books/" + fileName);
+                BufferedReader bufferedReader = new BufferedReader(fileReader);
+                String curLine;
+                while ((curLine = bufferedReader.readLine()) != null) {
+                    invertedIndex.addToMapByLine(curLine, fileName);
+                }
             }
-        }
-        fileReader.close();
+            fileReader.close();
+        }catch (IOException ignored){};
         return invertedIndex;
     }
 }

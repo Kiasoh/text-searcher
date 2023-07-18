@@ -29,7 +29,7 @@ import java.io.*;
  * by calling one of the various stem(something) methods.
  */
 
-class Stemmer {
+class Stemmer extends Normalization implements INormalize {
     private char[] b;
     private int i,     /* offset into b */
             i_end, /* offset to end of stemmed word */
@@ -38,6 +38,7 @@ class Stemmer {
 
     /* unit of size whereby b is increased */
     public Stemmer() {
+        super();
         b = new char[INC];
         i = 0;
         i_end = 0;
@@ -480,6 +481,7 @@ class Stemmer {
      * from the input.  You can retrieve the result with
      * getResultLength()/getResultBuffer() or toString().
      */
+    @Override
     public String normalize(String s) {
         add(s.toCharArray(), s.length());
         k = i - 1;

@@ -5,9 +5,9 @@ public class SearchProcess {
     private QueryLists queryLists = new QueryLists();
     private Set<String> ans;
 
-    public SearchProcess(String query, InvertedIndex invertedIndex) {
+    public SearchProcess(String query, InvertedIndex invertedIndex, ReadPrinciple readPrinciple) {
         this.invertedIndex = invertedIndex;
-        queryLists.categorization(query.split(" "));
+        queryLists.categorization(query.split(" "), readPrinciple);
     }
 
     public Set<String> getAns() {
@@ -31,7 +31,7 @@ public class SearchProcess {
         return (!flag && queryLists.getOptional().size() != 0);
     }
 
-    private void checkForced(boolean isEssential, ArrayList<String> query) {
+    public void checkForced(boolean isEssential, ArrayList<String> query) {
         Iterator<String> it = setIterator();
         while (it.hasNext()) {
             String doc = it.next();
@@ -44,7 +44,7 @@ public class SearchProcess {
         }
     }
 
-    private void checkOptional() {
+    public void checkOptional() {
         Iterator<String> it = setIterator();
         boolean flag;
         while (it.hasNext()) {

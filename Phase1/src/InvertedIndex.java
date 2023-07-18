@@ -22,8 +22,7 @@ public class InvertedIndex {
                 continue;
             }
             else {
-                WordManipulation wordManipulation = new WordManipulation();
-                word = wordManipulation.normalize(word);
+                word = readPrinciple.normalization.normalize(word);
             }
             if (map.containsKey(word)) {
                 if (map.get(word).contains(fileName)) {
