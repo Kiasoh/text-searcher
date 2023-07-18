@@ -23,13 +23,16 @@ public class InvertedIndex {
         {
             return ans.iterator();
         }
+        private boolean IsEssentialWaste(String word, String doc) {return (navigator.map.get(word) == null || !navigator.map.get(word).contains(doc));}
+        private boolean IsOptionalWaste
+
         private void CheckEssentials()
         {
             Iterator<String> it = SetIterator();
             while (it.hasNext()){
                 String doc = it.next();
                 for(String word : queryLists.essential) {
-                    if (navigator.map.get(word) == null || !navigator.map.get(word).contains(doc)){
+                    if (IsEssentialWaste(word ,doc)){
                         it.remove();
                         break;
                     }

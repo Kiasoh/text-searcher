@@ -28,6 +28,4 @@ public class FileReaderClass {
         fileReader.close();
         return navigator;
     }
-
-
 }
