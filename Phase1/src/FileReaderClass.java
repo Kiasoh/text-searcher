@@ -27,12 +27,30 @@ public class FileReaderClass {
             return allFiles;
         ArrayList<String> validFiles = new ArrayList<>();
         for (String fileName : allFiles) {
-            if (validFormats.contains(fileName.substring(fileName.lastIndexOf("."))))
-                validFiles.add(fileName);
+            try {
+                if (validFormats.contains(fileName.substring(fileName.lastIndexOf("."))))
+                    validFiles.add(fileName);
+            }catch (StringIndexOutOfBoundsException ignored){}
         }
         return validFiles;
     }
+    public void addToMapByLine(String line , String fileName , InvertedIndex in)
+    {
+        String word = "";
+        int count = 0;
+        for (Character c : in.getReadPrinciple().prepareForScan(line)) {
+            if (in.getReadPrinciple().splitBy(c)) {
+                word += c.toString();
+                count++;
+                if(count == line.length())
+                    in.addToMap(word,fileName);
+                continue;
+            }
 
+            in.addToMap(word, fileName);
+            word = "";
+        }
+    }
     public InvertedIndex createMap(ReadPrinciple readPrinciple){
         InvertedIndex invertedIndex = new InvertedIndex(readPrinciple);
         try {
@@ -41,7 +59,7 @@ public class FileReaderClass {
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
                 String curLine;
                 while ((curLine = bufferedReader.readLine()) != null) {
-                    invertedIndex.addToMapByLine(curLine, fileName);
+                    addToMapByLine(curLine, fileName , invertedIndex);
                 }
             }
             fileReader.close();

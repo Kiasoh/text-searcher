@@ -13,6 +13,6 @@ public class Main {
         ReadPrinciple readPrinciple = new ReadPrinciple();
         readPrinciple.setSplitMarks(" ");
         readPrinciple.normalization = new Stemmer();
-        System.out.print(Execute.run("learn" , readPrinciple).toString().replaceAll(",","\n"));
+        System.out.print(Execute.run("kiarash -learn" , readPrinciple).toString().replaceAll(",","\n"));
     }
 }
