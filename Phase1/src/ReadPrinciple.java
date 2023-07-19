@@ -6,13 +6,12 @@ import java.util.Arrays;
  */
 public class ReadPrinciple {
     private ArrayList<String> splitMarks;
-    public Normalization normalization;
+    public INormalize normalization;
 
 
     public ReadPrinciple(){
         splitMarks = new ArrayList<>();
-        normalization = new Normalization();
-        normalization.setNormalizeMethod(new Stemmer());
+        normalization = new Stemmer();
     }
 
     public char[] prepareForScan(String Line)
