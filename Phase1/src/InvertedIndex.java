@@ -1,12 +1,13 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 /**
  * create the hashmap in which each word is mapped to a list of document names that the word is in that
  */
 public class InvertedIndex {
-    public HashMap<String, ArrayList<String>> map;
+    public HashMap<String, HashSet<String>> map;
     private ReadPrinciple readPrinciple;
 
     public InvertedIndex(ReadPrinciple readPrinciple)
@@ -21,13 +22,14 @@ public class InvertedIndex {
         String word = "";
         int count = 0;
         for (Character c : readPrinciple.prepareForScan(line)) {
-            count++;
             if (readPrinciple.splitBy(c)) {
+                word += c.toString();
+                count++;
                 if(count == line.length())
                     addToMap(word,fileName);
-                word += c.toString();
                 continue;
             }
+
             addToMap(word, fileName);
             word = "";
         }
@@ -41,6 +43,6 @@ public class InvertedIndex {
             map.get(word).add(fileName);
         }
         else
-            map.put(word, new ArrayList<String>(List.of(fileName)));
+            map.put(word, new HashSet<>(List.of(fileName)));
     }
 }

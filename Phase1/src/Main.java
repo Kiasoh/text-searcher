@@ -14,6 +14,11 @@ public class Main {
         readPrinciple.setSplitMarks(" ");
         readPrinciple.normalization = new Stemmer();
 
+
+
+        long start1 = System.nanoTime();
         System.out.print(Execute.run("learn" , readPrinciple).toString().replaceAll(",","\n"));
+        long end1 = System.nanoTime();
+        System.out.println(end1-start1);
     }
 }
