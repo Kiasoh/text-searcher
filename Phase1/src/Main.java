@@ -9,7 +9,7 @@ public class Main {
 //        Scanner in = new Scanner(System.in);
 //        System.out.println("\u001B[36mwrite the query then split marks\nExample: get help +illness +disease -cough /sm  ,# !.\nto quit type :q");
 //        ReadPrinciple readPrinciple = new ReadPrinciple();
-//        printResult(Execute.run(in, readPrinciple));
+//        System.out.println(Execute.run(in, readPrinciple).toString().replaceAll(",","\n"));
         ReadPrinciple readPrinciple = new ReadPrinciple();
         readPrinciple.setSplitMarks(" ");
         readPrinciple.normalization = new Stemmer();
