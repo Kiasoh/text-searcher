@@ -5,36 +5,31 @@ import java.util.List;
 /**
  * read files line by line and pass them to invertedIndex class
  */
-public class FileReaderClass {
+public class TxtFileReader implements IFileReader{
     private FileReader fileReader;
-    private static String path;
-    private static ArrayList<String > validFormats = new ArrayList<>();
+    private String path;
 
-    public FileReaderClass() {}
-
-    public static void setPath(String path) {
-        FileReaderClass.path = path;
+    public TxtFileReader(String path){
+        this.path = path;
     }
 
-    public static void addValidFormat(String validFormat) {
-        FileReaderClass.validFormats.add(validFormat);
-    }
-
-    public static ArrayList<String> getFilesName() {
+    public ArrayList<String> getFilesName() {
         File file = new File(path);
-        ArrayList<String> allFiles = new ArrayList<>(List.of(file.list()));;
-        if (validFormats.isEmpty())
-            return allFiles;
         ArrayList<String> validFiles = new ArrayList<>();
+        if(!file.exists()){
+            return validFiles;
+        }
+        ArrayList<String> allFiles = new ArrayList<>(List.of(file.list()));
         for (String fileName : allFiles) {
             try {
-                if (validFormats.contains(fileName.substring(fileName.lastIndexOf("."))))
+                if (fileName.substring(fileName.lastIndexOf(".")).equals(".txt"))
                     validFiles.add(fileName);
-            }catch (StringIndexOutOfBoundsException ignored){}
+            } catch (StringIndexOutOfBoundsException ignored) {}
         }
         return validFiles;
     }
-    public void addToMapByLine(String line , String fileName , InvertedIndex in)
+
+    private void addToMapByLine(String line , String fileName , InvertedIndex in)
     {
         String word = "";
         int count = 0;
@@ -51,6 +46,8 @@ public class FileReaderClass {
             word = "";
         }
     }
+
+    @Override
     public InvertedIndex createMap(ReadPrinciple readPrinciple){
         InvertedIndex invertedIndex = new InvertedIndex(readPrinciple);
         try {
@@ -63,9 +60,7 @@ public class FileReaderClass {
                 }
             }
             fileReader.close();
-        }catch (IOException ignored){
-            System.out.println("Invalid file.");
-        };
+        }catch (IOException | NullPointerException ignored){}
         return invertedIndex;
     }
 }

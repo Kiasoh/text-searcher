@@ -8,19 +8,16 @@ public class SearchProcess {
     private QueryLists queryLists = new QueryLists();
     private Set<String> ans;
 
-    public SearchProcess(String query, InvertedIndex invertedIndex, ReadPrinciple readPrinciple) {
+    public SearchProcess(String query, InvertedIndex invertedIndex,
+                         ReadPrinciple readPrinciple, IFileReader fileReader) {
         this.invertedIndex = invertedIndex;
         queryLists.categorization(query.split(" "), readPrinciple);
-        ans = new HashSet<>(FileReaderClass.getFilesName());
+        ans = new HashSet<>(fileReader.getFilesName());
     }
 
     public Set<String> getAns() {
         search();
         return ans;
-    }
-
-    public boolean isThereFiles(ArrayList<String> fileNames) {
-        return (fileNames == null || fileNames.isEmpty());
     }
 
     private Iterator<String> setIterator() {
@@ -45,7 +42,7 @@ public class SearchProcess {
         }
     }
 
-     private boolean isEssentialWaste(String word, String doc) {
+    private boolean isEssentialWaste(String word, String doc) {
         return (invertedIndex.map.get(word) == null || !invertedIndex.map.get(word).contains(doc));
     }
 
@@ -84,31 +81,12 @@ public class SearchProcess {
         }
     }
 
-//    private void checkForbidden(ArrayList<String> query) {
-//        Iterator<String> it = setIterator();
-//        while (it.hasNext()) {
-//            String doc = it.next();
-//            for (String word : query) {
-//                if (invertedIndex.map.get(word) == null)
-//                    continue;
-//                if (invertedIndex.map.get(word).contains(doc)) {
-//                    it.remove();
-//                    break;
-//                }
-//            }
-//        }
-//    }
-
     private void search() {
-        ArrayList<String> fileNames = FileReaderClass.getFilesName();
-        if (isThereFiles(fileNames))
-            ans.add("THERE IS NO FILE");
-        ans = new HashSet<>(fileNames);
         checkEssential(queryLists.getEssential());
 //        checkForced(true,queryLists.getEssential());
         checkForced(false, queryLists.getForbidden());
         checkOptional(queryLists.getOptional());
-//        checkForbidden(queryLists.getForbidden());
-
+        if (ans.isEmpty())
+            ans.add("THERE IS NO FILE");
     }
 }

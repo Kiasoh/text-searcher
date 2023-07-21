@@ -7,14 +7,14 @@ import java.util.Set;
  * get query and sop marks and do search
  */
 public class Execute {
-    public static Set<String> run(String query, ReadPrinciple readPrinciple) throws IOException {
-        FileReaderClass fileReaderClass = new FileReaderClass();
-        SearchProcess searchProcess = new SearchProcess(trimQuery(query, readPrinciple), fileReaderClass.createMap(readPrinciple), readPrinciple);
+    public static Set<String> run(String query, ReadPrinciple readPrinciple, IFileReader fileReader) throws IOException {
+        SearchProcess searchProcess = new SearchProcess(trimQuery(query, readPrinciple),
+                fileReader.createMap(readPrinciple), readPrinciple, fileReader);
         return searchProcess.getAns();
     }
-    public static Set<String> run(Scanner in, ReadPrinciple readPrinciple) throws IOException {
+    public static Set<String> run(Scanner in, ReadPrinciple readPrinciple, IFileReader fileReader) throws IOException {
         String query = in.nextLine();
-        return run(query, readPrinciple);
+        return run(query, readPrinciple, fileReader);
     }
     private static String trimQuery(String query, ReadPrinciple readPrinciple) {
         int temp = query.lastIndexOf("/sm");

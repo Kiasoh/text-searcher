@@ -14,10 +14,10 @@ public class ReadPrinciple {
         normalization = new Stemmer();
     }
 
-    public char[] prepareForScan(String Line)
+    public char[] prepareForScan(String line)
     {
-        Line = Line.toLowerCase();
-        return Line.toCharArray();
+        line = line.toLowerCase();
+        return line.toCharArray();
     }
     public boolean splitBy(Character c){
         if(splitMarks.isEmpty())
