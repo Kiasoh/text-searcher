@@ -32,11 +32,7 @@ public class SearchProcess {
     private void checkEssential(ArrayList<String> query) {
         if(query.isEmpty())
             return;
-        ans = invertedIndex.map.get(query.get(0));
-        if(ans == null){
-            ans = new HashSet<>();
-            return;
-        }
+
         for (String word : query){
             if (invertedIndex.map.containsKey(word)) {
                 ans.retainAll(invertedIndex.map.get(word));
