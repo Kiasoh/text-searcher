@@ -14,12 +14,11 @@ public class ReadPrinciple {
         normalization = new Stemmer();
     }
 
-    public char[] prepareForScan(String line)
-    {
+    public char[] prepareForScan(String line) {
         line = line.toLowerCase();
         return line.toCharArray();
     }
-    public boolean splitBy(Character c){
+    public boolean issplitMark(Character c){
         if(splitMarks.isEmpty())
             return isAlphabetic(c);
         return !splitMarks.contains(c.toString());

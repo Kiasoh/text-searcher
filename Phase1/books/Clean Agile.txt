@@ -1,6 +1,6 @@
 learning
 Summary
-
+kakaka
 This book is a relevant start because Robert C. Martin is a signatory of the Agile manifesto. I will sum up only the parts I found helpful as a machine learning engineer. There are many other stimulating topics for a software developer in the book.
 History
 

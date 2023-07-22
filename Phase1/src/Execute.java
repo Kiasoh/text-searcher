@@ -17,10 +17,10 @@ public class Execute {
         return run(query, readPrinciple, fileReader);
     }
     private static String trimQuery(String query, ReadPrinciple readPrinciple) {
-        int temp = query.lastIndexOf("/sm");
-        if (temp > 0) {
-            readPrinciple.setSplitMarks(query.substring(temp + 4));
-            return query.substring(0, temp);
+        int splitMarkQueryIndex = query.lastIndexOf("/sm");
+        if (splitMarkQueryIndex != -1) {
+            readPrinciple.setSplitMarks(query.substring(splitMarkQueryIndex + 4));
+            return query.substring(0, splitMarkQueryIndex);
         } else
             return query;
     }

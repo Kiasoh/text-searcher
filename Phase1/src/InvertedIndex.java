@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -8,7 +7,7 @@ import java.util.List;
  */
 public class InvertedIndex {
     public HashMap<String, HashSet<String>> map;
-    private ReadPrinciple readPrinciple;
+    private final ReadPrinciple readPrinciple;
 
     public ReadPrinciple getReadPrinciple() {
         return readPrinciple;

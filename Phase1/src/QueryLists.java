@@ -4,9 +4,9 @@ import java.util.ArrayList;
  * categorize query based on their prefixes( '+' , '-' ro nothing)
  */
 public class QueryLists {
-    private ArrayList<String> essential;
-    private ArrayList<String> optional;
-    private ArrayList<String> forbidden;
+    private final ArrayList<String> essential;
+    private final ArrayList<String> optional;
+    private final ArrayList<String> forbidden;
     public QueryLists()
     {
         essential = new ArrayList<>();

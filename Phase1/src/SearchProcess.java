@@ -4,14 +4,15 @@ import java.util.*;
  * do the search with processed inverted index and processed query
  */
 public class SearchProcess {
-    private InvertedIndex invertedIndex;
-    private QueryLists queryLists = new QueryLists();
+    private final InvertedIndex invertedIndex;
+    private final QueryLists queryLists;
     private Set<String> ans;
 
     public SearchProcess(String query, InvertedIndex invertedIndex,
                          ReadPrinciple readPrinciple, IFileReader fileReader) {
         this.invertedIndex = invertedIndex;
-        queryLists.categorization(query.split(" "), readPrinciple);
+        queryLists = new QueryLists();
+        queryLists.categorization(query.split("\s+"), readPrinciple);
         ans = new HashSet<>(fileReader.getFilesName());
     }
 

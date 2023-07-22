@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class TxtFileReader implements IFileReader{
     private FileReader fileReader;
-    private String path;
+    private final String path;
 
     public TxtFileReader(String path){
         this.path = path;
@@ -34,16 +34,17 @@ public class TxtFileReader implements IFileReader{
         String word = "";
         int count = 0;
         for (Character c : in.getReadPrinciple().prepareForScan(line)) {
-            if (in.getReadPrinciple().splitBy(c)) {
+            if (in.getReadPrinciple().issplitMark(c)) {
                 word += c.toString();
                 count++;
                 if(count == line.length())
                     in.addToMap(word,fileName);
-                continue;
+            }
+            else {
+                in.addToMap(word, fileName);
+                word = "";
             }
 
-            in.addToMap(word, fileName);
-            word = "";
         }
     }
 

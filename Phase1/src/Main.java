@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -10,7 +11,7 @@ public class Main {
         ReadPrinciple readPrinciple = new ReadPrinciple();
         readPrinciple.setSplitMarks(" ");
         readPrinciple.normalization = new Stemmer();
-        System.out.print(Execute.run("kiarash" , readPrinciple, fileReader).toString().replaceAll(",","\n"));
+        System.out.print(Execute.run("kiarash   summary " , readPrinciple, fileReader).toString().replaceAll(",","\n"));
 
         //use from console
 //        Scanner in = new Scanner(System.in);
