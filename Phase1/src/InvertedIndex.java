@@ -22,9 +22,8 @@ public class InvertedIndex {
     public void addToMap(String word, String fileName){
         word = readPrinciple.normalization.normalize(word);
         if (map.containsKey(word)) {
-            if (map.get(word).contains(fileName))
-                return;
-            map.get(word).add(fileName);
+            if (!map.get(word).contains(fileName))
+                map.get(word).add(fileName);
         }
         else
             map.put(word, new HashSet<>(List.of(fileName)));

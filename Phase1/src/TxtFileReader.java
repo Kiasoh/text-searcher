@@ -6,8 +6,6 @@ import java.util.List;
  * read files line by line and pass them to invertedIndex class
  */
 public class TxtFileReader implements FileScanner {
-
-    private FileReader fileReader;
     private final String path;
 
     public TxtFileReader(String path){
@@ -41,6 +39,7 @@ public class TxtFileReader implements FileScanner {
     public InvertedIndex readFiles(ReadPrinciple readPrinciple){
         InvertedIndex invertedIndex = new InvertedIndex(readPrinciple);
         try {
+            FileReader fileReader = null;
             for (String fileName : getFilesName()) {
                 fileReader = new FileReader(path + fileName);
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
