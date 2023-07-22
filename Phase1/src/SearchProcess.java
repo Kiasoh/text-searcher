@@ -33,13 +33,18 @@ public class SearchProcess {
         if(query.isEmpty())
             return;
         ans = invertedIndex.map.get(query.get(0));
-        if(ans == null)
+        if(ans == null){
             ans = new HashSet<>();
+            return;
+        }
         for (String word : query){
-            HashSet<String> docs = invertedIndex.map.get(word);
-            if (docs == null)
-                continue;
-            ans.retainAll(docs);
+            if (invertedIndex.map.containsKey(word)) {
+                ans.retainAll(invertedIndex.map.get(word));
+            }
+            else{
+                ans = new HashSet<>();
+                return;
+            }
         }
     }
 
