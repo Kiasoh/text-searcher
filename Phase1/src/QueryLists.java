@@ -4,27 +4,27 @@ import java.util.ArrayList;
  * categorize query based on their prefixes( '+' , '-' ro nothing)
  */
 public class QueryLists {
+
     private final ArrayList<String> essential;
     private final ArrayList<String> optional;
     private final ArrayList<String> forbidden;
-    public QueryLists()
-    {
+
+    public QueryLists() {
         essential = new ArrayList<>();
         optional = new ArrayList<>();
         forbidden = new ArrayList<>();
     }
-    public void categorization(String[] query, ReadPrinciple readPrinciple)
-    {
+
+    public void categorization(String[] query, ReadPrinciple readPrinciple) {
         for (String word : query) {
-            word = readPrinciple.normalization.normalize(word);
             if(word.equals(""))
                 continue;
             if (word.charAt(0) == '+')
-                optional.add(word.substring(1));
+                optional.add(readPrinciple.normalization.normalize(word.substring(1)));
             else if (word.charAt(0) == '-')
-                forbidden.add(word.substring(1));
+                forbidden.add(readPrinciple.normalization.normalize(word.substring(1)));
             else
-                essential.add(word);
+                essential.add(readPrinciple.normalization.normalize(word));
         }
     }
 

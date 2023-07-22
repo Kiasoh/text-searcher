@@ -4,28 +4,29 @@ import java.util.*;
  * do the search with processed inverted index and processed query
  */
 public class SearchProcess {
+
     private final InvertedIndex invertedIndex;
     private final QueryLists queryLists;
-    private Set<String> ans;
+    private Set<String> result;
 
     public SearchProcess(String query, InvertedIndex invertedIndex,
-                         ReadPrinciple readPrinciple, IFileReader fileReader) {
+                         ReadPrinciple readPrinciple, FileScanner fileReader) {
         this.invertedIndex = invertedIndex;
         queryLists = new QueryLists();
         queryLists.categorization(query.split("\s+"), readPrinciple);
-        ans = new HashSet<>(fileReader.getFilesName());
+        result = new HashSet<>(fileReader.getFilesName());
     }
 
-    public Set<String> getAns() {
+    public Set<String> getResult() {
         search();
-        return ans;
+        return result;
     }
 
     private Iterator<String> setIterator() {
-        return ans.iterator();
+        return result.iterator();
     }
 
-    private boolean isOptionalWaste(Boolean flag) {
+    private boolean containsOptional(Boolean flag) {
         return (!flag && queryLists.getOptional().size() != 0);
     }
 
@@ -35,16 +36,16 @@ public class SearchProcess {
 
         for (String word : query){
             if (invertedIndex.map.containsKey(word)) {
-                ans.retainAll(invertedIndex.map.get(word));
+                result.retainAll(invertedIndex.map.get(word));
             }
             else{
-                ans = new HashSet<>();
+                result = new HashSet<>();
                 return;
             }
         }
     }
 
-    private boolean isEssentialWaste(String word, String doc) {
+    private boolean containsEssential(String word, String doc) {
         return (invertedIndex.map.get(word) == null || !invertedIndex.map.get(word).contains(doc));
     }
 
@@ -55,7 +56,7 @@ public class SearchProcess {
             String doc = it.next();
 
             for (String word : query) {
-                if (isEssentialWaste(word, doc) == isEssential) {
+                if (containsEssential(word, doc) == isEssential) {
                     it.remove();
                     break;
                 }
@@ -77,7 +78,7 @@ public class SearchProcess {
                     break;
                 }
             }
-            if (isOptionalWaste(flag)) {
+            if (containsOptional(flag)) {
                 it.remove();
             }
         }
@@ -88,7 +89,7 @@ public class SearchProcess {
 //        checkForced(true,queryLists.getEssential());
         checkForced(false, queryLists.getForbidden());
         checkOptional(queryLists.getOptional());
-        if (ans.isEmpty())
-            ans.add("THERE IS NO FILE");
+        if (result.isEmpty())
+            result.add("THERE IS NO FILE");
     }
 }

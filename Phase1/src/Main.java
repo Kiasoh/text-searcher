@@ -1,22 +1,23 @@
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Scanner;
-import java.util.Set;
 
 public class Main {
+
     public static void main(String[] args) throws IOException {
-        IFileReader fileReader = new TxtFileReader("./books/");
+        FileScanner fileReader = new TxtFileReader("./books/");
+        ReadPrinciple readPrinciple = new ReadPrinciple();
+        readPrinciple.setSplitMarks(" -");
+        Execute execute = new Execute(readPrinciple, fileReader);
 
         //use from code
-        ReadPrinciple readPrinciple = new ReadPrinciple();
-        readPrinciple.setSplitMarks(" ");
+
         readPrinciple.normalization = new Stemmer();
-        System.out.print(Execute.run("askjda kiarash  " , readPrinciple, fileReader).toString().replaceAll(",","\n"));
+        System.out.print(execute.run("word dog").toString().replaceAll(",","\n"));
 
         //use from console
 //        Scanner in = new Scanner(System.in);
 //        System.out.println("\u001B[36mwrite the query then split marks\nExample: get help +illness +disease -cough /sm  ,# !.\nto quit type :q");
-//        ReadPrinciple readPrinciple = new ReadPrinciple();
-//        System.out.println(Execute.run(in, readPrinciple, fileReader).toString().replaceAll(",","\n"));
+//        System.out.println(execute.run(in).toString().replaceAll(",","\n"));
+//        Stemmer stemmer = new Stemmer();
+//        System.out.println(stemmer.normalize("gathered."));
     }
 }

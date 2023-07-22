@@ -6,6 +6,7 @@ import java.util.List;
  * create the hashmap in which each word is mapped to a list of document names that the word is in that
  */
 public class InvertedIndex {
+
     public HashMap<String, HashSet<String>> map;
     private final ReadPrinciple readPrinciple;
 
@@ -13,11 +14,11 @@ public class InvertedIndex {
         return readPrinciple;
     }
 
-    public InvertedIndex(ReadPrinciple readPrinciple)
-    {
+    public InvertedIndex(ReadPrinciple readPrinciple) {
         this.readPrinciple = readPrinciple;
         map = new HashMap<>();
     }
+
     public void addToMap(String word, String fileName){
         word = readPrinciple.normalization.normalize(word);
         if (map.containsKey(word)) {

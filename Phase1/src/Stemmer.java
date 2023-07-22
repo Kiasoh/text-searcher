@@ -19,8 +19,6 @@
    Release 4
 */
 
-import java.io.*;
-
 /**
  * Stemmer, implementing the Porter Stemming Algorithm
  * <p>
@@ -29,7 +27,7 @@ import java.io.*;
  * by calling one of the various stem(something) methods.
  */
 
-class Stemmer implements INormalize {
+class Stemmer implements Normalizable {
     private char[] b;
     private int i,     /* offset into b */
             i_end, /* offset to end of stemmed word */
@@ -483,7 +481,7 @@ class Stemmer implements INormalize {
      */
     @Override
     public String normalize(String s) {
-        add(s.toCharArray(), s.length());
+        add(s.toLowerCase().toCharArray(), s.length());
         k = i - 1;
         if (k > 1) {
             step1();

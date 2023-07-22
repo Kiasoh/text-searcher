@@ -1,7 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class WordManipulation implements INormalize{
+public class WordManipulation implements Normalizable {
+
     private static final ArrayList<String> prepositions = new ArrayList<>(List.of("of","with","at",
             "from","into", "during","including","until","against","among","through","despite","towards",
             "upon","that", "concerning","to","in","for","on","by","about","like","through","over","before",
@@ -16,6 +17,7 @@ public class WordManipulation implements INormalize{
 
     @Override
     public String normalize(String word){
+
         if (word.length() <= 2 || prepositions.contains(word)) {
             word = "";
         }

@@ -5,7 +5,8 @@ import java.util.List;
 /**
  * read files line by line and pass them to invertedIndex class
  */
-public class TxtFileReader implements IFileReader{
+public class TxtFileReader implements FileScanner {
+
     private FileReader fileReader;
     private final String path;
 
@@ -29,27 +30,15 @@ public class TxtFileReader implements IFileReader{
         return validFiles;
     }
 
-    private void addToMapByLine(String line , String fileName , InvertedIndex in)
-    {
-        String word = "";
-        int count = 0;
-        for (Character c : in.getReadPrinciple().prepareForScan(line)) {
-            if (in.getReadPrinciple().issplitMark(c)) {
-                word += c.toString();
-                count++;
-                if(count == line.length())
-                    in.addToMap(word,fileName);
-            }
-            else {
-                in.addToMap(word, fileName);
-                word = "";
-            }
-
+    private void addToMapByLine(String line , String fileName , InvertedIndex in) {
+        String[] words = line.split("[" + in.getReadPrinciple().getSplitMarks() + "]+");
+        for (String word : words) {
+            in.addToMap(word, fileName);
         }
     }
 
     @Override
-    public InvertedIndex createMap(ReadPrinciple readPrinciple){
+    public InvertedIndex readFiles(ReadPrinciple readPrinciple){
         InvertedIndex invertedIndex = new InvertedIndex(readPrinciple);
         try {
             for (String fileName : getFilesName()) {

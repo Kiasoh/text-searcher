@@ -5,28 +5,29 @@ import java.util.Arrays;
  * split and normalization
  */
 public class ReadPrinciple {
-    private ArrayList<String> splitMarks;
-    public INormalize normalization;
 
+    private String splitMarks;
+    public Normalizable normalization;
 
     public ReadPrinciple(){
-        splitMarks = new ArrayList<>();
         normalization = new Stemmer();
     }
 
-    public char[] prepareForScan(String line) {
-        line = line.toLowerCase();
-        return line.toCharArray();
-    }
-    public boolean issplitMark(Character c){
-        if(splitMarks.isEmpty())
+    public boolean isSplitMark(Character c){
+        if(splitMarks.equals(""))
             return isAlphabetic(c);
         return !splitMarks.contains(c.toString());
     }
+
     private boolean isAlphabetic(char c) {
-        return c >= 'a' && c <= 'z';
+        return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
     }
+
     public void setSplitMarks(String splitMarks) {
-        this.splitMarks = new ArrayList<>(Arrays.asList(splitMarks.split("")));
+        this.splitMarks = splitMarks;
+    }
+
+    public String getSplitMarks() {
+        return splitMarks;
     }
 }
