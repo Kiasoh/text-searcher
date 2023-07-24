@@ -4,14 +4,15 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         FileScanner fileReader = new TxtFileReader("./books/");
-        ReadPrinciple readPrinciple = ReadPrinciple.builder().build();
-        readPrinciple.setSplitMarks(" -");
+        Chainsaw chainsaw = new Chainsaw(2,10);
+        ReadPrinciple readPrinciple = ReadPrinciple.builder().useNGram(true).splitMarks(" -")
+                .normalization(new Stemmer()).chainsaw(chainsaw).build();
         Execute execute = new Execute(readPrinciple, fileReader);
 
         //use from code
 
-        readPrinciple.normalization = new Stemmer();
-        System.out.print(execute.run("word dog").toString().replaceAll(",","\n"));
+//        readPrinciple.normalization = new Stemmer();
+        System.out.print(execute.run("kia").toString().replaceAll(",","\n"));
 
         //use from console
 //        Scanner in = new Scanner(System.in);

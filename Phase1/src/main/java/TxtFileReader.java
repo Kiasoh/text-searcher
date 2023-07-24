@@ -7,7 +7,6 @@ import java.util.List;
  */
 public class TxtFileReader implements FileScanner {
 
-    private FileReader fileReader;
     private final String path;
 
     public TxtFileReader(String path){
@@ -33,6 +32,8 @@ public class TxtFileReader implements FileScanner {
     private void addToMapByLine(String line , String fileName , InvertedIndex in) {
         String[] words = line.split("[" + in.getReadPrinciple().getSplitMarks() + "]+");
         for (String word : words) {
+            if(in.getReadPrinciple().isUseNGram())
+                in.addToMap(in.getReadPrinciple().getChainsaw().nGram(word) , fileName);
             in.addToMap(word, fileName);
         }
     }
@@ -40,6 +41,7 @@ public class TxtFileReader implements FileScanner {
     @Override
     public InvertedIndex readFiles(ReadPrinciple readPrinciple){
         InvertedIndex invertedIndex = new InvertedIndex(readPrinciple);
+        FileReader fileReader;
         try {
             for (String fileName : getFilesName()) {
                 fileReader = new FileReader(path + fileName);
@@ -48,9 +50,9 @@ public class TxtFileReader implements FileScanner {
                 while ((curLine = bufferedReader.readLine()) != null) {
                     addToMapByLine(curLine, fileName , invertedIndex);
                 }
+                fileReader.close();
             }
-            fileReader.close();
-        }catch (IOException | NullPointerException ignored){}
+        }catch (IOException ignored){}
         return invertedIndex;
     }
 }
