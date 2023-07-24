@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 public class InvertedIndex {
 
-    public HashMap<String, HashSet<String>> map;
+    public HashMap<String, HashSet<Document>> map;
     private final ReadPrinciple readPrinciple;
 
     public InvertedIndex(ReadPrinciple readPrinciple) {
@@ -18,19 +18,19 @@ public class InvertedIndex {
         map = new HashMap<>();
     }
 
-    public void addToMap(String word, String fileName){
+    public void addToMap(String word, Document document){
         word = readPrinciple.getNormalization().normalize(word);
-        enterToMap(word, fileName);
+        enterToMap(word, document);
     }
 
-    public void addToMap(List<String> words, String fileName){
-        words.forEach(word ->enterToMap(word,fileName));
+    public void addToMap(List<String> words, Document document){
+        words.forEach(word ->enterToMap(word,document));
     }
 
-    private void enterToMap(String word, String fileName){
+    private void enterToMap(String word, Document document){
         if (map.containsKey(word))
-            map.get(word).add(fileName);
+            map.get(word).add(document);
         else
-            map.put(word, new HashSet<>(List.of(fileName)));
+            map.put(word, new HashSet<>(List.of(document)));
     }
 }

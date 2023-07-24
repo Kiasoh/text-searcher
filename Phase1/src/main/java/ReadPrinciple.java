@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class ReadPrinciple {
 
     private String splitMarks;
-    public Normalizable normalization;
+    private Normalizable normalization;
     private boolean useNGram;
     private Chainsaw chainsaw;
 

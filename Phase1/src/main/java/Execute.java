@@ -1,12 +1,11 @@
 import java.io.IOException;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Execute class
  * get query and sop marks and do search
  */
-public class Execute {
+public class Execute implements Comparator{
 
     private final ReadPrinciple readPrinciple;
     private final InvertedIndex invertedIndex;
@@ -18,15 +17,22 @@ public class Execute {
         invertedIndex = fileReader.readFiles(readPrinciple);
     }
 
-    public Set<String> run(String query) throws IOException {
+    public List<Document> run(String query) throws IOException {
         SearchProcess searchProcess = new SearchProcess(trimQuery(query),
                 invertedIndex, readPrinciple, fileReader);
-        return searchProcess.getResult();
+        return sort(searchProcess.getResult());
     }
 
-    public Set<String> run(Scanner in) throws IOException {
+    public List<Document> run(Scanner in) throws IOException {
         String query = in.nextLine();
         return run(query);
+    }
+
+    private List<Document> sort(Set<Document> result){
+//        List<Document> list = result.stream().toList();
+//        list.sort(Comparator.comparing(Document::getScore));
+//        list.sort((Document d1, Document d2) -> compare(d1,d2));
+        return result.stream().toList();
     }
 
     private String trimQuery(String query) {
@@ -36,5 +42,14 @@ public class Execute {
             return query.substring(0, splitMarkQueryIndex);
         } else
             return query;
+    }
+
+    @Override
+    public int compare(Object o1, Object o2) {
+        if(((Document)o1).getScore() > ((Document)o2).getScore())
+            return 1;
+        if(((Document)o1).getScore() < ((Document)o2).getScore())
+            return -1;
+        return 0;
     }
 }

@@ -20,11 +20,11 @@ public class QueryLists {
             if(word.equals(""))
                 continue;
             if (word.charAt(0) == '+')
-                optional.add(readPrinciple.normalization.normalize(word.substring(1)));
+                optional.add(readPrinciple.getNormalization().normalize(word.substring(1)));
             else if (word.charAt(0) == '-')
-                forbidden.add(readPrinciple.normalization.normalize(word.substring(1)));
+                forbidden.add(readPrinciple.getNormalization().normalize(word.substring(1)));
             else
-                essential.add(readPrinciple.normalization.normalize(word));
+                essential.add(readPrinciple.getNormalization().normalize(word));
         }
     }
 

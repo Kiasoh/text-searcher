@@ -1,5 +1,8 @@
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -13,44 +16,50 @@ public class TxtFileReader implements FileScanner {
         this.path = path;
     }
 
-    public ArrayList<String> getFilesName() {
+    public ArrayList<Document> getFiles() {
         File file = new File(path);
-        ArrayList<String> validFiles = new ArrayList<>();
+        ArrayList<Document> validFiles = new ArrayList<>();
         if(!file.exists()){
             return validFiles;
         }
-        ArrayList<String> allFiles = new ArrayList<>(List.of(file.list()));
-        for (String fileName : allFiles) {
+        for(String fileName : file.list()){
             try {
                 if (fileName.substring(fileName.lastIndexOf(".")).equals(".txt"))
-                    validFiles.add(fileName);
+                    validFiles.add(new Document(fileName,0,0));
             } catch (StringIndexOutOfBoundsException ignored) {}
         }
         return validFiles;
     }
 
-    private void addToMapByLine(String line , String fileName , InvertedIndex in) {
-        String[] words = line.split("[" + in.getReadPrinciple().getSplitMarks() + "]+");
+//    private void addToMapByLine(String line , String fileName , InvertedIndex in) {
+//        String[] words = line.split("[" + in.getReadPrinciple().getSplitMarks() + "]+");
+//        for (String word : words) {
+//            if(in.getReadPrinciple().isUseNGram())
+//                in.addToMap(in.getReadPrinciple().getChainsaw().nGram(word) , fileName);
+//            in.addToMap(word, fileName);
+//        }
+//    }
+
+    private void addToMap(String text, InvertedIndex in, String documentName){
+        String[] words = text.split("[" + in.getReadPrinciple().getSplitMarks() + "]+");
+        Document document = new Document(documentName,0 , words.length);
+        System.out.println(words.length);
         for (String word : words) {
+            document.giveScore(word, List.of(words));
             if(in.getReadPrinciple().isUseNGram())
-                in.addToMap(in.getReadPrinciple().getChainsaw().nGram(word) , fileName);
-            in.addToMap(word, fileName);
+                in.addToMap(in.getReadPrinciple().getChainsaw().nGram(word) , document);
+            in.addToMap(word, document);
         }
     }
-
     @Override
     public InvertedIndex readFiles(ReadPrinciple readPrinciple){
         InvertedIndex invertedIndex = new InvertedIndex(readPrinciple);
-        FileReader fileReader;
         try {
-            for (String fileName : getFilesName()) {
-                fileReader = new FileReader(path + fileName);
-                BufferedReader bufferedReader = new BufferedReader(fileReader);
-                String curLine;
-                while ((curLine = bufferedReader.readLine()) != null) {
-                    addToMapByLine(curLine, fileName , invertedIndex);
-                }
-                fileReader.close();
+            for (Document document : getFiles()) {
+                String fileName = document.getName();
+                String text = Files.readString(Paths.get(path + fileName));
+                addToMap(text,invertedIndex,fileName);
+                System.out.println(document.getName());
             }
         }catch (IOException ignored){}
         return invertedIndex;

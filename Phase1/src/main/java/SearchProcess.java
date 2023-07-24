@@ -7,17 +7,18 @@ public class SearchProcess {
 
     private final InvertedIndex invertedIndex;
     private final QueryLists queryLists;
-    private Set<String> result;
+    private Set<Document> result;
 
     public SearchProcess(String query, InvertedIndex invertedIndex,
                          ReadPrinciple readPrinciple, FileScanner fileReader) {
         this.invertedIndex = invertedIndex;
         queryLists = new QueryLists();
         queryLists.categorization(query.split("\s+"), readPrinciple);
-        result = new HashSet<>(fileReader.getFilesName());
+        result = new HashSet<>(fileReader.getFiles());
     }
 
-    public Set<String> getResult() {
+    public Set<Document> getResult() {
+        result = Document.sumScores(result);
         search();
         return result;
     }
@@ -32,7 +33,8 @@ public class SearchProcess {
 
         for (String word : query){
             if (invertedIndex.map.containsKey(word)) {
-                result.retainAll(invertedIndex.map.get(word));
+                intersection(invertedIndex.map.get(word));
+//                result.retainAll(invertedIndex.map.get(word));
             }
             else{
                 result = new HashSet<>();
@@ -41,7 +43,17 @@ public class SearchProcess {
         }
     }
 
-    private boolean containsEssential(String word, String doc) {
+    private void intersection(Set<Document> documents){
+        Iterator<Document> iterator = result.iterator();
+        while (iterator.hasNext()){
+            for (Document document : documents) {
+                if(!iterator.next().getName().equals(document.getName()))
+                    iterator.remove();
+            }
+        }
+    }
+
+    private boolean containsEssential(String word, Document doc) {
         return (invertedIndex.map.get(word) == null || !invertedIndex.map.get(word).contains(doc));
     }
 
@@ -50,7 +62,7 @@ public class SearchProcess {
     }
 
     private void checkOptional(ArrayList<String> query) {
-        Iterator<String> it = result.iterator();
+        Iterator<Document> it = result.iterator();
         it.forEachRemaining(doc -> {
             boolean flag = false;
             for (String word : query) {
@@ -73,6 +85,6 @@ public class SearchProcess {
         checkForced(false, queryLists.getForbidden());
         checkOptional(queryLists.getOptional());
         if (result.isEmpty())
-            result.add("THERE IS NO FILE");
+            result.add(new Document("THERE IS NO DOCUMENT",0,0));
     }
 }

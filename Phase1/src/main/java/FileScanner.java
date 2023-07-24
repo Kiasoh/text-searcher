@@ -4,5 +4,6 @@ public interface FileScanner {
 
     InvertedIndex readFiles(ReadPrinciple readPrinciple);
 
-    ArrayList<String> getFilesName();
+    ArrayList<Document> getFiles();
+
 }
