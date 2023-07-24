@@ -10,11 +10,12 @@ public class Document implements ScoreHandler{
     private String name;
     private double score;
     private int numWords;
+    private int numTarget;
 
     @Override
-    public void giveScore(String word, List<String> words) {
-        int occurrences = Collections.frequency(words,word);
-        this.setScore(Math.log(occurrences*1.0 / numWords));
+    public void giveScore() {
+        numTarget++;
+        this.setScore(Math.log(numTarget*1.0 / numWords));
     }
 
     public static Set<Document> sumScores(Set<Document> docs){
@@ -32,7 +33,7 @@ public class Document implements ScoreHandler{
         return result;
     }
 
-    private void addScore(double amount){
+    public void addScore(double amount){
         this.score += amount;
     }
 

@@ -27,9 +27,19 @@ public class InvertedIndex {
         words.forEach(word ->enterToMap(word,document));
     }
 
-    private void enterToMap(String word, Document document){
-        if (map.containsKey(word))
-            map.get(word).add(document);
+    private void enterToMap(String word, Document document) {
+        if (map.containsKey(word)) {
+            boolean flag = false;
+            for (Document doc : map.get(word)) {
+                if (doc.equals(document)) {
+                    doc.giveScore();
+                    flag = true;
+                }
+            }
+            if (!flag)
+                map.get(word).add(document);
+//            map.get(word).add(document);
+        }
         else
             map.put(word, new HashSet<>(List.of(document)));
     }

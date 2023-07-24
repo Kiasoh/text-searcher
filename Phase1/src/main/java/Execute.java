@@ -1,11 +1,12 @@
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Execute class
  * get query and sop marks and do search
  */
-public class Execute implements Comparator{
+public class Execute{
 
     private final ReadPrinciple readPrinciple;
     private final InvertedIndex invertedIndex;
@@ -29,10 +30,18 @@ public class Execute implements Comparator{
     }
 
     private List<Document> sort(Set<Document> result){
-//        List<Document> list = result.stream().toList();
-//        list.sort(Comparator.comparing(Document::getScore));
-//        list.sort((Document d1, Document d2) -> compare(d1,d2));
-        return result.stream().toList();
+        List<Document> list = new ArrayList<>(result);
+        Collections.sort(list, new Comparator<Document>() {
+            @Override
+            public int compare(Document o1, Document o2) {
+                if(o1.getScore() > o2.getScore())
+                    return 1;
+                if(o1.getScore() < o2.getScore())
+                    return -1;
+                return 0;
+            }
+        });
+        return list;
     }
 
     private String trimQuery(String query) {
@@ -44,12 +53,4 @@ public class Execute implements Comparator{
             return query;
     }
 
-    @Override
-    public int compare(Object o1, Object o2) {
-        if(((Document)o1).getScore() > ((Document)o2).getScore())
-            return 1;
-        if(((Document)o1).getScore() < ((Document)o2).getScore())
-            return -1;
-        return 0;
-    }
 }

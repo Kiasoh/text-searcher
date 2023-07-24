@@ -1,6 +1,6 @@
 Part 1
 Goal
-
+kiarash
 Goal of architecture: to minimize human resources required to build and maintain the required system
 
 A good indication of a badly designed system: look at the cost of each line of code, and the productivity of each engineer over time

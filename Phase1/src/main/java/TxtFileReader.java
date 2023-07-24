@@ -25,7 +25,7 @@ public class TxtFileReader implements FileScanner {
         for(String fileName : file.list()){
             try {
                 if (fileName.substring(fileName.lastIndexOf(".")).equals(".txt"))
-                    validFiles.add(new Document(fileName,0,0));
+                    validFiles.add(new Document(fileName,0,0 , 0));
             } catch (StringIndexOutOfBoundsException ignored) {}
         }
         return validFiles;
@@ -42,10 +42,9 @@ public class TxtFileReader implements FileScanner {
 
     private void addToMap(String text, InvertedIndex in, String documentName){
         String[] words = text.split("[" + in.getReadPrinciple().getSplitMarks() + "]+");
-        Document document = new Document(documentName,0 , words.length);
-        System.out.println(words.length);
+        Document document = new Document(documentName,0 , words.length,0);
         for (String word : words) {
-            document.giveScore(word, List.of(words));
+            document.giveScore();
             if(in.getReadPrinciple().isUseNGram())
                 in.addToMap(in.getReadPrinciple().getChainsaw().nGram(word) , document);
             in.addToMap(word, document);
@@ -59,7 +58,6 @@ public class TxtFileReader implements FileScanner {
                 String fileName = document.getName();
                 String text = Files.readString(Paths.get(path + fileName));
                 addToMap(text,invertedIndex,fileName);
-                System.out.println(document.getName());
             }
         }catch (IOException ignored){}
         return invertedIndex;

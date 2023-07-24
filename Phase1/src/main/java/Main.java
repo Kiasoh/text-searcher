@@ -1,9 +1,10 @@
 import java.io.IOException;
+import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        FileScanner fileReader = new TxtFileReader("./boz/");
+        FileScanner fileReader = new TxtFileReader("./books/");
         Chainsaw chainsaw = new Chainsaw(2,10);
         ReadPrinciple readPrinciple = ReadPrinciple.builder().useNGram(false).splitMarks("\\n\\r\\s -")
                 .normalization(new Stemmer()).chainsaw(chainsaw).build();
@@ -11,9 +12,10 @@ public class Main {
 
         //use from code
 
-        for (Document d:execute.run("kimia")) {
-            System.out.println(d.getName());
+        List<Document> answer = execute.run("kiarash");
+        for (int i = 0; i <answer.size() ; i++) {
 
+            System.out.println(i+1 + ". " + answer.get(i).getName() + " " + answer.get(i).getScore());
         }
 //        System.out.print();
 

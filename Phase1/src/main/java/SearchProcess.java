@@ -46,10 +46,19 @@ public class SearchProcess {
     private void intersection(Set<Document> documents){
         Iterator<Document> iterator = result.iterator();
         while (iterator.hasNext()){
+            boolean flag = false;
+            Document doc = iterator.next();
             for (Document document : documents) {
-                if(!iterator.next().getName().equals(document.getName()))
-                    iterator.remove();
+                if (doc.getName().equals(document.getName())) {
+//                    iterator.remove();
+                    flag = true;
+                    doc.addScore(document.getScore());
+                    break;
+                }
             }
+            if (!flag)
+                iterator.remove();
+
         }
     }
 
@@ -85,6 +94,6 @@ public class SearchProcess {
         checkForced(false, queryLists.getForbidden());
         checkOptional(queryLists.getOptional());
         if (result.isEmpty())
-            result.add(new Document("THERE IS NO DOCUMENT",0,0));
+            result.add(new Document("THERE IS NO DOCUMENT",0,0,0));
     }
 }
