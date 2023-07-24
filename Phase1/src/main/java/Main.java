@@ -4,7 +4,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         FileScanner fileReader = new TxtFileReader("./books/");
-        ReadPrinciple readPrinciple = new ReadPrinciple();
+        ReadPrinciple readPrinciple = ReadPrinciple.builder().build();
         readPrinciple.setSplitMarks(" -");
         Execute execute = new Execute(readPrinciple, fileReader);
 

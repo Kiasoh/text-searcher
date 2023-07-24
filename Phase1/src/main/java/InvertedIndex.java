@@ -1,3 +1,5 @@
+import lombok.Getter;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -5,14 +7,11 @@ import java.util.List;
 /**
  * create the hashmap in which each word is mapped to a list of document names that the word is in that
  */
+@Getter
 public class InvertedIndex {
 
     public HashMap<String, HashSet<String>> map;
     private final ReadPrinciple readPrinciple;
-
-    public ReadPrinciple getReadPrinciple() {
-        return readPrinciple;
-    }
 
     public InvertedIndex(ReadPrinciple readPrinciple) {
         this.readPrinciple = readPrinciple;

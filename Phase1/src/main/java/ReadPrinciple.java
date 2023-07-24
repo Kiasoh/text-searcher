@@ -1,9 +1,13 @@
+import lombok.Builder;
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
  * split and normalization
  */
+@Getter @Builder
 public class ReadPrinciple {
 
     private String splitMarks;
