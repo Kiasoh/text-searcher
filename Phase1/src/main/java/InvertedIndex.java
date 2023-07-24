@@ -20,19 +20,17 @@ public class InvertedIndex {
 
     public void addToMap(String word, String fileName){
         word = readPrinciple.getNormalization().normalize(word);
+        enterToMap(word, fileName);
+    }
 
+    public void addToMap(List<String> words, String fileName){
+        words.forEach(word ->enterToMap(word,fileName));
+    }
+
+    private void enterToMap(String word, String fileName){
         if (map.containsKey(word))
             map.get(word).add(fileName);
         else
             map.put(word, new HashSet<>(List.of(fileName)));
-    }
-
-    public void addToMap(List<String> words, String fileName){
-        for (String word : words) {
-            if (map.containsKey(word))
-                map.get(word).add(fileName);
-            else
-                map.put(word, new HashSet<>(List.of(fileName)));
-        }
     }
 }

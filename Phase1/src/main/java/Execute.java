@@ -8,9 +8,9 @@ import java.util.Set;
  */
 public class Execute {
 
-    private ReadPrinciple readPrinciple;
-    private InvertedIndex invertedIndex;
-    private FileScanner fileReader;
+    private final ReadPrinciple readPrinciple;
+    private final InvertedIndex invertedIndex;
+    private final FileScanner fileReader;
 
     public Execute(ReadPrinciple readPrinciple, FileScanner fileReader){
         this.readPrinciple = readPrinciple;

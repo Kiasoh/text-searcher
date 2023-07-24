@@ -22,10 +22,6 @@ public class SearchProcess {
         return result;
     }
 
-    private Iterator<String> setIterator() {
-        return result.iterator();
-    }
-
     private boolean containsOptional(Boolean flag) {
         return (!flag && queryLists.getOptional().size() != 0);
     }
@@ -50,26 +46,13 @@ public class SearchProcess {
     }
 
     private void checkForced(boolean isEssential, ArrayList<String> query) {
-        Iterator<String> it = setIterator();
-
-        while (it.hasNext()) {
-            String doc = it.next();
-
-            for (String word : query) {
-                if (containsEssential(word, doc) == isEssential) {
-                    it.remove();
-                    break;
-                }
-            }
-        }
+        result.removeIf(doc -> query.stream().anyMatch(word -> containsEssential(word, doc) == isEssential));
     }
 
     private void checkOptional(ArrayList<String> query) {
-        Iterator<String> it = setIterator();
-        boolean flag;
-        while (it.hasNext()) {
-            flag = false;
-            String doc = it.next();
+        Iterator<String> it = result.iterator();
+        it.forEachRemaining(doc -> {
+            boolean flag = false;
             for (String word : query) {
                 if (invertedIndex.map.get(word) == null)
                     continue;
@@ -81,7 +64,7 @@ public class SearchProcess {
             if (containsOptional(flag)) {
                 it.remove();
             }
-        }
+        });
     }
 
     private void search() {

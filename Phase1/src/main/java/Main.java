@@ -12,7 +12,7 @@ public class Main {
         //use from code
 
 //        readPrinciple.normalization = new Stemmer();
-        System.out.print(execute.run("kia").toString().replaceAll(",","\n"));
+        System.out.print(execute.run("+kakaka -kia").toString().replaceAll(",","\n"));
 
         //use from console
 //        Scanner in = new Scanner(System.in);

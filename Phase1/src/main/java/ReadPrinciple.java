@@ -14,4 +14,5 @@ public class ReadPrinciple {
     public Normalizable normalization;
     private boolean useNGram;
     private Chainsaw chainsaw;
+
 }
