@@ -6,16 +6,16 @@ public class Main {
     public static void main(String[] args) throws IOException {
         FileScanner fileReader = new TxtFileReader("./books/");
         Chainsaw chainsaw = new Chainsaw(2,10);
-        ReadPrinciple readPrinciple = ReadPrinciple.builder().useNGram(false).splitMarks("\\n\\r\\s -")
+        ReadPrinciple readPrinciple = ReadPrinciple.builder().useNGram(false).splitMarks("\\n\\r\\s-")
                 .normalization(new Stemmer()).chainsaw(chainsaw).build();
         Execute execute = new Execute(readPrinciple, fileReader);
 
         //use from code
 
-        List<Document> answer = execute.run("kiarash");
+        List<Document> answer = execute.run("kiarash -dog");
         for (int i = 0; i <answer.size() ; i++) {
 
-            System.out.println(i+1 + ". " + answer.get(i).getName() + " " + answer.get(i).getScore());
+            System.out.println(i+1 + ". " + answer.get(i).getName() + " " + (-1 * answer.get(i).getScore()));
         }
 //        System.out.print();
 

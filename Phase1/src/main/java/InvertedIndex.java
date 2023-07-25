@@ -37,10 +37,10 @@ public class InvertedIndex {
                 }
             }
             if (!flag)
-                map.get(word).add(document);
+                map.get(word).add(Document.createNewDoc(document.getName() , document.getNumWords()));
 //            map.get(word).add(document);
         }
         else
-            map.put(word, new HashSet<>(List.of(document)));
+            map.put(word, new HashSet<>(List.of(Document.createNewDoc(document.getName() , document.getNumWords()))));
     }
 }

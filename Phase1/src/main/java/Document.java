@@ -15,9 +15,14 @@ public class Document implements ScoreHandler{
     @Override
     public void giveScore() {
         numTarget++;
-        this.setScore(Math.log(numTarget*1.0 / numWords));
+        this.setScore((Math.log(numTarget*1.0 / numWords))*-1.0);
     }
-
+    public static Document createNewDoc(String name , int numWords)
+    {
+        Document doc = new Document(name , 0 , numWords , 0);
+        doc.giveScore();
+        return doc;
+    }
     public static Set<Document> sumScores(Set<Document> docs){
         ArrayList<Document> docsList = new ArrayList<>(docs);
         Set<Document> result = new HashSet<>();
@@ -32,7 +37,14 @@ public class Document implements ScoreHandler{
         }
         return result;
     }
-
+    public static boolean contains (Set<Document> docs , Document target)
+    {
+        for (Document doc:docs) {
+            if (doc.equals(target))
+                return true;
+        }
+        return false;
+    }
     public void addScore(double amount){
         this.score += amount;
     }

@@ -26,6 +26,9 @@ public class SearchProcess {
     private boolean containsOptional(Boolean flag) {
         return (!flag && queryLists.getOptional().size() != 0);
     }
+    private boolean containsEssential(String word, Document doc) {
+        return (invertedIndex.map.get(word) == null || !Document.contains(invertedIndex.map.get(word) ,doc ));
+    }
 
     private void checkEssential(ArrayList<String> query) {
         if(query.isEmpty())
@@ -58,13 +61,9 @@ public class SearchProcess {
             }
             if (!flag)
                 iterator.remove();
-
         }
     }
 
-    private boolean containsEssential(String word, Document doc) {
-        return (invertedIndex.map.get(word) == null || !invertedIndex.map.get(word).contains(doc));
-    }
 
     private void checkForced(boolean isEssential, ArrayList<String> query) {
         result.removeIf(doc -> query.stream().anyMatch(word -> containsEssential(word, doc) == isEssential));
@@ -72,12 +71,14 @@ public class SearchProcess {
 
     private void checkOptional(ArrayList<String> query) {
         Iterator<Document> it = result.iterator();
-        it.forEachRemaining(doc -> {
+        while(it.hasNext()) {
+//        it.forEachRemaining(doc -> {
+            Document doc = it.next();
             boolean flag = false;
             for (String word : query) {
                 if (invertedIndex.map.get(word) == null)
                     continue;
-                else if (invertedIndex.map.get(word).contains(doc)) {
+                else if (Document.contains(invertedIndex.map.get(word) ,doc )) {
                     flag = true;
                     break;
                 }
@@ -85,7 +86,8 @@ public class SearchProcess {
             if (containsOptional(flag)) {
                 it.remove();
             }
-        });
+//        });
+        }
     }
 
     private void search() {
