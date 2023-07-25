@@ -24,7 +24,7 @@ public class InvertedIndex {
     }
 
     public void addToMap(List<String> words, Document document){
-        words.forEach(word ->enterToMap(word,document));
+        words.forEach(word ->enterToMap(word.toLowerCase(),document));
     }
 
     private void enterToMap(String word, Document document) {

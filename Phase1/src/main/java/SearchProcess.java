@@ -27,7 +27,7 @@ public class SearchProcess {
         return (!flag && queryLists.getOptional().size() != 0);
     }
     private boolean containsEssential(String word, Document doc) {
-        return (invertedIndex.map.get(word) == null || Document.contains(invertedIndex.map.get(word) ,doc ).getClass().toString() == "main.java.NullDocument"  );
+        return (invertedIndex.map.get(word) == null || Document.contains(invertedIndex.map.get(word) ,doc ).getClass()== NullDocument.class  );
     }
 
 
@@ -87,7 +87,7 @@ private void baseResult(ArrayList<String> query)
             for (String word : query) {
                 if (invertedIndex.map.get(word) == null)
                     continue;
-                else if (Document.contains(invertedIndex.map.get(word) ,doc ).getClass().toString()!="main.java.NullDocument") {
+                else if (Document.contains(invertedIndex.map.get(word) ,doc ).getClass()!=NullDocument.class) {
                     flag = true;
                     break;
                 }

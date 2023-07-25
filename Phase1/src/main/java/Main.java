@@ -7,18 +7,18 @@ public class Main {
         FileScanner fileReader = new TxtFileReader("./books/");
         Chainsaw chainsaw = new Chainsaw(5,5);
         ReadPrinciple readPrinciple = ReadPrinciple.builder()
-                .useNGram(false).splitMarks("\\n\\r\\s-")
+                .useNGram(true).splitMarks("\\n\\r\\s-")
                 .normalization(new Stemmer()).chainsaw(chainsaw)
                 .build();
         Execute execute = new Execute(readPrinciple, fileReader);
 
         //use from code
 
-        List<Document> answer = execute.run("+kiarash -dog");
+        List<Document> answer = execute.run("desig");
         for (int i = 0; i <answer.size() ; i++) {
 
-            System.out.println(i+1 + ". " + answer.get(i).getName() + " " + (-1 * answer.get(i).getScore()));
-//            System.out.println(i+1 + ". " + answer.get(i).getName());
+//            System.out.println(i+1 + ". " + answer.get(i).getName() + " " + (-1 * answer.get(i).getScore()));
+            System.out.println(i+1 + ". " + answer.get(i).getName());
         }
 //        System.out.print();
 
