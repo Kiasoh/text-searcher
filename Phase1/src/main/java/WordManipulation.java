@@ -14,7 +14,6 @@ public class WordManipulation implements Normalizable {
         super();
     }
 
-
     @Override
     public String normalize(String word){
 

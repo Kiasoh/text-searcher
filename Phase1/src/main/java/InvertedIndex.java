@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 public class InvertedIndex {
 
-    public HashMap<String, HashSet<Document>> map;
+    public HashMap<String, HashSet<DocumentInfo>> map;
     private final ReadPrinciple readPrinciple;
 
     public InvertedIndex(ReadPrinciple readPrinciple) {
@@ -18,29 +18,28 @@ public class InvertedIndex {
         map = new HashMap<>();
     }
 
-    public void addToMap(String word, Document document){
+    public void addToMap(String word, DocumentInfo documentInfo){
         word = readPrinciple.getNormalization().normalize(word);
-        enterToMap(word, document);
+        enterToMap(word, documentInfo);
     }
 
-    public void addToMap(List<String> words, Document document){
-        words.forEach(word ->enterToMap(word.toLowerCase(),document));
+    public void addToMap(List<String> words, DocumentInfo documentInfo){
+        words.forEach(word ->enterToMap(word.toLowerCase(), documentInfo));
     }
 
-    private void enterToMap(String word, Document document) {
+    private void enterToMap(String word, DocumentInfo documentInfo) {
         if (map.containsKey(word)) {
             boolean flag = false;
-            for (Document doc : map.get(word)) {
-                if (doc.equals(document)) {
+            for (DocumentInfo doc : map.get(word)) {
+                if (doc.equals(documentInfo)) {
                     doc.giveScore();
                     flag = true;
                 }
             }
             if (!flag)
-                map.get(word).add(Document.createNewDoc(document.getName() , document.getNumWords()));
-//            map.get(word).add(document);
+                map.get(word).add(DocumentInfo.createNewDoc(documentInfo.getName() , documentInfo.getNumWords()));
         }
         else
-            map.put(word, new HashSet<>(List.of(Document.createNewDoc(document.getName() , document.getNumWords()))));
+            map.put(word, new HashSet<>(List.of(DocumentInfo.createNewDoc(documentInfo.getName() , documentInfo.getNumWords()))));
     }
 }

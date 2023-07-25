@@ -93,7 +93,7 @@ adapting to change. Modify system and adapt it to changing requirements - pay at
 
 ## Chapter 2: Data Models and Query Languages
 
-*Relational Model vs Document Model*. Relational Databases turned out to generalise very well. NoSQL (*Not Only SQL*) is
+*Relational Model vs DocumentInfo Model*. Relational Databases turned out to generalise very well. NoSQL (*Not Only SQL*) is
 the latest attempt to overthrow the relational model's dominance.
 
 Driving forces behind NoSQL:
@@ -108,19 +108,19 @@ A rule of thumb: is you are duplicating values that could be stored in just one 
 Many-to-many relationships are widely used in relational databases, NoSQL reopened the debate on how best to represent
 such relationship.
 
-If your data has document-like structure, then it's probably a good idea to use a document model. The relational
-database and its shredding (splitting document-like structure into multiple tables) can lead to unnecessary complicated
+If your data has documentInfo-like structure, then it's probably a good idea to use a documentInfo model. The relational
+database and its shredding (splitting documentInfo-like structure into multiple tables) can lead to unnecessary complicated
 application code.
 
-Problems with document model: you can not access nested object directly you need to use access path, also it is not
+Problems with documentInfo model: you can not access nested object directly you need to use access path, also it is not
 performing well in many-to-many relationships.
 
-Database schema can be compared to languages: relational - compiled language with static typing, document - dynamic (
+Database schema can be compared to languages: relational - compiled language with static typing, documentInfo - dynamic (
 runtime) type checking - schema on read.
 
-Data locality - because document databases store document as a string continuous string - JSON, XML, ... - often access
+Data locality - because documentInfo databases store documentInfo as a string continuous string - JSON, XML, ... - often access
 will be faster because of locality, if data is split across multiple tables -> multiple disks -> more disk seeks -> more
-time required. However, the document database will need to load entire document even if you need a small portion of it.
+time required. However, the documentInfo database will need to load entire documentInfo even if you need a small portion of it.
 
 *Query Languages for Data*
 
@@ -415,9 +415,9 @@ outweigh the added complexity, however there are some situations in which this c
   basically means every device has a local database that acts as a leader. For example CouchDB is designed for this mode
   of operation.
 
-- collaborative editing - multiple people editing the same document - e.g. Google Docs, very similar case to the
+- collaborative editing - multiple people editing the same documentInfo - e.g. Google Docs, very similar case to the
   previous one. If you want to guarantee that there will be no editing conflicts, the application must obtain a lock on
-  the document before user can edit - this collaboration model is equivalent to single-leader replication with
+  the documentInfo before user can edit - this collaboration model is equivalent to single-leader replication with
   transaction on the leader.
 
 Handling Write Conflicts:
@@ -493,7 +493,7 @@ storm of activity - this may lead to many writes to the same key. It is up to ap
 Secondary indexes are slightly more problematic because they don't identify a record uniquely. There are 2 main
 approaches to partitioning a database with secondary indexes:
 
-- document-based (local index) - each partition have (local) partitioned secondary indexes, this means reading requires
+- documentInfo-based (local index) - each partition have (local) partitioned secondary indexes, this means reading requires
   extra care. I am looking for a red car - needs to scatter query to two partitions - quite expensive. However, widely
   used.
 

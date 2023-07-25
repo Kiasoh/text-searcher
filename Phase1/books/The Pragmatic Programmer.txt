@@ -279,7 +279,7 @@ Editor "must" features
     Syntax highlighting
     Auto-completion
     Auto-indentation
-    Initial code or document boilerplate
+    Initial code or documentInfo boilerplate
     Tie-in to help systems
     IDE-like features (compile, debug, and so on)
 
@@ -576,7 +576,7 @@ How to Program Deliberately
     Don't code blindfolded.
     Proceed from a plan.
     Rely only on reliable things.
-    Document your assumptions. Design by Contract.
+    DocumentInfo your assumptions. Design by Contract.
     Don't just test your code, but test your assumptions as well. Don't guess Assertive Programming
     Prioritize your effort.
     Don't be a slave to history. Don't let existing code dictate future code. Refactoring
@@ -761,7 +761,7 @@ It's very hard to succeed on a project where the users and developers refer to t
 Tip 54: Use a Project Glossary
 Get the Word Out
 
-Publishing project documents to internal Web sites for easy access by all participants.
+Publishing project documentInfos to internal Web sites for easy access by all participants.
 37.-Solving Impossible Puzzles
 Degrees of Freedom
 
@@ -952,7 +952,7 @@ Even worse than meaningless names are misleading names.
 One of the most important pieces of information that should appear in the source file is the author's name—not necessarily who edited the file last, but the owner.
 Executable Documents
 
-Create documents that create schemas. The only way to change the schema is to change the document.
+Create documentInfos that create schemas. The only way to change the schema is to change the documentInfo.
 Technical Writers
 
 We want the writers to embrace the same basic principles that a Pragmatic Programmer does—especially honoring the DRY principle, orthogonality, the model-view concept, and the use of automation and scripting.
@@ -1062,7 +1062,7 @@ Tip 29: Write Code That Writes Code Code generators increase your productivity a
 
 Tip 30: You Can't Write Perfect Software Software can't be perfect. Protect your code and users from the inevitable errors.
 
-Tip 31: Design with Contracts Use contracts to document and verify that code does no more and no less than it claims to do.
+Tip 31: Design with Contracts Use contracts to documentInfo and verify that code does no more and no less than it claims to do.
 
 Tip 32: Crash Early A dead program normally does a lot less damage than a crippled one.
 
@@ -1134,7 +1134,7 @@ Tip 65: Test State Coverage, Not Code Coverage Identify and test significant pro
 
 Tip 66: Find Bugs Once Once a human tester finds a bug, it should be the last time a human tester finds that bug. Automatic tests should check for it from then on.
 
-Tip 67: English is Just a Programming Language Write documents as you would write code: honor the DRY principle, use metadata, MVC, automatic generation, and so on.
+Tip 67: English is Just a Programming Language Write documentInfos as you would write code: honor the DRY principle, use metadata, MVC, automatic generation, and so on.
 
 Tip 68: Build Documentation In, Don't Bolt It On Documentation created separately from code is less likely to be correct and up to date.
 
@@ -1211,7 +1211,7 @@ How to Program Deliberately
     Don't code blindfolded.
     Proceed from a plan.
     Rely only on reliable things.
-    Document your assumptions.
+    DocumentInfo your assumptions.
     Test assumptions as well as code.
     Prioritize your effort.
     Don't be a slave to history.

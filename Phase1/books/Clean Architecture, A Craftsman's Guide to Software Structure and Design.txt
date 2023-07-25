@@ -341,7 +341,7 @@ The database is a detail
 
 The particulars of a database is of little architectural importance, while the data model is. (How would one define a data model?) Business entity should not know the detail of the underlying data stored in a relational way, represented as tabular rows of records, etc.
 
-Why are database systems so prevalent? They work with disks: file system does and offers a document abstraction, databases are content based, and provide a natural and convenient way to find records based on their content.
+Why are database systems so prevalent? They work with disks: file system does and offers a documentInfo abstraction, databases are content based, and provide a natural and convenient way to find records based on their content.
 
 Relational database used to be a buzzword, nowadays, are "SoA"s such words as well?
 The web is a detail

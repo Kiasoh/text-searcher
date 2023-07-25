@@ -1049,7 +1049,7 @@ A Pattern:
 
 Like design principles, patterns are not meant to be laws or rules - they are guidelines that you can alter to fit your
 needs. A lot of real-world examples don't fit the classic pattern designs. When you adapt patterns, it never hurts to
-document how your pattern differs from the classic design - that way other developers can quickly recognize the patterns
+documentInfo how your pattern differs from the classic design - that way other developers can quickly recognize the patterns
 you are using.
 
 The Design Pattern definition tells us that the problem consists of a goal and set of constraints. Only when solution

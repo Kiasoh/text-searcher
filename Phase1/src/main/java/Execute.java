@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Execute class
@@ -18,22 +17,22 @@ public class Execute{
         invertedIndex = fileReader.readFiles(readPrinciple);
     }
 
-    public List<Document> run(String query) throws IOException {
+    public List<DocumentInfo> run(String query) throws IOException {
         SearchProcess searchProcess = new SearchProcess(trimQuery(query),
                 invertedIndex, readPrinciple, fileReader);
         return sort(searchProcess.getResult());
     }
 
-    public List<Document> run(Scanner in) throws IOException {
+    public List<DocumentInfo> run(Scanner in) throws IOException {
         String query = in.nextLine();
         return run(query);
     }
 
-    private List<Document> sort(Set<Document> result){
-        List<Document> list = new ArrayList<>(result);
-        Collections.sort(list, new Comparator<Document>() {
+    private List<DocumentInfo> sort(Set<DocumentInfo> result){
+        List<DocumentInfo> list = new ArrayList<>(result);
+        Collections.sort(list, new Comparator<DocumentInfo>() {
             @Override
-            public int compare(Document o1, Document o2) {
+            public int compare(DocumentInfo o1, DocumentInfo o2) {
                 if(o1.getScore() > o2.getScore())
                     return 1;
                 if(o1.getScore() < o2.getScore())

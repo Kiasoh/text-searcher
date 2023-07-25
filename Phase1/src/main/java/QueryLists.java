@@ -1,8 +1,11 @@
+import lombok.Getter;
+
 import java.util.ArrayList;
 
 /**
  * categorize query based on their prefixes( '+' , '-' ro nothing)
  */
+@Getter
 public class QueryLists {
 
     private final ArrayList<String> essential;
@@ -26,17 +29,5 @@ public class QueryLists {
             else
                 essential.add(readPrinciple.getNormalization().normalize(word));
         }
-    }
-
-    public ArrayList<String> getEssential() {
-        return essential;
-    }
-
-    public ArrayList<String> getForbidden() {
-        return forbidden;
-    }
-
-    public ArrayList<String> getOptional() {
-        return optional;
     }
 }

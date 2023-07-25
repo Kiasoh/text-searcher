@@ -82,8 +82,8 @@ by Joshua Bloch
 * Inheritance means you inherit the scope and flaws of an API, whereas composition allows you to design a better suited one.
 * If an appropriate interface exists, using composition and forwarding allows you to instrument any implementation of the interface, instead of a single implementation through inheritance.
 
-#### Item 17: Design and document for inheritance, or else prohibit it
-* The class that allows subclassing must document its self-use of overridable methods.
+#### Item 17: Design and documentInfo for inheritance, or else prohibit it
+* The class that allows subclassing must documentInfo its self-use of overridable methods.
 * The only way to test if a class is suitably designed for inheritance (e.g. provides all the necessary implementation hooks through protected methods) is to actually write subclasses.
 * Eliminating a class's self use of methods, typically through introducing private helper methods, can make a class safe to subclass.
 
@@ -229,7 +229,7 @@ by Joshua Bloch
 * An alternative to using a `StringBuilder` is to try processing the strings one at a time to avoid all concatenation.
 
 #### Item 52: Refer to objects by their interfaces
-* If you depend on any properties of an implementation not specified by its interface, such as its synchronization policy, use the class as a type and document the requirements.
+* If you depend on any properties of an implementation not specified by its interface, such as its synchronization policy, use the class as a type and documentInfo the requirements.
 
 #### Item 53: Prefer interfaces to reflection
 * If a class is unavailable at compile time but there exists an appropriate interface, create instances reflectively and access them normally through their interface.
@@ -266,8 +266,8 @@ by Joshua Bloch
 * If an exception does not have a chaining-aware constructor, use the `initCause` method of `Throwable`.
 * Try to avoid low-level exceptions by checking the higher-level method's parameters upfront.
 
-#### Item 62: Document all exceptions thrown by each method
-* Document the unchecked exceptions a method can throw, thereby documenting its preconditions.
+#### Item 62: DocumentInfo all exceptions thrown by each method
+* DocumentInfo the unchecked exceptions a method can throw, thereby documenting its preconditions.
 * Do not use the `throws` keyword to include unchecked exceptions in a method declaration.
 
 #### Item 63: Include failure-capture information in detail messages
