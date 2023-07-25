@@ -30,14 +30,13 @@ public class SearchProcess {
         return (invertedIndex.map.get(word) == null || !Document.contains(invertedIndex.map.get(word) ,doc ));
     }
 
+//status : unused for now
     private void checkEssential(ArrayList<String> query) {
         if(query.isEmpty())
             return;
-
         for (String word : query){
             if (invertedIndex.map.containsKey(word)) {
                 intersection(invertedIndex.map.get(word));
-//                result.retainAll(invertedIndex.map.get(word));
             }
             else{
                 result = new HashSet<>();
@@ -45,7 +44,7 @@ public class SearchProcess {
             }
         }
     }
-
+    //status : unused for now
     private void intersection(Set<Document> documents){
         Iterator<Document> iterator = result.iterator();
         while (iterator.hasNext()){
@@ -64,7 +63,15 @@ public class SearchProcess {
         }
     }
 
-
+    private void baseResult(ArrayList<String> query)
+    {
+        if (invertedIndex.map.containsKey(query.get(0))) {
+            result = Document.CopyDocuments(invertedIndex.map.get(query.get(0)));
+        }
+        else {
+            result = new HashSet<>();
+        }
+    }
     private void checkForced(boolean isEssential, ArrayList<String> query) {
         result.removeIf(doc -> query.stream().anyMatch(word -> containsEssential(word, doc) == isEssential));
     }
@@ -91,10 +98,11 @@ public class SearchProcess {
     }
 
     private void search() {
-        checkEssential(queryLists.getEssential());
-//        checkForced(true,queryLists.getEssential());
-        checkForced(false, queryLists.getForbidden());
+//        checkEssential(queryLists.getEssential());
+        baseResult(queryLists.getEssential());
+        checkForced(true,queryLists.getEssential());
         checkOptional(queryLists.getOptional());
+        checkForced(false, queryLists.getForbidden());
         if (result.isEmpty())
             result.add(new Document("THERE IS NO DOCUMENT",0,0,0));
     }

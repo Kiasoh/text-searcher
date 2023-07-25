@@ -12,16 +12,18 @@ public class Document implements ScoreHandler{
     private int numWords;
     private int numTarget;
 
-    @Override
-    public void giveScore() {
-        numTarget++;
-        this.setScore((Math.log(numTarget*1.0 / numWords))*-1.0);
-    }
+
     public static Document createNewDoc(String name , int numWords)
     {
         Document doc = new Document(name , 0 , numWords , 0);
         doc.giveScore();
         return doc;
+    }
+    public static Set<Document> CopyDocuments (Set<Document> docs)
+    {
+        Set<Document> newDocs = new HashSet<>();
+        docs.stream().forEach(doc -> newDocs.add(new Document(doc.getName(), doc.getScore(), doc.getNumWords(), doc.getNumTarget())));
+        return newDocs;
     }
     public static Set<Document> sumScores(Set<Document> docs){
         ArrayList<Document> docsList = new ArrayList<>(docs);
@@ -30,8 +32,11 @@ public class Document implements ScoreHandler{
             Document doc = docsList.get(i);
             for (int j = i+1; j < docsList.size() ; j++) {
                 Document newDoc = docsList.get(j);
-                if(doc.getName().equals(newDoc.getName()))
+                if(doc.equals(newDoc)) {
                     doc.addScore(newDoc.getScore());
+                    docs.remove(newDoc);
+                    j--;
+                }
             }
             result.add(doc);
         }
@@ -44,6 +49,12 @@ public class Document implements ScoreHandler{
                 return true;
         }
         return false;
+    }
+
+    @Override
+    public void giveScore() {
+        numTarget++;
+        this.setScore((Math.log(numTarget*1.0 / numWords))*-1.0);
     }
     public void addScore(double amount){
         this.score += amount;

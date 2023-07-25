@@ -15,7 +15,8 @@ public class Main {
         List<Document> answer = execute.run("kiarash -dog");
         for (int i = 0; i <answer.size() ; i++) {
 
-            System.out.println(i+1 + ". " + answer.get(i).getName() + " " + (-1 * answer.get(i).getScore()));
+//            System.out.println(i+1 + ". " + answer.get(i).getName0() + " " + (-1 * answer.get(i).getScore()));
+            System.out.println(i+1 + ". " + answer.get(i).getName());
         }
 //        System.out.print();
 
