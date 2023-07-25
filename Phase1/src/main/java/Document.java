@@ -1,10 +1,11 @@
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.*;
 
-@Getter @Setter @AllArgsConstructor
+@Getter @Setter @AllArgsConstructor @NoArgsConstructor
 public class Document implements ScoreHandler{
 
     private String name;
@@ -25,6 +26,19 @@ public class Document implements ScoreHandler{
         docs.stream().forEach(doc -> newDocs.add(new Document(doc.getName(), doc.getScore(), doc.getNumWords(), doc.getNumTarget())));
         return newDocs;
     }
+    public static Document contains (Set<Document> docs , Document target)
+    {
+//        docs.stream().forEach(doc -> {
+//            if (doc.equals(target))
+//                return true;
+//        });
+        ArrayList<Document> orderedDocs = new ArrayList<>(docs);
+        for (Document doc:orderedDocs) {
+            if (doc.equals(target))
+                return doc;
+        }
+        return new NullDocument();
+    }
     public static Set<Document> sumScores(Set<Document> docs){
         ArrayList<Document> docsList = new ArrayList<>(docs);
         Set<Document> result = new HashSet<>();
@@ -42,14 +56,7 @@ public class Document implements ScoreHandler{
         }
         return result;
     }
-    public static boolean contains (Set<Document> docs , Document target)
-    {
-        for (Document doc:docs) {
-            if (doc.equals(target))
-                return true;
-        }
-        return false;
-    }
+
 
     @Override
     public void giveScore() {
@@ -66,5 +73,11 @@ public class Document implements ScoreHandler{
         if (o == null || getClass() != o.getClass()) return false;
         Document document = (Document) o;
         return Objects.equals(getName(), document.getName());
+    }
+}
+class NullDocument extends Document
+{
+    public NullDocument() {
+        super();
     }
 }

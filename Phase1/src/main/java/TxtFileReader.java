@@ -15,7 +15,6 @@ public class TxtFileReader implements FileScanner {
     public TxtFileReader(String path){
         this.path = path;
     }
-
     public ArrayList<Document> getFiles() {
         File file = new File(path);
         ArrayList<Document> validFiles = new ArrayList<>();

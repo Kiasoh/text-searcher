@@ -27,10 +27,23 @@ public class SearchProcess {
         return (!flag && queryLists.getOptional().size() != 0);
     }
     private boolean containsEssential(String word, Document doc) {
-        return (invertedIndex.map.get(word) == null || !Document.contains(invertedIndex.map.get(word) ,doc ));
+        return (invertedIndex.map.get(word) == null || Document.contains(invertedIndex.map.get(word) ,doc ).getClass().toString() == "main.java.NullDocument"  );
     }
 
-//status : unused for now
+
+private void baseResult(ArrayList<String> query)
+{
+    if (query.isEmpty()) {
+        return;
+    }
+    if (invertedIndex.map.containsKey(query.get(0))) {
+        result = Document.CopyDocuments(invertedIndex.map.get(query.get(0)));
+        query.remove(0);
+    }
+    else {
+        result = new HashSet<>();
+    }
+}
     private void checkEssential(ArrayList<String> query) {
         if(query.isEmpty())
             return;
@@ -44,7 +57,6 @@ public class SearchProcess {
             }
         }
     }
-    //status : unused for now
     private void intersection(Set<Document> documents){
         Iterator<Document> iterator = result.iterator();
         while (iterator.hasNext()){
@@ -62,16 +74,6 @@ public class SearchProcess {
                 iterator.remove();
         }
     }
-
-    private void baseResult(ArrayList<String> query)
-    {
-        if (invertedIndex.map.containsKey(query.get(0))) {
-            result = Document.CopyDocuments(invertedIndex.map.get(query.get(0)));
-        }
-        else {
-            result = new HashSet<>();
-        }
-    }
     private void checkForced(boolean isEssential, ArrayList<String> query) {
         result.removeIf(doc -> query.stream().anyMatch(word -> containsEssential(word, doc) == isEssential));
     }
@@ -85,7 +87,7 @@ public class SearchProcess {
             for (String word : query) {
                 if (invertedIndex.map.get(word) == null)
                     continue;
-                else if (Document.contains(invertedIndex.map.get(word) ,doc )) {
+                else if (Document.contains(invertedIndex.map.get(word) ,doc ).getClass().toString()!="main.java.NullDocument") {
                     flag = true;
                     break;
                 }
@@ -98,9 +100,9 @@ public class SearchProcess {
     }
 
     private void search() {
-//        checkEssential(queryLists.getEssential());
         baseResult(queryLists.getEssential());
-        checkForced(true,queryLists.getEssential());
+        checkEssential(queryLists.getEssential());
+//        checkForced(true,queryLists.getEssential());
         checkOptional(queryLists.getOptional());
         checkForced(false, queryLists.getForbidden());
         if (result.isEmpty())
