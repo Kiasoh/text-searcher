@@ -1,3 +1,4 @@
+import javax.print.Doc;
 import java.util.*;
 
 /**
@@ -80,6 +81,7 @@ private void baseResult(ArrayList<String> query)
 
     private void checkOptional(ArrayList<String> query) {
         Iterator<Document> it = result.iterator();
+        Document doc1;
         while(it.hasNext()) {
 //        it.forEachRemaining(doc -> {
             Document doc = it.next();
@@ -87,7 +89,8 @@ private void baseResult(ArrayList<String> query)
             for (String word : query) {
                 if (invertedIndex.map.get(word) == null)
                     continue;
-                else if (Document.contains(invertedIndex.map.get(word) ,doc ).getClass()!=NullDocument.class) {
+                else if ( (doc1 = Document.contains(invertedIndex.map.get(word) ,doc )).getClass()!=NullDocument.class) {
+                    doc.addScore(doc1.getScore());
                     flag = true;
                     break;
                 }

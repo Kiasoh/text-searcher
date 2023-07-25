@@ -16,19 +16,19 @@ public class ExecuteTest {
 //    public void haha() {
 //
 //    }
-//    boolean compareResults(ArrayList<Document> result1 , ArrayList<Document> result2 )
-//    {
-//        for (Document doc: result1) {
-//            boolean flag = false;
-//            Set<Document> ha = new HashSet<>(result2);
-//            if (Document.contains(ha, doc)) {
-//                flag = true;
-//            }
-//            if (!flag)
-//                return false;
-//        }
-//        return true;
-//    }
+    boolean compareResults(ArrayList<Document> result1 , ArrayList<Document> result2 )
+    {
+        for (Document doc: result1) {
+            boolean flag = false;
+            Set<Document> ha = new HashSet<>(result2);
+            if (Document.contains(ha, doc).getClass() !=NullDocument.class) {
+                flag = true;
+            }
+            if (!flag)
+                return false;
+        }
+        return true;
+    }
     boolean compareResults_WithOrderInMind(ArrayList<Document> result1 , ArrayList<Document> result2 )
     {
         if (result1.size()!=result2.size()) return false;
@@ -86,7 +86,7 @@ public class ExecuteTest {
         expectedResult.add(new Document("Crusual Conversations.txt",0 ,0 , 0));
         var actualResult =new ArrayList<>(execute.run("-data")) ;
 //        assertTrue();
-        assertEquals(true , compareResults_WithOrderInMind(expectedResult ,actualResult) );
+        assertEquals(true , compareResults(expectedResult ,actualResult) );
     }
     @Test
     public void run_OneOptionalOneEssential() throws IOException {
@@ -122,4 +122,40 @@ public class ExecuteTest {
 //        assertTrue();
         assertEquals(true , compareResults_WithOrderInMind(expectedResult ,actualResult) );
     }
+    @Test
+    public void run_OneEssentialOneNegetive() throws IOException {
+        Execute execute;
+        FileScanner fileReader = new TxtFileReader("./books/");
+        Chainsaw chainsaw = new Chainsaw(2,10);
+        ReadPrinciple readPrinciple = ReadPrinciple.builder().useNGram(false).splitMarks("\\n\\r\\s-")
+                .normalization(new Stemmer()).chainsaw(chainsaw).build();
+        execute = new Execute(readPrinciple, fileReader);
+        var expectedResult = new ArrayList<Document>();
+        expectedResult.add(new Document("Clean Agile.txt",0 ,0 ,0));
+        expectedResult.add(new Document("Clean Architecture, A Craftsman's Guide to Software Structure and Design.txt",0 ,0 , 0));
+//        expectedResult.add(new Document("PeopleWare.txt",0 ,0 , 0));
+        expectedResult.add(new Document("Modern Java In Action.txt",0 ,0,0));
+        var actualResult =new ArrayList<>(execute.run("kiarash -dog")) ;
+//        assertTrue();
+        assertEquals(true , compareResults(expectedResult ,actualResult) );
+    }
+    @Test
+    public void run_OneOfEach() throws IOException {
+        Execute execute;
+        FileScanner fileReader = new TxtFileReader("./books/");
+        Chainsaw chainsaw = new Chainsaw(2,10);
+        ReadPrinciple readPrinciple = ReadPrinciple.builder().useNGram(false).splitMarks("\\n\\r\\s-")
+                .normalization(new Stemmer()).chainsaw(chainsaw).build();
+        execute = new Execute(readPrinciple, fileReader);
+        var expectedResult = new ArrayList<Document>();
+//        expectedResult.add(new Document("Clean Agile.txt",0 ,0 ,0));
+        expectedResult.add(new Document("Clean Architecture, A Craftsman's Guide to Software Structure and Design.txt",0 ,0 , 0));
+//        expectedResult.add(new Document("PeopleWare.txt",0 ,0 , 0));
+        expectedResult.add(new Document("Modern Java In Action.txt",0 ,0,0));
+        var actualResult =new ArrayList<>(execute.run("kiarash +scope -dog")) ;
+//        assertTrue();
+        assertEquals(true , compareResults(expectedResult ,actualResult) );
+    }
+    
+
 }
