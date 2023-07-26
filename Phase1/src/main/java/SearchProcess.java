@@ -28,7 +28,8 @@ public class SearchProcess {
     }
 
     private boolean containsEssential(String word, DocumentInfo doc) {
-        return (invertedIndex.map.get(word) == null || DocumentInfo.contains(invertedIndex.map.get(word), doc).getClass() == NullDocumentInfo.class);
+        return (invertedIndex.map.get(word) == null ||
+                DocumentInfo.contains(invertedIndex.getMap().get(word), doc).getClass() == NullDocumentInfo.class);
     }
 
     private void baseResult(ArrayList<String> query) {
@@ -36,7 +37,7 @@ public class SearchProcess {
             return;
         }
         if (invertedIndex.map.containsKey(query.get(0))) {
-            result = DocumentInfo.CopyDocuments(invertedIndex.map.get(query.get(0)));
+            result = DocumentInfo.copyDocuments(invertedIndex.getMap().get(query.get(0)));
             query.remove(0);
         }
         else {
@@ -48,8 +49,8 @@ public class SearchProcess {
         if (query.isEmpty())
             return;
         for (String word : query) {
-            if (invertedIndex.map.containsKey(word)) {
-                intersection(invertedIndex.map.get(word));
+            if (invertedIndex.getMap().containsKey(word)) {
+                intersection(invertedIndex.getMap().get(word));
             } else {
                 result = new HashSet<>();
                 return;
@@ -87,9 +88,10 @@ public class SearchProcess {
             DocumentInfo doc = it.next();
             boolean flag = false;
             for (String word : query) {
-                if (invertedIndex.map.get(word) == null)
+                if (invertedIndex.getMap().get(word) == null)
                     continue;
-                else if ((doc1 = DocumentInfo.contains(invertedIndex.map.get(word), doc)).getClass() != NullDocumentInfo.class) {
+                else if ((doc1 = DocumentInfo.contains(invertedIndex.getMap().get(word), doc)).getClass()
+                        != NullDocumentInfo.class) {
                     doc.addScore(doc1.getScore());
                     flag = true;
                     break;

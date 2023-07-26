@@ -23,7 +23,15 @@ public class DocumentInfo implements ScoreHandler {
         return doc;
     }
 
-    public static Set<DocumentInfo> CopyDocuments(Set<DocumentInfo> docs) {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DocumentInfo documentInfo = (DocumentInfo) o;
+        return Objects.equals(getName(), documentInfo.getName());
+    }
+
+    public static Set<DocumentInfo> copyDocuments(Set<DocumentInfo> docs) {
         Set<DocumentInfo> newDocs = new HashSet<>();
         docs.forEach(doc -> newDocs.add(new DocumentInfo(doc.getName(), doc.getScore(),
                 doc.getNumWords(), doc.getNumTarget())));
@@ -65,14 +73,6 @@ public class DocumentInfo implements ScoreHandler {
 
     public void addScore(double amount) {
         this.score += amount;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        DocumentInfo documentInfo = (DocumentInfo) o;
-        return Objects.equals(getName(), documentInfo.getName());
     }
 }
 

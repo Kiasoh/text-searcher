@@ -29,8 +29,12 @@ public class TxtFileReader implements FileScanner {
         return validFiles;
     }
 
+    private String[] splitText(String text, String regex){
+        return text.split("[" + regex + "]+");
+    }
+
     private void addToMap(String text, InvertedIndex in, String documentName){
-        String[] words = text.split("[" + in.getReadPrinciple().getSplitMarks() + "]+");
+        String[] words = splitText(text,in.getReadPrinciple().getSplitMarks());
         DocumentInfo documentInfo = new DocumentInfo(documentName,0 , words.length,0);
         for (String word : words) {
             documentInfo.giveScore();

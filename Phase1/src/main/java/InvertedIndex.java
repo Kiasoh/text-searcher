@@ -3,6 +3,7 @@ import lombok.Getter;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * create the hashmap in which each word is mapped to a list of document names that the word is in that
@@ -10,7 +11,7 @@ import java.util.List;
 @Getter
 public class InvertedIndex {
 
-    public HashMap<String, HashSet<DocumentInfo>> map;
+    public HashMap<String, Set<DocumentInfo>> map;
     private final ReadPrinciple readPrinciple;
 
     public InvertedIndex(ReadPrinciple readPrinciple) {
@@ -37,9 +38,11 @@ public class InvertedIndex {
                 }
             }
             if (!flag)
-                map.get(word).add(DocumentInfo.createNewDoc(documentInfo.getName() , documentInfo.getNumWords()));
+                map.get(word).add(DocumentInfo.createNewDoc(documentInfo.getName(),
+                        documentInfo.getNumWords()));
         }
         else
-            map.put(word, new HashSet<>(List.of(DocumentInfo.createNewDoc(documentInfo.getName() , documentInfo.getNumWords()))));
+            map.put(word, new HashSet<>(List.of(DocumentInfo.createNewDoc(documentInfo.getName()
+                    , documentInfo.getNumWords()))));
     }
 }
