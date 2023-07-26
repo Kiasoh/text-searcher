@@ -6,7 +6,7 @@ import java.util.Arrays;
 /**
  * split and normalization
  */
-@Getter @Builder @Setter
+@Getter @Builder @Setter @AllArgsConstructor @NoArgsConstructor
 public class ReadPrinciple {
 
     private String splitMarks;

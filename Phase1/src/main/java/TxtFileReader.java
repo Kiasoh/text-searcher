@@ -33,7 +33,7 @@ public class TxtFileReader implements FileScanner {
         return text.split("[" + regex + "]+");
     }
 
-    private void addToMap(String text, InvertedIndex in, String documentName){
+    private void scanWords(String text, InvertedIndex in, String documentName){
         String[] words = splitText(text,in.getReadPrinciple().getSplitMarks());
         DocumentInfo documentInfo = new DocumentInfo(documentName,0 , words.length,0);
         for (String word : words) {
@@ -51,7 +51,7 @@ public class TxtFileReader implements FileScanner {
             for (DocumentInfo documentInfo : getFiles()) {
                 String fileName = documentInfo.getName();
                 String text = Files.readString(Paths.get(path + fileName));
-                addToMap(text,invertedIndex,fileName);
+                scanWords(text,invertedIndex,fileName);
             }
         }catch (IOException ignored){}
         return invertedIndex;
