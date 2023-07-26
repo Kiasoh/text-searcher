@@ -25,6 +25,6 @@ public class Document {
 class NullDocument extends Document{
     public NullDocument()
     {
-        super("ha", 2);
+        super("null", -1);
     }
 }

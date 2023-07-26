@@ -52,7 +52,7 @@ public class ScoreHolder implements ScoreHandler {
                 ScoreHolder newDoc = docsList.get(j);
                 if (doc.equals(newDoc)) {
                     doc.addScore(newDoc.getScore());
-                    docs.remove(newDoc);
+                    docsList.remove(j);
                     j--;
                 }
             }
@@ -64,7 +64,7 @@ public class ScoreHolder implements ScoreHandler {
     @Override
     public void giveScore() {
         numTarget++;
-        this.setScore((Math.log(numTarget * 1.0 / document.getNumWords())) * -1.0);
+        this.setScore((Math.log10(numTarget * 1.0 / document.getNumWords())) * -1.0);
     }
 
     public void addScore(double amount) {
@@ -75,6 +75,7 @@ public class ScoreHolder implements ScoreHandler {
 class NullScoreHolder extends ScoreHolder {
 
     public NullScoreHolder() {
-        super(Document.findDoc("asd:%^&#@$^%*(^.234"));
+        super(new NullDocument());
     }
 }
+
