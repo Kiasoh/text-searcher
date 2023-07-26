@@ -22,23 +22,23 @@ public class Execute{
         fileReaders.stream().forEach(fileReader -> fileReader.readFiles());
     }
 
-    public List<DocumentInfo> run(String query) throws IOException {
+    public List<ScoreHolder> run(String query) throws IOException {
         QueryLists queryLists= new QueryLists();
         queryLists.categorization(query.split("\s+"), guards.get(0).getReadPrinciple());
         SearchProcess searchProcess = new SearchProcess(queryLists, invertedIndex );
         return sort(searchProcess.getResult());
     }
 
-    public List<DocumentInfo> run(Scanner in) throws IOException {
+    public List<ScoreHolder> run(Scanner in) throws IOException {
         String query = in.nextLine();
         return run(query);
     }
 
-    private List<DocumentInfo> sort(Set<DocumentInfo> result){
-        List<DocumentInfo> list = new ArrayList<>(result);
-        Collections.sort(list, new Comparator<DocumentInfo>() {
+    private List<ScoreHolder> sort(Set<ScoreHolder> result){
+        List<ScoreHolder> list = new ArrayList<>(result);
+        Collections.sort(list, new Comparator<ScoreHolder>() {
             @Override
-            public int compare(DocumentInfo o1, DocumentInfo o2) {
+            public int compare(ScoreHolder o1, ScoreHolder o2) {
                 if(o1.getScore() > o2.getScore())
                     return 1;
                 if(o1.getScore() < o2.getScore())

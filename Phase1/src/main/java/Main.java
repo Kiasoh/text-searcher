@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +20,7 @@ public class Main {
 
         //use from code
 
-        List<DocumentInfo> answer = execute.run("kiarash -dog +data");
+        List<ScoreHolder> answer = execute.run("kiarash -dog +data");
         for (int i = 0; i <answer.size() ; i++) {
 
 //            System.out.println(i+1 + ". " + answer.get(i).getDocument().getName() + " " + (-1 * answer.get(i).getScore()));

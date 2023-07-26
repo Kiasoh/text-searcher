@@ -29,7 +29,7 @@ metaphor, etc...
 
 ## Chapter 8: Defensive Programming
 
-Protecting yourself from "cruel world of incorrect data". Use assertions to documentInfo assumptions made in the code.
+Protecting yourself from "cruel world of incorrect data". Use assertions to scoreHolder assumptions made in the code.
 
 Guidelines:
 
@@ -38,7 +38,7 @@ Guidelines:
 - no executable code in asserts:
     - bad: `assert foo(), ...`
     - good: `result = foo(); assert result, ...`
-- use asserts to documentInfo and verify preconditions (before executing the routine) and post conditions (after executing
+- use asserts to scoreHolder and verify preconditions (before executing the routine) and post conditions (after executing
   the routine)
 - for high robustness: failed assertions should be handled anyway
 
@@ -188,7 +188,7 @@ Data-Lever Refactoring:
 
 Statement-Level Refactoring:
 
-- decompose boolean expression - use variables that help documentInfo the meaning of the expression
+- decompose boolean expression - use variables that help scoreHolder the meaning of the expression
 - move boolean expression into a well-named function
 - return as soon as you know the return value
 
@@ -325,10 +325,10 @@ compiler. You can never be sure about the effect of an optimisation until you me
 
 ## Chapter 32: Self-Documenting Code
 
-Unit development folder - informal documentInfo that contains notes used by a developer during construction - main purpose
+Unit development folder - informal scoreHolder that contains notes used by a developer during construction - main purpose
 is to provide a trail of design decisions that aren't documented elsewhere.
 
-Detailed-design documentInfo - low-level design documentInfo, describes the class-level or routine-level design decisions.
+Detailed-design scoreHolder - low-level design scoreHolder, describes the class-level or routine-level design decisions.
 
 Internal documentation (within the program) is the most detailed kind of documentation. The main contributor to
 code-level documentation isn't comments, but good programming style, good variable names, clear layout and minimisation
@@ -376,7 +376,7 @@ Commenting data declarations:
 - if you have comments that refer to a specific variable, make sure the comment stays updated after variable name change
 
 Keep comments close to the code they describe. Describe the design approaches, limitations, usage assumptions and so on.
-Do not documentInfo implementation details in the interface.
+Do not scoreHolder implementation details in the interface.
 
 ## Chapter 33: Personal Character
 

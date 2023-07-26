@@ -1,6 +1,5 @@
 import lombok.Getter;
 
-import javax.print.Doc;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -12,23 +11,24 @@ import java.util.Set;
 @Getter
 public class InvertedIndex {
 
-    public HashMap<String, Set<DocumentInfo>> map;
+    private HashMap<String, Set<ScoreHolder>> map;
     public InvertedIndex() {
         map = new HashMap<>();
     }
+
     public void enterToMap(String word, Document document) {
         if (map.containsKey(word)) {
             boolean flag = false;
-            for (DocumentInfo doc : map.get(word)) {
+            for (ScoreHolder doc : map.get(word)) {
                 if (doc.getDocument().equals(document)) {
                     doc.giveScore();
                     flag = true;
                 }
             }
             if (!flag)
-                map.get(word).add(DocumentInfo.createNewDoc(document));
+                map.get(word).add(ScoreHolder.createNewDoc(document));
         }
         else
-            map.put(word, new HashSet<>(List.of(DocumentInfo.createNewDoc(document))));
+            map.put(word, new HashSet<>(List.of(ScoreHolder.createNewDoc(document))));
     }
 }

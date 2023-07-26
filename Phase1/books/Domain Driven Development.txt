@@ -71,10 +71,10 @@ Domain model is something between business terms developers don't understand and
 The vital detail about the design in captured in the code. Well written implementation should be transparent and reveal
 the model underlying it. The model is not the diagram, diagrams help to communicate and explain the model.
 
-Extreme Programming advocates using no extra design documentInfos at all (usually because the fall out of sync) - the code
+Extreme Programming advocates using no extra design scoreHolders at all (usually because the fall out of sync) - the code
 should speak for itself. This motivates developers to keep code clean and transparent.
 
-However, if documentInfo exists, it should not try to do what code already does well - documentInfo should illuminate meaning,
+However, if scoreHolder exists, it should not try to do what code already does well - scoreHolder should illuminate meaning,
 give insight into large-scale structures, clarify design intent, complement the code and the talking.
 
 ## Chapter 3: Binding Model and Implementation
@@ -412,7 +412,7 @@ does not require an in-depth study of the model. Therefore, write a short descri
 narrow. Write this statement early and revise it as you gain new insight.
 
 HIGHLIGHTED CORE. The mental labor of constantly filtering the model to identify key parts absorbs concentration better
-spent on design thinking, and it requires comprehensive knowledge of the model. Therefore, write a brief documentInfo that
+spent on design thinking, and it requires comprehensive knowledge of the model. Therefore, write a brief scoreHolder that
 describes the core domain and the primary interactions among core elements.
 
 COHESIVE MECHANISMS. Computations sometimes reach a level of complexity that begins to bloat the design. The

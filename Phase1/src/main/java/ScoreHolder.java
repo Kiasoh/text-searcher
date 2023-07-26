@@ -7,14 +7,14 @@ import java.util.*;
 @RequiredArgsConstructor
 @AllArgsConstructor
 //@NoArgsConstructor
-public class DocumentInfo implements ScoreHandler {
+public class ScoreHolder implements ScoreHandler {
     private final Document document;
     private double score;
     private int numTarget = 0;
 
 
-    public static DocumentInfo createNewDoc(Document document) {
-        DocumentInfo doc = new DocumentInfo(document);
+    public static ScoreHolder createNewDoc(Document document) {
+        ScoreHolder doc = new ScoreHolder(document);
         doc.giveScore();
         return doc;
     }
@@ -23,33 +23,33 @@ public class DocumentInfo implements ScoreHandler {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DocumentInfo documentInfo = (DocumentInfo) o;
-        return Objects.equals(document.getName(), documentInfo.document.getName());
+        ScoreHolder scoreHolder = (ScoreHolder) o;
+        return Objects.equals(document.getName(), scoreHolder.document.getName());
     }
 
-    public static Set<DocumentInfo> copyDocuments(Set<DocumentInfo> docs) {
-        Set<DocumentInfo> newDocs = new HashSet<>();
-        docs.forEach(doc -> newDocs.add(new DocumentInfo(doc.getDocument(), doc.getScore(),
+    public static Set<ScoreHolder> copyDocuments(Set<ScoreHolder> docs) {
+        Set<ScoreHolder> newDocs = new HashSet<>();
+        docs.forEach(doc -> newDocs.add(new ScoreHolder(doc.getDocument(), doc.getScore(),
                 doc.getNumTarget())));
         return newDocs;
     }
 
-    public static DocumentInfo contains(Set<DocumentInfo> docs, DocumentInfo target) {
-        ArrayList<DocumentInfo> orderedDocs = new ArrayList<>(docs);
-        for (DocumentInfo doc : orderedDocs) {
+    public static ScoreHolder contains(Set<ScoreHolder> docs, ScoreHolder target) {
+        ArrayList<ScoreHolder> orderedDocs = new ArrayList<>(docs);
+        for (ScoreHolder doc : orderedDocs) {
             if (doc.equals(target))
                 return doc;
         }
-        return new NullDocumentInfo();
+        return new NullScoreHolder();
     }
 
-    public static Set<DocumentInfo> sumScores(Set<DocumentInfo> docs) {
-        ArrayList<DocumentInfo> docsList = new ArrayList<>(docs);
-        Set<DocumentInfo> result = new HashSet<>();
+    public static Set<ScoreHolder> sumScores(Set<ScoreHolder> docs) {
+        ArrayList<ScoreHolder> docsList = new ArrayList<>(docs);
+        Set<ScoreHolder> result = new HashSet<>();
         for (int i = 0; i < docsList.size(); i++) {
-            DocumentInfo doc = docsList.get(i);
+            ScoreHolder doc = docsList.get(i);
             for (int j = i + 1; j < docsList.size(); j++) {
-                DocumentInfo newDoc = docsList.get(j);
+                ScoreHolder newDoc = docsList.get(j);
                 if (doc.equals(newDoc)) {
                     doc.addScore(newDoc.getScore());
                     docs.remove(newDoc);
@@ -72,9 +72,9 @@ public class DocumentInfo implements ScoreHandler {
     }
 }
 
-class NullDocumentInfo extends DocumentInfo {
+class NullScoreHolder extends ScoreHolder {
 
-    public NullDocumentInfo() {
+    public NullScoreHolder() {
         super(Document.findDoc("asd:%^&#@$^%*(^.234"));
     }
 }

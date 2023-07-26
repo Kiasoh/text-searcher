@@ -6,18 +6,18 @@ import java.util.*;
 public class SearchProcess {
     private final InvertedIndex invertedIndex;
     private final QueryLists queryLists;
-    private Set<DocumentInfo> result;
+    private Set<ScoreHolder> result;
 
     public SearchProcess(QueryLists queryLists, InvertedIndex invertedIndex) {
         this.invertedIndex = invertedIndex;
         this.queryLists = queryLists;
-        ArrayList<DocumentInfo> documentInfos = new ArrayList<>();
-        Document.documents.stream().forEach(doc -> documentInfos.add(new DocumentInfo(doc)));
-        result = new HashSet<>(documentInfos);
+        ArrayList<ScoreHolder> scoreHolders = new ArrayList<>();
+        Document.documents.stream().forEach(doc -> scoreHolders.add(new ScoreHolder(doc)));
+        result = new HashSet<>(scoreHolders);
     }
 
-    public Set<DocumentInfo> getResult() {
-        result = DocumentInfo.sumScores(result);
+    public Set<ScoreHolder> getResult() {
+        result = ScoreHolder.sumScores(result);
         search();
         return result;
     }
@@ -26,17 +26,17 @@ public class SearchProcess {
         return (!flag && queryLists.getOptional().size() != 0);
     }
 
-    private boolean containsEssential(String word, DocumentInfo doc) {
-        return (invertedIndex.map.get(word) == null ||
-                DocumentInfo.contains(invertedIndex.getMap().get(word), doc).getClass() == NullDocumentInfo.class);
+    private boolean containsEssential(String word, ScoreHolder doc) {
+        return (invertedIndex.getMap().get(word) == null ||
+                ScoreHolder.contains(invertedIndex.getMap().get(word), doc).getClass() == NullScoreHolder.class);
     }
 
     private void baseResult(ArrayList<String> query) {
         if (query.isEmpty()) {
             return;
         }
-        if (invertedIndex.map.containsKey(query.get(0))) {
-            result = DocumentInfo.copyDocuments(invertedIndex.getMap().get(query.get(0)));
+        if (invertedIndex.getMap().containsKey(query.get(0))) {
+            result = ScoreHolder.copyDocuments(invertedIndex.getMap().get(query.get(0)));
             query.remove(0);
         }
         else {
@@ -57,16 +57,16 @@ public class SearchProcess {
         }
     }
 
-    private void intersection(Set<DocumentInfo> documentInfos) {
-        Iterator<DocumentInfo> iterator = result.iterator();
+    private void intersection(Set<ScoreHolder> scoreHolders) {
+        Iterator<ScoreHolder> iterator = result.iterator();
         while (iterator.hasNext()) {
             boolean flag = false;
-            DocumentInfo doc = iterator.next();
-            for (DocumentInfo documentInfo : documentInfos) {
-                if (doc.equals(documentInfo)) {
+            ScoreHolder doc = iterator.next();
+            for (ScoreHolder scoreHolder : scoreHolders) {
+                if (doc.equals(scoreHolder)) {
 //                    iterator.remove();
                     flag = true;
-                    doc.addScore(documentInfo.getScore());
+                    doc.addScore(scoreHolder.getScore());
                     break;
                 }
             }
@@ -80,17 +80,17 @@ public class SearchProcess {
     }
 
     private void checkOptional(ArrayList<String> query) {
-        Iterator<DocumentInfo> it = result.iterator();
-        DocumentInfo doc1;
+        Iterator<ScoreHolder> it = result.iterator();
+        ScoreHolder doc1;
         while (it.hasNext()) {
 //        it.forEachRemaining(doc -> {
-            DocumentInfo doc = it.next();
+            ScoreHolder doc = it.next();
             boolean flag = false;
             for (String word : query) {
                 if (invertedIndex.getMap().get(word) == null)
                     continue;
-                else if ((doc1 = DocumentInfo.contains(invertedIndex.getMap().get(word), doc)).getClass()
-                        != NullDocumentInfo.class) {
+                else if ((doc1 = ScoreHolder.contains(invertedIndex.getMap().get(word), doc)).getClass()
+                        != NullScoreHolder.class) {
                     doc.addScore(doc1.getScore());
                     flag = true;
                     break;
@@ -110,6 +110,6 @@ public class SearchProcess {
         checkOptional(queryLists.getOptional());
         checkForced(false, queryLists.getForbidden());
         if (result.isEmpty())
-            result.add(new DocumentInfo(new Document("NO DOCUMENT FOUND" , 0)));
+            result.add(new ScoreHolder(new Document("NO DOCUMENT FOUND" , 0)));
     }
 }

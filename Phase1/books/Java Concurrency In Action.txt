@@ -89,7 +89,7 @@ by Brian Goetz
 * To publish an object safely, both the reference to the object and the object's state must be made visible to other threads at the same time.
 * Objects that are not technically immutable, but whose state will not be modified after publication, are called *effectively immutable*. Such objects, when safely published, can be used safely by any thread without additional synchronization.
 * While effectively immutable objects must be safely published, mutable objects must be safely published, and mus the either thread-safe or guarded by a lock.
-* Many concurrency errors stem from failing to understand the "rules of engagement" for a shared object. When you publish an object, documentInfo how it should be accessed.
+* Many concurrency errors stem from failing to understand the "rules of engagement" for a shared object. When you publish an object, scoreHolder how it should be accessed.
 
 #### Chapter 4: Composing Objects
 
@@ -119,8 +119,8 @@ by Brian Goetz
 
 ##### 4.5: Documenting synchronization policies
 
-* DocumentInfo a class's thread safety guarantees for its clients; documentInfo its synchronization policy for its maintainers.
-* If you want clients to be able to create new atomic operations on your class, you must documentInfo which locks they should acquire to do so safely.
+* ScoreHolder a class's thread safety guarantees for its clients; scoreHolder its synchronization policy for its maintainers.
+* If you want clients to be able to create new atomic operations on your class, you must scoreHolder which locks they should acquire to do so safely.
 * If you must guess whether a class is thread-safe, improve the quality of your guess by interpreting the specification by someone who must implement it versus someone who will merely use it.
 
 #### Chapter 10: Avoiding Liveness Hazards
