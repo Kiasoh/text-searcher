@@ -6,20 +6,26 @@ import java.util.*;
  * get query and sop marks and do search
  */
 public class Execute{
-
-    private final ReadPrinciple readPrinciple;
     private final InvertedIndex invertedIndex;
-    private final FileScanner fileReader;
-
-    public Execute(ReadPrinciple readPrinciple, FileScanner fileReader){
-        this.readPrinciple = readPrinciple;
-        this.fileReader = fileReader;
-        invertedIndex = fileReader.readFiles(readPrinciple);
+    private final ArrayList<FileScanner> fileReaders;
+    private final ArrayList<Guard> guards;
+    private boolean CheckRunable() {
+        return fileReaders.isEmpty() || guards.isEmpty();
+    }
+    public Execute(ArrayList<Guard> guards ,ArrayList<FileScanner> fileReaders) throws Exception {
+        this.guards = guards;
+        this.fileReaders = fileReaders;
+        if (CheckRunable())
+            throw new Exception("Bro you suck!");
+        invertedIndex = new InvertedIndex();
+        guards.stream().forEach(guard -> guard.setInvertedIndex(invertedIndex));
+        fileReaders.stream().forEach(fileReader -> fileReader.readFiles());
     }
 
     public List<DocumentInfo> run(String query) throws IOException {
-        SearchProcess searchProcess = new SearchProcess(trimQuery(query),
-                invertedIndex, readPrinciple, fileReader);
+        QueryLists queryLists= new QueryLists();
+        queryLists.categorization(query.split("\s+"), guards.get(0).getReadPrinciple());
+        SearchProcess searchProcess = new SearchProcess(queryLists, invertedIndex );
         return sort(searchProcess.getResult());
     }
 
@@ -46,7 +52,7 @@ public class Execute{
     private String trimQuery(String query) {
         int splitMarkQueryIndex = query.lastIndexOf("/sm");
         if (splitMarkQueryIndex != -1) {
-            readPrinciple.setSplitMarks(query.substring(splitMarkQueryIndex + 4));
+            guards.get(0).getReadPrinciple().setSplitMarks(query.substring(splitMarkQueryIndex + 4));
             return query.substring(0, splitMarkQueryIndex);
         } else
             return query;

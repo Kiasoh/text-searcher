@@ -4,17 +4,16 @@ import java.util.*;
  * do the search with processed inverted index and processed query
  */
 public class SearchProcess {
-
     private final InvertedIndex invertedIndex;
     private final QueryLists queryLists;
     private Set<DocumentInfo> result;
 
-    public SearchProcess(String query, InvertedIndex invertedIndex,
-                         ReadPrinciple readPrinciple, FileScanner fileReader) {
+    public SearchProcess(QueryLists queryLists, InvertedIndex invertedIndex) {
         this.invertedIndex = invertedIndex;
-        queryLists = new QueryLists();
-        queryLists.categorization(query.split("\s+"), readPrinciple);
-        result = new HashSet<>(fileReader.getFiles());
+        this.queryLists = queryLists;
+        ArrayList<DocumentInfo> documentInfos = new ArrayList<>();
+        Document.documents.stream().forEach(doc -> documentInfos.add(new DocumentInfo(doc)));
+        result = new HashSet<>(documentInfos);
     }
 
     public Set<DocumentInfo> getResult() {
@@ -64,7 +63,7 @@ public class SearchProcess {
             boolean flag = false;
             DocumentInfo doc = iterator.next();
             for (DocumentInfo documentInfo : documentInfos) {
-                if (doc.getName().equals(documentInfo.getName())) {
+                if (doc.equals(documentInfo)) {
 //                    iterator.remove();
                     flag = true;
                     doc.addScore(documentInfo.getScore());
@@ -111,6 +110,6 @@ public class SearchProcess {
         checkOptional(queryLists.getOptional());
         checkForced(false, queryLists.getForbidden());
         if (result.isEmpty())
-            result.add(new DocumentInfo("THERE IS NO DOCUMENT", 0, 0, 0));
+            result.add(new DocumentInfo(new Document("NO DOCUMENT FOUND" , 0)));
     }
 }

@@ -13,5 +13,7 @@ public class ReadPrinciple {
     private Normalizable normalization;
     private boolean useNGram;
     private Chainsaw chainsaw;
-
+    public String[] splitText(String text){
+        return text.split("[" + splitMarks + "]+");
+    }
 }

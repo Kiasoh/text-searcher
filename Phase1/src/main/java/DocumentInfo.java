@@ -1,24 +1,20 @@
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.*;
 
 @Getter
 @Setter
+@RequiredArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 public class DocumentInfo implements ScoreHandler {
-
-    private String name;
+    private final Document document;
     private double score;
-    private int numWords;
-    private int numTarget;
+    private int numTarget = 0;
 
 
-    public static DocumentInfo createNewDoc(String name, int numWords) {
-        DocumentInfo doc = new DocumentInfo(name, 0, numWords, 0);
+    public static DocumentInfo createNewDoc(Document document) {
+        DocumentInfo doc = new DocumentInfo(document);
         doc.giveScore();
         return doc;
     }
@@ -28,13 +24,13 @@ public class DocumentInfo implements ScoreHandler {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DocumentInfo documentInfo = (DocumentInfo) o;
-        return Objects.equals(getName(), documentInfo.getName());
+        return Objects.equals(document.getName(), documentInfo.document.getName());
     }
 
     public static Set<DocumentInfo> copyDocuments(Set<DocumentInfo> docs) {
         Set<DocumentInfo> newDocs = new HashSet<>();
-        docs.forEach(doc -> newDocs.add(new DocumentInfo(doc.getName(), doc.getScore(),
-                doc.getNumWords(), doc.getNumTarget())));
+        docs.forEach(doc -> newDocs.add(new DocumentInfo(doc.getDocument(), doc.getScore(),
+                doc.getNumTarget())));
         return newDocs;
     }
 
@@ -68,7 +64,7 @@ public class DocumentInfo implements ScoreHandler {
     @Override
     public void giveScore() {
         numTarget++;
-        this.setScore((Math.log(numTarget * 1.0 / numWords)) * -1.0);
+        this.setScore((Math.log(numTarget * 1.0 / document.getNumWords())) * -1.0);
     }
 
     public void addScore(double amount) {
@@ -79,6 +75,6 @@ public class DocumentInfo implements ScoreHandler {
 class NullDocumentInfo extends DocumentInfo {
 
     public NullDocumentInfo() {
-        super();
+        super(Document.findDoc("asd:%^&#@$^%*(^.234"));
     }
 }

@@ -1,9 +1,10 @@
+import javax.print.Doc;
 import java.util.ArrayList;
 
 public interface FileScanner {
 
-    InvertedIndex readFiles(ReadPrinciple readPrinciple);
+    void readFiles();
 
-    ArrayList<DocumentInfo> getFiles();
+    ArrayList<Document> getFiles();
 
 }
