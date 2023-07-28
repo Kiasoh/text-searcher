@@ -239,7 +239,7 @@ No, finding bugs in legacy code usually isn’t a problem. In terms of strategy,
 
 ### Characterization Tests
 
-The tests scoreHolders the actual current behavior of the system.
+The tests documents the actual current behavior of the system.
 Characterization tests record the actual behavior of a piece of code. If we find something unexpected when we write them, it pays to get some clarification. It could be a bug. That doesn’t mean that we don’t include the test in our test suite; instead, we should mark it as suspicious and find out what the effect would be of fixing it.
 
 ### When You Find Bugs

@@ -1,10 +1,10 @@
 import lombok.*;
-
 import java.util.List;
 
 @RequiredArgsConstructor
 @Getter
 public class GateKeeper implements Guard {
+
     private InvertedIndex invertedIndex;
     private final ReadPrinciple readPrinciple;
 
@@ -28,8 +28,8 @@ public class GateKeeper implements Guard {
         word = readPrinciple.getNormalization().normalize(word);
         invertedIndex.enterToMap(word, document);
     }
+
     public void addToMap(List<String> words, Document document){
         words.forEach(word ->invertedIndex.enterToMap(word.toLowerCase(), document));
     }
-
 }

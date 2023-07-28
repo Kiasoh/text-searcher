@@ -1,11 +1,11 @@
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.util.ArrayList;
 
 @AllArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 public class Document {
     public static ArrayList<Document> documents = new ArrayList<>();
     public final String name;

@@ -5,7 +5,7 @@ raoul-gabriel urma
 mario fusco
 alan mycroft
 
-manning kiarash
+manning
 praise for the previous edition, java 8 in action,
 by raoul-gabriel urma, mario fusco, and alan mycroft.
 
@@ -10702,7 +10702,7 @@ unfortunately, converting imperative code to the streams api can be a difficult 
 because you need to think about control-flow statements such as break, continue, and
 return and then infer the right stream operations to use. The good news is that some
 tools can help you with this task as well. The good news is that some tools (e. G. , lambda-
-ficator, https: //ieeexplore. Ieee. Org/scoreHolder/6606699) can help you with this task
+ficator, https: //ieeexplore. Ieee. Org/document/6606699) can help you with this task
 as well.
 
 9.1.5 improving code flexibility
@@ -13635,7 +13635,7 @@ Once again, this approach allows you to make explicit through the type system
 something that otherwise would remain implicit in your knowledge of the domain
 model: the first purpose of a language, even a programming language, is communica-
 tion. Declaring a method to take an optional as an argument or to return an optional
-as a result scoreHolders to your colleaguesand all future users of your methodthat it
+as a result documents to your colleaguesand all future users of your methodthat it
 can take an empty value or give an empty value as a result.
 Person/car/insurance dereferencing chain using optionals
 starting with this optional<person>, the car from the person, the insurance from
@@ -19371,7 +19371,7 @@ and the java 9 flow api
  exploring the rxjava operations to transform and
 combine multiple reactive streams
  presenting marble diagrams that visually
-scoreHolder operations on reactive streams
+document operations on reactive streams
 
 before we dig into what reactive programming is and how it works, its helpful to
 clarify why this new paradigm is of growing importance. A few years ago, the larg-
@@ -20383,7 +20383,7 @@ achieved with flow. Processor), or even merge or combine two streams in many way
 (which cant be achieved with flow. Processor).
 These transforming and combining functions can be quite sophisticated, to the
 point that explaining their behavior in plain words may result in awkward, convoluted
-sentences. To get an idea, see how rxjava scoreHolders its mergedelayerror function:
+sentences. To get an idea, see how rxjava documents its mergedelayerror function:
 
 flattens an observable that emits observables into one observable, in a way that allows
 an observer to receive all successfully emitted items from all of the source observables
@@ -20391,7 +20391,7 @@ without being interrupted by an error notification from one of them, while limit
 number of concurrent subscriptions to these observables.
 
 You must admit that what this function does isnt immediately evident. To alleviate this
-problem, the reactive-streams community decided to scoreHolder the behaviors of these
+problem, the reactive-streams community decided to document the behaviors of these
 functions in a visual way, using so-called marble diagrams. A marble diagram, such as
 that shown in figure 17.4, represents the temporally ordered sequence of elements in
 a reactive stream as geometric shapes on a horizontal line; special symbols represent
@@ -21291,7 +21291,7 @@ will be passed to it and, if the arguments have side effects, what these side ef
 might do. It becomes far too complicated to reason about what your code does if it
 uses functions passed as arguments that make unpredictable changes in the state
 of your program; such functions might even interfere with your code in some hard-to-
-debug way. Its a good design principle to scoreHolder what side effects youre willing
+debug way. Its a good design principle to document what side effects youre willing
 to accept from functions passed as parameters. None is best of all!
 
 In the next section, we turn to currying: a technique that can help you modularize
@@ -21427,7 +21427,7 @@ ods. If you need a data structure to represent the result of a computation, you 
 make a new one, not mutate an existing data structure, as youve done previously.
 Doing so is often a best practice in standard object-oriented programming, too. A
 common objection to the functional approach is that it causes excess copying, and the
-programmer says, ill remember or ill scoreHolder the side effects. But such opti-
+programmer says, ill remember or ill document the side effects. But such opti-
 mism is a trap for maintenance programmers who have to deal with your code later.
 Thus, the functional-style solution is as follows:
 static trainjourney append(trainjourney a, trainjourney b){

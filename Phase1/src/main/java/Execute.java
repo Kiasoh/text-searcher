@@ -3,23 +3,26 @@ import java.util.*;
 
 /**
  * Execute class
- * get query and sop marks and do search
+ * get query and stop marks and do search
  */
 public class Execute{
+
     private final InvertedIndex invertedIndex;
     private final ArrayList<FileScanner> fileReaders;
     private final ArrayList<Guard> guards;
-    private boolean CheckRunable() {
+
+    private boolean CheckRunnable() {
         return fileReaders.isEmpty() || guards.isEmpty();
     }
+
     public Execute(ArrayList<Guard> guards ,ArrayList<FileScanner> fileReaders) throws Exception {
         this.guards = guards;
         this.fileReaders = fileReaders;
-        if (CheckRunable())
-            throw new Exception("Bro you suck!");
+        if (CheckRunnable())
+            throw new Exception("invalid");
         invertedIndex = new InvertedIndex();
-        guards.stream().forEach(guard -> guard.setInvertedIndex(invertedIndex));
-        fileReaders.stream().forEach(fileReader -> fileReader.readFiles());
+        guards.forEach(guard -> guard.setInvertedIndex(invertedIndex));
+        fileReaders.forEach(FileScanner::readFiles);
     }
 
     public List<ScoreHolder> run(String query) throws IOException {
@@ -29,33 +32,21 @@ public class Execute{
         return sort(searchProcess.getResult());
     }
 
-    public List<ScoreHolder> run(Scanner in) throws IOException {
-        String query = in.nextLine();
-        return run(query);
-    }
-
     private List<ScoreHolder> sort(Set<ScoreHolder> result){
         List<ScoreHolder> list = new ArrayList<>(result);
-        Collections.sort(list, new Comparator<ScoreHolder>() {
-            @Override
-            public int compare(ScoreHolder o1, ScoreHolder o2) {
-                if(o1.getScore() > o2.getScore())
-                    return 1;
-                if(o1.getScore() < o2.getScore())
-                    return -1;
-                return 0;
-            }
-        });
+        list.sort((o1, o2) -> Double.compare(o2.getScore(), o1.getScore()));
         return list;
     }
 
-    private String trimQuery(String query) {
+    public static String giveQueryFromConsole(Scanner in, ArrayList<Guard> guards) {
+        String query = in.nextLine();
         int splitMarkQueryIndex = query.lastIndexOf("/sm");
-        if (splitMarkQueryIndex != -1) {
-            guards.get(0).getReadPrinciple().setSplitMarks(query.substring(splitMarkQueryIndex + 4));
-            return query.substring(0, splitMarkQueryIndex);
-        } else
-            return query;
+        System.out.println(splitMarkQueryIndex);
+        ReadPrinciple readPrinciple = guards.get(0).getReadPrinciple();
+        if (splitMarkQueryIndex != -1)
+            readPrinciple.setSplitMarks(query.substring(splitMarkQueryIndex + 4));
+        else
+            readPrinciple.setSplitMarks("");
+        return query.substring(0, splitMarkQueryIndex);
     }
-
 }

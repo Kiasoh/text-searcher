@@ -1,17 +1,12 @@
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class InvertedIndexTest {
-    private final InvertedIndex invertedIndex = new InvertedIndex();
+
+    InvertedIndex invertedIndex = new InvertedIndex();
     ScoreHolder scoreHolder1 = new ScoreHolder(new Document("doc1",5));
     ScoreHolder scoreHolder2 = new ScoreHolder(new Document("doc2",10));
 
-    @BeforeEach
-    public void setup() {
-
-    }
     @Test
     public void enterToMapTest() {
         String word = "word";

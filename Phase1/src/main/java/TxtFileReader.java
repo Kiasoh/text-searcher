@@ -1,21 +1,15 @@
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
-import lombok.experimental.FieldNameConstants;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-/**
- * read files line by line and pass them to invertedIndex class
- */
 @RequiredArgsConstructor
 public class TxtFileReader implements FileScanner {
 
     private final String path;
     private final Guard guard;
+
     public ArrayList<Document> getFiles() {
         File file = new File(path);
         ArrayList<Document> validFiles = new ArrayList<>();
@@ -30,8 +24,6 @@ public class TxtFileReader implements FileScanner {
         }
         return validFiles;
     }
-
-
 
     @Override
     public void readFiles(){

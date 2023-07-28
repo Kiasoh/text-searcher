@@ -32,16 +32,14 @@ public class SearchProcess {
     }
 
     private void baseResult(ArrayList<String> query) {
-        if (query.isEmpty()) {
+        if (query.isEmpty())
             return;
-        }
         if (invertedIndex.getMap().containsKey(query.get(0))) {
-            result = ScoreHolder.copyDocuments(invertedIndex.getMap().get(query.get(0)));
+            result = ScoreHolder.copyScoreHolders(invertedIndex.getMap().get(query.get(0)));
             query.remove(0);
         }
-        else {
+        else
             result = new HashSet<>();
-        }
     }
 
     private void checkEssential(ArrayList<String> query) {
@@ -64,7 +62,6 @@ public class SearchProcess {
             ScoreHolder doc = iterator.next();
             for (ScoreHolder scoreHolder : scoreHolders) {
                 if (doc.equals(scoreHolder)) {
-//                    iterator.remove();
                     flag = true;
                     doc.addScore(scoreHolder.getScore());
                     break;
@@ -83,7 +80,6 @@ public class SearchProcess {
         Iterator<ScoreHolder> it = result.iterator();
         ScoreHolder doc1;
         while (it.hasNext()) {
-//        it.forEachRemaining(doc -> {
             ScoreHolder doc = it.next();
             boolean flag = false;
             for (String word : query) {
@@ -99,7 +95,6 @@ public class SearchProcess {
             if (containsOptional(flag)) {
                 it.remove();
             }
-//        });
         }
     }
 

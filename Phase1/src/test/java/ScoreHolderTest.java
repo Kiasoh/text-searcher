@@ -1,7 +1,5 @@
-import lombok.Setter;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,7 +27,7 @@ public class ScoreHolderTest {
         Set<ScoreHolder> set = new HashSet<>();
         set.add(doc1);
         set.add(doc2);
-        assertNotEquals(set,ScoreHolder.copyDocuments(set));
+        assertNotEquals(set,ScoreHolder.copyScoreHolders(set));
     }
 
     @Test

@@ -27,11 +27,11 @@ public class ScoreHolder implements ScoreHandler {
         return Objects.equals(document.getName(), scoreHolder.document.getName());
     }
 
-    public static Set<ScoreHolder> copyDocuments(Set<ScoreHolder> docs) {
-        Set<ScoreHolder> newDocs = new HashSet<>();
-        docs.forEach(doc -> newDocs.add(new ScoreHolder(doc.getDocument(), doc.getScore(),
+    public static Set<ScoreHolder> copyScoreHolders(Set<ScoreHolder> docs) {
+        Set<ScoreHolder> scoreHolders = new HashSet<>();
+        docs.forEach(doc -> scoreHolders.add(new ScoreHolder(doc.getDocument(), doc.getScore(),
                 doc.getNumTarget())));
-        return newDocs;
+        return scoreHolders;
     }
 
     public static ScoreHolder contains(Set<ScoreHolder> docs, ScoreHolder target) {
@@ -64,7 +64,7 @@ public class ScoreHolder implements ScoreHandler {
     @Override
     public void giveScore() {
         numTarget++;
-        this.setScore((Math.log10(numTarget * 1.0 / document.getNumWords())) * -1.0);
+        this.setScore((Math.log10(numTarget * 1.0 / document.getNumWords())));
     }
 
     public void addScore(double amount) {
