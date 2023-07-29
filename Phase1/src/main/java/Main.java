@@ -6,19 +6,19 @@ import java.util.Scanner;
  * This class represents the main entry point for executing a search algorithm on text documents.
  * It uses various components such as Chainsaw, Normalizable, ReadPrinciple,
  * and Guard to process and analyze the input files.
- *
+ * <p>
  * to customize your test :
  * set min and max length for edge n-gram in line 32
  * set your normalization in line 33
  * set your split marks for tokenizing texts in line 34
  * set your useNGram true or false in line 35
- *
+ * </p><p>
  * after building readPrinciple you can again set different values for those
  * and build a new readPrinciple a new Guard and add it to guards
- *
+ *</p> <p>
  * set the path of your documents in line 45
  * you can also make another FileScanners and add them to fileReaders
- *
+ *</p>
  * Now it's time to search :)
  * if u want to run inside the code just write your query in line 50, and it's done
  * if u want to give your query and splitMarks from console comment lines 49-54 and uncomment lines 57-64

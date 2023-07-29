@@ -8,18 +8,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @Getter
 public class GateKeeper implements Guard {
-
+    @Setter
     private InvertedIndex invertedIndex;
     private final ReadPrinciple readPrinciple;
-
-    /**
-     * Sets the inverted index.
-     *
-     * @param invertedIndex the inverted index to set
-     */
-    public void setInvertedIndex(InvertedIndex invertedIndex) {
-        this.invertedIndex = invertedIndex;
-    }
 
     /**
      * Scans the given text and adds the words to the inverted index associated with the specified document.
