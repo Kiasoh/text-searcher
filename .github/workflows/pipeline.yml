@@ -30,3 +30,8 @@ jobs:
     - name: Build with Maven
       working-directory: ./Phase1
       run: mvn -B package --file pom.xml
+      
+    - name: jacoco-badge-generator
+      uses: cicirello/jacoco-badge-generator@v2.9.0
+
+    
