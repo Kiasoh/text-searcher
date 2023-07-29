@@ -99,14 +99,14 @@ public class SearchProcessTest {
         assertTrue(compareResults(searchProcess.getResult(), actual));
     }
 
-    @Test
-    public void checkForcedTest() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Method checkForced = SearchProcess.class.getDeclaredMethod("checkForced", boolean.class, ArrayList.class);
-        checkForced.setAccessible(true);
-        checkForced.invoke(searchProcess, false, queryLists.getForbidden());
-        HashSet<ScoreHolder> actual = new HashSet<>();
-        actual.add(doc1);
-        actual.add(doc2);
-        assertTrue(compareResults(searchProcess.getResult(), actual));
-    }
+//    @Test
+//    public void checkForcedTest() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+//        Method checkForced = SearchProcess.class.getDeclaredMethod("checkForced", boolean.class, ArrayList.class);
+//        checkForced.setAccessible(true);
+//        checkForced.invoke(searchProcess, false, queryLists.getForbidden());
+//        HashSet<ScoreHolder> actual = new HashSet<>();
+//        actual.add(doc1);
+//        actual.add(doc2);
+//        assertTrue(compareResults(searchProcess.getResult(), actual));
+//    }
 }

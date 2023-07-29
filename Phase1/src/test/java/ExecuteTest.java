@@ -66,8 +66,7 @@ public class ExecuteTest {
         expectedResult.add(new ScoreHolder( new Document("file1.txt" , 2)));
         expectedResult.add(new ScoreHolder(new Document("file2.txt" , 2) ,0 , 0));
         var actualResult =new ArrayList<>(execute.run("kimia")) ;
-//        assertTrue();
-        assertEquals(true , compareResults_WithOrderInMind(expectedResult ,actualResult) );
+        assertTrue(compareResults_WithOrderInMind(expectedResult, actualResult));
     }
 
     @Test
@@ -76,8 +75,7 @@ public class ExecuteTest {
         expectedResult.add(new ScoreHolder( new Document("file1.txt" , 2)));
         expectedResult.add(new ScoreHolder(new Document("file2.txt" , 2) ,0 , 0));
         var actualResult =new ArrayList<>(execute.run("+kimia")) ;
-//        assertTrue();
-        assertEquals(true , compareResults_WithOrderInMind(expectedResult ,actualResult) );
+        assertTrue(compareResults_WithOrderInMind(expectedResult, actualResult));
     }
 
     @Test
@@ -85,8 +83,7 @@ public class ExecuteTest {
         var expectedResult = new ArrayList<ScoreHolder>();
         expectedResult.add(new ScoreHolder(new Document("file1.txt",0) ,0 ,0));
         var actualResult =new ArrayList<>(execute.run("-boz1boz1")) ;
-//        assertTrue();
-        assertEquals(true , compareResults(expectedResult ,actualResult) );
+        assertTrue(compareResults(expectedResult, actualResult));
     }
 
     @Test
@@ -94,8 +91,7 @@ public class ExecuteTest {
         var expectedResult = new ArrayList<ScoreHolder>();
         expectedResult.add(new ScoreHolder(new Document("file1.txt" , 0) ,0 , 0));
         var actualResult =new ArrayList<>(execute.run("asd +kimia")) ;
-//        assertTrue();
-        assertEquals(true , compareResults_WithOrderInMind(expectedResult ,actualResult) );
+        assertTrue(compareResults_WithOrderInMind(expectedResult, actualResult));
     }
 
     @Test
@@ -103,17 +99,15 @@ public class ExecuteTest {
         var expectedResult = new ArrayList<ScoreHolder>();
         expectedResult.add(new ScoreHolder( new Document("file1.txt" , 2)));
         var actualResult =new ArrayList<>(execute.run("-boz1boz1 +boz1")) ;
-//        assertTrue();
-        assertEquals(true , compareResults_WithOrderInMind(expectedResult ,actualResult) );
+        assertTrue(compareResults_WithOrderInMind(expectedResult, actualResult));
     }
 
     @Test
     public void run_OneEssentialOneNegetive() throws IOException {
         var expectedResult = new ArrayList<ScoreHolder>();
-
         expectedResult.add(new ScoreHolder( new Document("file1.txt" , 2)));
         var actualResult =new ArrayList<>(execute.run("-boz1boz1 boz1")) ;
-        assertEquals(true , compareResults(expectedResult ,actualResult) );
+        assertTrue(compareResults(expectedResult, actualResult));
     }
 
     @Test
@@ -121,7 +115,6 @@ public class ExecuteTest {
         var expectedResult = new ArrayList<ScoreHolder>();
         expectedResult.add(new ScoreHolder( new Document("file1.txt" , 2)));
         var actualResult =new ArrayList<>(execute.run("kimia +boz1 -boz1boz1")) ;
-//        assertTrue();
-        assertEquals(true , compareResults_WithOrderInMind(expectedResult ,actualResult) );
+        assertTrue(compareResults_WithOrderInMind(expectedResult, actualResult));
     }
 }
