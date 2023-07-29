@@ -55,7 +55,7 @@ public class Execute{
         QueryLists queryLists= new QueryLists();
         queryLists.categorization(query.split("\s+"), guards.get(0).getReadPrinciple());
         SearchProcess searchProcess = new SearchProcess(queryLists, invertedIndex );
-        return sort(searchProcess.getResult());
+        return sort(searchProcess.runSearch());
     }
 
     /**

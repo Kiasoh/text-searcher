@@ -1,9 +1,12 @@
+import lombok.Getter;
+
 import java.util.*;
 
 /**
  * The SearchProcess class is responsible for performing a search process based on
  * given query lists and an inverted index.
  */
+@Getter
 public class SearchProcess {
 
     private final InvertedIndex invertedIndex;
@@ -27,7 +30,7 @@ public class SearchProcess {
      * Returns the search result after performing the search process.
      * @return the set of ScoreHolder objects representing the search result
      */
-    public Set<ScoreHolder> getResult() {
+    public Set<ScoreHolder> runSearch() {
         result = ScoreHolder.sumScores(result);
         search();
         return result;
