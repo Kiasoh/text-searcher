@@ -1,36 +1,62 @@
 import java.util.*;
 
 /**
- * do the search with processed inverted index and processed query
+ * The SearchProcess class is responsible for performing a search process based on
+ * given query lists and an inverted index.
  */
 public class SearchProcess {
+
     private final InvertedIndex invertedIndex;
     private final QueryLists queryLists;
     private Set<ScoreHolder> result;
 
+    /**
+     * Constructs a new SearchProcess object with the specified query lists and inverted index.
+     * @param queryLists the query lists containing essential, optional, and forbidden words
+     * @param invertedIndex the inverted index used for searching
+     */
     public SearchProcess(QueryLists queryLists, InvertedIndex invertedIndex) {
         this.invertedIndex = invertedIndex;
         this.queryLists = queryLists;
         ArrayList<ScoreHolder> scoreHolders = new ArrayList<>();
-        Document.documents.stream().forEach(doc -> scoreHolders.add(new ScoreHolder(doc)));
+        Document.documents.forEach(doc -> scoreHolders.add(new ScoreHolder(doc)));
         result = new HashSet<>(scoreHolders);
     }
 
+    /**
+     * Returns the search result after performing the search process.
+     * @return the set of ScoreHolder objects representing the search result
+     */
     public Set<ScoreHolder> getResult() {
         result = ScoreHolder.sumScores(result);
         search();
         return result;
     }
 
+    /**
+     * Checks if the query lists contain optional words and the flag is false.
+     * @param flag the flag indicating if the search should consider optional words
+     * @return true if the query lists contain optional words and the flag is false, false otherwise
+     */
     private boolean containsOptional(Boolean flag) {
         return (!flag && queryLists.getOptional().size() != 0);
     }
 
+    /**
+     * Checks if the specified word is essential for the given ScoreHolder.
+     * @param word the word to check
+     * @param doc the ScoreHolder object to check against
+     * @return true if the word is essential for the ScoreHolder, false otherwise
+     */
     private boolean containsEssential(String word, ScoreHolder doc) {
         return (invertedIndex.getMap().get(word) == null ||
                 ScoreHolder.contains(invertedIndex.getMap().get(word), doc).getClass() == NullScoreHolder.class);
     }
 
+    /**
+     * Sets the base result by copying the ScoreHolders associated with the first query word from the inverted index.
+     * @param query the list of query words
+     */
     private void baseResult(ArrayList<String> query) {
         if (query.isEmpty())
             return;
@@ -42,6 +68,10 @@ public class SearchProcess {
             result = new HashSet<>();
     }
 
+    /**
+     * Checks the essential words from the query lists and updates the search result accordingly.
+     * @param query the list of query words
+     */
     private void checkEssential(ArrayList<String> query) {
         if (query.isEmpty())
             return;
@@ -55,6 +85,10 @@ public class SearchProcess {
         }
     }
 
+    /**
+     * Intersects the given scoreHolders set with the current search result to update the scores.
+     * @param scoreHolders the set of ScoreHolder objects to intersect with the search result
+     */
     private void intersection(Set<ScoreHolder> scoreHolders) {
         Iterator<ScoreHolder> iterator = result.iterator();
         while (iterator.hasNext()) {
@@ -72,10 +106,19 @@ public class SearchProcess {
         }
     }
 
+    /**
+     * Checks for forced words in the query lists and removes ScoreHolders from the search result accordingly.
+     * @param isEssential flag indicating if the forced words are essential or forbidden
+     * @param query the list of query words
+     */
     private void checkForced(boolean isEssential, ArrayList<String> query) {
         result.removeIf(doc -> query.stream().anyMatch(word -> containsEssential(word, doc) == isEssential));
     }
 
+    /**
+     * Checks the optional words from the query lists and updates the search result accordingly.
+     * @param query the list of query words
+     */
     private void checkOptional(ArrayList<String> query) {
         Iterator<ScoreHolder> it = result.iterator();
         ScoreHolder doc1;
@@ -98,6 +141,9 @@ public class SearchProcess {
         }
     }
 
+    /**
+     * Performs the search process by calling different methods to update the search result based on the query lists. 
+     */
     private void search() {
         baseResult(queryLists.getEssential());
         checkEssential(queryLists.getEssential());

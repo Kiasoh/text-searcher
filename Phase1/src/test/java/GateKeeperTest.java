@@ -46,7 +46,7 @@ public class GateKeeperTest {
         String text2 = "word1   word2.word3 ";
 
         readPrinciple.setSplitMarks("\\n\\s.-");
-        when (readPrinciple.getNormalization()).thenReturn(new NullNormalization());
+        when(readPrinciple.getNormalization()).thenReturn(new NullNormalization());
         gateKeeper.scanWords(text1, scoreHolder1.getDocument());
         gateKeeper.scanWords(text2, scoreHolder1.getDocument());
 
@@ -55,5 +55,20 @@ public class GateKeeperTest {
         assertEquals(ScoreHolder.contains(gateKeeper.getInvertedIndex().getMap().get("bootcamp"), scoreHolder1), scoreHolder1);
         assertEquals(ScoreHolder.contains(gateKeeper.getInvertedIndex().getMap().get("word1"), scoreHolder1), scoreHolder1);
         assertEquals(ScoreHolder.contains(gateKeeper.getInvertedIndex().getMap().get("hello"), scoreHolder1), scoreHolder1);
+    }
+
+    @Test
+    public void scanWordsWithNGramTest(){
+        String text = "word1";
+
+        when(readPrinciple.getNormalization()).thenReturn(new NullNormalization());
+        readPrinciple.setChainsaw(new Chainsaw(2,3));
+        when(readPrinciple.isUseNGram()).thenReturn(true);
+
+        gateKeeper.scanWords(text, scoreHolder1.getDocument());
+
+        assertEquals(ScoreHolder.contains(gateKeeper.getInvertedIndex().getMap().get("wo"), scoreHolder1), scoreHolder1);
+        assertEquals(ScoreHolder.contains(gateKeeper.getInvertedIndex().getMap().get("rd1"), scoreHolder1), scoreHolder1);
+        assertEquals(ScoreHolder.contains(gateKeeper.getInvertedIndex().getMap().get("word1"), scoreHolder1), scoreHolder1);
     }
 }

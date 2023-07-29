@@ -13,7 +13,7 @@ public class ScoreHolderTest {
     @Test
     public void createNewDocTest(){
         ScoreHolder scoreHolder = ScoreHolder.createNewDoc(new Document("doc1" , 200));
-        double expected = (Math.log10(1.0 / 200)) * -1.0;
+        double expected = (Math.log10(1.0 / 200));
         assertEquals(scoreHolder.getScore(), expected);
     }
 
@@ -49,13 +49,13 @@ public class ScoreHolderTest {
         ScoreHolder temp = ScoreHolder.contains(expected, doc1);
         assertNotEquals(temp.getClass(), NullScoreHolder.class);
         //log(1/100) + log(1/10)
-        assertEquals(temp.getScore(), 3.0);
+        assertEquals(temp.getScore(), -3.0);
     }
 
     @Test
     public void giveScoreTest(){
         doc1.giveScore();
-        assertEquals(doc2.getScore(), 3);
+        assertEquals(doc2.getScore(), -3.0);
     }
 
 }
