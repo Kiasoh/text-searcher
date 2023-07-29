@@ -18,11 +18,9 @@ public class Chainsaw {
      */
     public List<String> EdgeNGram(String word) {
         List<String> candidates = new ArrayList<>();
-        for (int i = min; i <= max ; i++) {
-            for (int j = 0; j < word.length() - i + 1; j++) {
+        for (int i = min; i <= max ; i++)
+            for (int j = 0; j < word.length() - i + 1; j++)
                 candidates.add(word.substring(j , j + i));
-            }
-        }
         return candidates;
     }
 }
