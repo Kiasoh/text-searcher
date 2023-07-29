@@ -100,7 +100,7 @@ public class ExecuteTest {
     @Test
     public void run_OneOptionalOneNegetive() throws IOException {
         var expectedResult = new ArrayList<ScoreHolder>();
-        expectedResult.add(new ScoreHolder( new Do cument("file1.txt" , 2)));
+        expectedResult.add(new ScoreHolder( new Document("file1.txt" , 2)));
         var actualResult =new ArrayList<>(execute.run("-boz1boz1 +boz1")) ;
 //        assertTrue();
         assertEquals(true , compareResults_WithOrderInMind(expectedResult ,actualResult) );
