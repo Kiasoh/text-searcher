@@ -22,17 +22,20 @@ public class QueryListsTest {
 
     @Test
     public void categorizationEssentialTest(){
+        assertEquals(queryLists.getEssential().size(), 2);
         assertTrue(queryLists.getEssential().contains("word1"));
         assertTrue(queryLists.getEssential().contains("word4"));
     }
 
     @Test
     public void categorizationOptionalTest(){
+        assertEquals(queryLists.getOptional().size(), 1);
         assertTrue(queryLists.getOptional().contains("word2"));
     }
 
     @Test
     public void categorizationForbiddenTest(){
+        assertEquals(queryLists.getForbidden().size(), 1);
         assertTrue(queryLists.getForbidden().contains("word3"));
     }
 }
