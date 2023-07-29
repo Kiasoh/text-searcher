@@ -57,5 +57,4 @@ public class ScoreHolderTest {
         doc1.giveScore();
         assertEquals(doc2.getScore(), -3.0);
     }
-
 }

@@ -26,6 +26,7 @@ public class Document {
         return this.getName().equals(obj.getName());
     }
 }
+
 /**
  * The NullDocument class represents a special type of Document that is used to represent a null value.
  * It inherits from the Document class and sets its name as "null" and number of words as -1.

@@ -59,10 +59,9 @@ public class ScoreHolder implements ScoreHandler {
      */
     public static ScoreHolder contains(Set<ScoreHolder> docs, ScoreHolder target) {
         ArrayList<ScoreHolder> orderedDocs = new ArrayList<>(docs);
-        for (ScoreHolder doc : orderedDocs) {
+        for (ScoreHolder doc : orderedDocs)
             if (doc.equals(target))
                 return doc;
-        }
         return new NullScoreHolder();
     }
 

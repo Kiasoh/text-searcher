@@ -14,6 +14,7 @@ import static org.mockito.Mockito.when;
 public class ExecuteTest {
     @Spy
     Execute execute;
+
     @BeforeEach
     public void setup() throws Exception {
         ArrayList<FileScanner> fileReaders = new ArrayList<>();
@@ -35,33 +36,29 @@ public class ExecuteTest {
         FileScanner fileReader = new TxtFileReader("./temp_tests/", guard);
         fileReaders.add(fileReader);
         execute = spy(Execute.class);
-        when(execute.CheckRunnable()).thenReturn(false);
+        when(execute.checkRunnable()).thenReturn(false);
         //use from code
         execute = new Execute(guards, fileReaders);
-
     }
-    boolean compareResults(ArrayList<ScoreHolder> result1 , ArrayList<ScoreHolder> result2 )
-    {
+
+    boolean compareResults(ArrayList<ScoreHolder> result1 , ArrayList<ScoreHolder> result2 ) {
         for (ScoreHolder doc: result1) {
-            boolean flag = false;
             Set<ScoreHolder> ha = new HashSet<>(result2);
-            if (ScoreHolder.contains(ha, doc).getClass() != NullScoreHolder.class) {
-                flag = true;
-            }
-            if (!flag)
+            if (ScoreHolder.contains(ha, doc).getClass() == NullScoreHolder.class) {
                 return false;
+            }
         }
         return true;
     }
     boolean compareResults_WithOrderInMind(ArrayList<ScoreHolder> result1 , ArrayList<ScoreHolder> result2 )
     {
         if (result1.size()!=result2.size()) return false;
-        for (int i = 0; i < result1.size(); i++) {
+        for (int i = 0; i < result1.size(); i++)
             if (!result1.get(i).equals(result2.get(i)))
                 return false;
-        }
         return true;
     }
+
     @Test
     public void run_OneEssential() throws IOException {
 
@@ -72,6 +69,7 @@ public class ExecuteTest {
 //        assertTrue();
         assertEquals(true , compareResults_WithOrderInMind(expectedResult ,actualResult) );
     }
+
     @Test
     public void run_OneOptional() throws IOException {
         var expectedResult = new ArrayList<ScoreHolder>();
@@ -81,6 +79,7 @@ public class ExecuteTest {
 //        assertTrue();
         assertEquals(true , compareResults_WithOrderInMind(expectedResult ,actualResult) );
     }
+
     @Test
     public void run_OneNegetive() throws IOException {
         var expectedResult = new ArrayList<ScoreHolder>();
@@ -89,6 +88,7 @@ public class ExecuteTest {
 //        assertTrue();
         assertEquals(true , compareResults(expectedResult ,actualResult) );
     }
+
     @Test
     public void run_OneOptionalOneEssential() throws IOException {
         var expectedResult = new ArrayList<ScoreHolder>();
@@ -97,6 +97,7 @@ public class ExecuteTest {
 //        assertTrue();
         assertEquals(true , compareResults_WithOrderInMind(expectedResult ,actualResult) );
     }
+
     @Test
     public void run_OneOptionalOneNegetive() throws IOException {
         var expectedResult = new ArrayList<ScoreHolder>();
@@ -105,6 +106,7 @@ public class ExecuteTest {
 //        assertTrue();
         assertEquals(true , compareResults_WithOrderInMind(expectedResult ,actualResult) );
     }
+
     @Test
     public void run_OneEssentialOneNegetive() throws IOException {
         var expectedResult = new ArrayList<ScoreHolder>();
@@ -113,6 +115,7 @@ public class ExecuteTest {
         var actualResult =new ArrayList<>(execute.run("-boz1boz1 boz1")) ;
         assertEquals(true , compareResults(expectedResult ,actualResult) );
     }
+
     @Test
     public void run_OneOfEach() throws IOException {
         var expectedResult = new ArrayList<ScoreHolder>();
@@ -121,6 +124,4 @@ public class ExecuteTest {
 //        assertTrue();
         assertEquals(true , compareResults_WithOrderInMind(expectedResult ,actualResult) );
     }
-
-
 }

@@ -1,5 +1,3 @@
-import lombok.NoArgsConstructor;
-
 import java.io.IOException;
 import java.util.*;
 
@@ -14,17 +12,18 @@ public class Execute{
     private final ArrayList<FileScanner> fileReaders;
     private final ArrayList<Guard> guards;
 
-    /**
-     * Checks if the Execute object is runnable, i.e., if it has both guards and file readers.
-     *
-     * @return true if the Execute object is runnable, false otherwise.
-     */
     public Execute() {
         invertedIndex = new InvertedIndex();
         guards = new ArrayList<>();
         fileReaders = new ArrayList<>();
     }
-    public boolean CheckRunnable() {
+
+    /**
+     * Checks if the Execute object is runnable, i.e., if it has both guards and file readers.
+     *
+     * @return true if the Execute object is runnable, false otherwise.
+     */
+    public boolean checkRunnable() {
         return !fileReaders.isEmpty() && !guards.isEmpty();
     }
 
@@ -38,12 +37,13 @@ public class Execute{
     public Execute(ArrayList<Guard> guards ,ArrayList<FileScanner> fileReaders) throws Exception {
         this.guards = guards;
         this.fileReaders = fileReaders;
-        if (!CheckRunnable())
+        if (!checkRunnable())
             throw new Exception("invalid");
         invertedIndex = new InvertedIndex();
         guards.forEach(guard -> guard.setInvertedIndex(invertedIndex));
         fileReaders.forEach(FileScanner::readFiles);
     }
+
     /**
      * Runs a search query on the Execute object using the specified query string.
      *

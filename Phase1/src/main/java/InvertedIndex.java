@@ -10,7 +10,7 @@ import java.util.Set;
 @Getter
 public class InvertedIndex {
 
-    private HashMap<String, Set<ScoreHolder>> map;
+    private final HashMap<String, Set<ScoreHolder>> map;
 
     /**
      * constructs an empty map

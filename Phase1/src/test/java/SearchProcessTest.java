@@ -40,11 +40,8 @@ public class SearchProcessTest {
 
     private boolean compareResults(Set<ScoreHolder> result1, Set<ScoreHolder> result2) {
         for (ScoreHolder doc : result1) {
-            boolean flag = false;
             Set<ScoreHolder> ha = new HashSet<>(result2);
-            if (ScoreHolder.contains(ha, doc).getClass() != NullScoreHolder.class)
-                flag = true;
-            if (!flag)
+            if (ScoreHolder.contains(ha, doc).getClass() == NullScoreHolder.class)
                 return false;
         }
         return true;
@@ -52,7 +49,6 @@ public class SearchProcessTest {
 
     @Test
     public void runSearchTest() {
-
         Set<ScoreHolder> expected = searchProcess.runSearch();
         Set<ScoreHolder> actual = new HashSet<>();
         doc1.setScore(-4.0);
