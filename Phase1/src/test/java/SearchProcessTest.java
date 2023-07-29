@@ -11,9 +11,9 @@ import static org.mockito.Mockito.when;
 
 public class SearchProcessTest {
 
-    ScoreHolder doc1 = ScoreHolder.createNewDoc(new Document("doc1" , 100));
-    ScoreHolder doc2 = ScoreHolder.createNewDoc(new Document("doc2" , 1000));
-    ScoreHolder doc3 = ScoreHolder.createNewDoc(new Document("doc3" , 1000));
+    ScoreHolder doc1 = ScoreHolder.createNewDoc(new Document("doc1", 100));
+    ScoreHolder doc2 = ScoreHolder.createNewDoc(new Document("doc2", 1000));
+    ScoreHolder doc3 = ScoreHolder.createNewDoc(new Document("doc3", 1000));
     ArrayList<String> queryList;
     SearchProcess searchProcess;
     ReadPrinciple readPrinciple;
@@ -21,7 +21,7 @@ public class SearchProcessTest {
     InvertedIndex invertedIndex;
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
         Document.documents.add(doc1.getDocument());
         Document.documents.add(doc2.getDocument());
         String[] query = new String[]{"+word1", "word2", "-word3"};
@@ -38,9 +38,8 @@ public class SearchProcessTest {
         searchProcess = new SearchProcess(queryLists, invertedIndex);
     }
 
-    private boolean compareResults(Set<ScoreHolder> result1 , Set<ScoreHolder> result2 )
-    {
-        for (ScoreHolder doc: result1) {
+    private boolean compareResults(Set<ScoreHolder> result1, Set<ScoreHolder> result2) {
+        for (ScoreHolder doc : result1) {
             boolean flag = false;
             Set<ScoreHolder> ha = new HashSet<>(result2);
             if (ScoreHolder.contains(ha, doc).getClass() != NullScoreHolder.class)
@@ -52,7 +51,7 @@ public class SearchProcessTest {
     }
 
     @Test
-    public void runSearchTest(){
+    public void runSearchTest() {
 
         Set<ScoreHolder> expected = searchProcess.runSearch();
         Set<ScoreHolder> actual = new HashSet<>();

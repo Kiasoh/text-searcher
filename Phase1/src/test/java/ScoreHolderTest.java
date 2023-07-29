@@ -7,12 +7,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ScoreHolderTest {
 
-    ScoreHolder doc1 = ScoreHolder.createNewDoc(new Document("doc1" , 100));
-    ScoreHolder doc2 = ScoreHolder.createNewDoc(new Document("doc2" , 1000));
+    ScoreHolder doc1 = ScoreHolder.createNewDoc(new Document("doc1", 100));
+    ScoreHolder doc2 = ScoreHolder.createNewDoc(new Document("doc2", 1000));
 
     @Test
-    public void createNewDocTest(){
-        ScoreHolder scoreHolder = ScoreHolder.createNewDoc(new Document("doc1" , 200));
+    public void createNewDocTest() {
+        ScoreHolder scoreHolder = ScoreHolder.createNewDoc(new Document("doc1", 200));
         double expected = (Math.log10(1.0 / 200));
         assertEquals(scoreHolder.getScore(), expected);
     }
@@ -27,20 +27,20 @@ public class ScoreHolderTest {
         Set<ScoreHolder> set = new HashSet<>();
         set.add(doc1);
         set.add(doc2);
-        assertNotEquals(set,ScoreHolder.copyScoreHolders(set));
+        assertNotEquals(set, ScoreHolder.copyScoreHolders(set));
     }
 
     @Test
-    public void containsTest(){
+    public void containsTest() {
         Set<ScoreHolder> scoreHolders = new HashSet<>();
         scoreHolders.add(doc1);
-        scoreHolders.add(new ScoreHolder(new Document("doc3",50)));
+        scoreHolders.add(new ScoreHolder(new Document("doc3", 50)));
         assertEquals(ScoreHolder.contains(scoreHolders, doc1), doc1);
         assertNotEquals(ScoreHolder.contains(scoreHolders, doc2), doc2);
     }
 
     @Test
-    public void sumScoreTest(){
+    public void sumScoreTest() {
         Set<ScoreHolder> scoreHolders = new HashSet<>();
         scoreHolders.add(doc1);
         scoreHolders.add(doc2);
@@ -53,7 +53,7 @@ public class ScoreHolderTest {
     }
 
     @Test
-    public void giveScoreTest(){
+    public void giveScoreTest() {
         doc1.giveScore();
         assertEquals(doc2.getScore(), -3.0);
     }
