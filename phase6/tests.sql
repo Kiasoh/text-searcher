@@ -1,0 +1,15 @@
+-- DROP SCHEMA public CASCADE;
+-- CREATE SCHEMA public;
+call add_user('kimik', 'kimia', 'hosseini', '09330418759', 'boz');
+call add_user('kiasoh', 'kianoosh', 'mehrabi', '09330418759', 'haha');
+-- call Delete_user('kimik');
+-- call change_bio('kimik', 'helooooooo');
+call add_chat('haha');
+call  join_chat(1, 'kimik', true);
+call Send_Message(1, 'kimik', null, 'helllooooo');
+call  join_chat(1, 'kiasoh', true);
+call Send_Message(1, 'kiasoh', null, 'hahhhhhhh');
+call Edit_Message(2, 'bye bye');
+call Delete_Message(2);
+call Send_Message(1, 'kimik', null, 'helllooooooooooooooo');
+call Send_Message(1, 'kimik', null, 'hellloooooooooooooooooooooooooooooooo');
