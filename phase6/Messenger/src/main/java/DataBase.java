@@ -15,7 +15,7 @@ public class DataBase {
         conn = dataSource.getConnection();
     }
 
-    public ResultSet signup(String userName, String firstName, String lastName, String phoneNumber, String bio, String pass) throws SQLException {
+    public void signup(String userName, String firstName, String lastName, String phoneNumber, String bio, String pass) throws SQLException {
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO Users VALUES (?, ?, ?, ?, ?, ?);");
         stmt.setString(1,userName);
         stmt.setString(2,firstName);
@@ -23,7 +23,7 @@ public class DataBase {
         stmt.setString(4,phoneNumber);
         stmt.setString(5,bio);
         stmt.setString(6,pass);
-        return stmt.executeQuery();
+        stmt.execute();
     }
 
     public ResultSet logIn(String userName, String password) throws SQLException {
@@ -31,5 +31,25 @@ public class DataBase {
         stmt.setString(1,userName);
         stmt.setString(2,password);
         return stmt.executeQuery();
+    }
+
+    public void deleteAccount(String userName, String password) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("select DeleteUser(?, ?);");
+        stmt.setString(1,userName);
+        stmt.setString(2,password);
+        stmt.executeQuery();
+    }
+
+    public void logOut(String userName) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("Delete From LoginLogs Where UserName = ?;");
+        stmt.setString(1,userName);
+        stmt.execute();
+    }
+
+    public void changeBio(String userName, String bio) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("Update Users set Bio = ? where UserName = ?;");
+        stmt.setString(1,bio);
+        stmt.setString(2,userName);
+        stmt.execute();
     }
 }
