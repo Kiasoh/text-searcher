@@ -52,4 +52,13 @@ public class DataBase {
         stmt.setString(2,userName);
         stmt.execute();
     }
+    public void sendMessage (String destination , String userName, String filePath , String message ) throws SQLException {
+
+        PreparedStatement stmt = conn.prepareStatement("Insert into Messages(\"content\", textMessage, Sender, Destination, sendAt) Values(?, ?, ?, ?, CURRENT_TIMESTAMP);");
+        stmt.setString(1,destination);
+        stmt.setString(2,message);
+        stmt.setString(3,userName);
+        stmt.setString(4,destination);
+        stmt.execute();
+    }
 }
