@@ -11,10 +11,10 @@
 <hibernate-configuration>
     <session-factory>
 
-        <property name="connection.url">jdbc:postgresql://localhost/MyDatebase</property> <!-- BD Mane -->
+        <property name="connection.url">jdbc:postgresql://localhost/Messanger</property> <!-- BD Mane -->
         <property name="connection.driver_class">org.postgresql.Driver</property> <!-- DB Driver -->
         <property name="connection.username">postgres</property> <!-- DB User -->
-        <property name="connection.password">ADMIN</property> <!-- DB Password -->
+        <property name="connection.password">26561343</property> <!-- DB Password -->
 
         <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property> <!-- DB Dialect -->
         <property name="hbm2ddl.auto">update</property> <!-- create / create-drop / update -->
@@ -22,7 +22,11 @@
         <property name="show_sql">true</property> <!-- Show SQL in console -->
         <property name="format_sql">true</property> <!-- Show SQL formatted -->
 
-        <mapping class="Users"/>
+        <mapping class="User"/>
+        <mapping class="Content"/>
+        <mapping class="Chat"/>
+        <mapping class="Member"/>
+        <mapping class="Messages"/>
 
     </session-factory>
 </hibernate-configuration>
