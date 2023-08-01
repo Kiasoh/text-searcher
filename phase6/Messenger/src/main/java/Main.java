@@ -1,9 +1,10 @@
 import org.postgresql.ds.PGSimpleDataSource;
 
+import java.io.IOException;
 import java.sql.*;
 
 public class Main {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, IOException {
         DataBase dataBase = new DataBase();
 // Create a new statement on the connection
 
@@ -12,6 +13,8 @@ public class Main {
 //        dataBase.signup("boz","kimia","hosseini","09330418759","boz","123");
 //            dataBase.changeBio("boz", "new boz");
         System.out.println(dataBase.getAllMessagesFromOneUser("kimik"));
+
+        dataBase.sendMessage(1, "kimik", "./Files/image.jpg", "hello");
 //        dataBase.deleteAccount("kimik","123");
         //        while (rs.next()) {
 //            // Now that `rs` points to a valid row (rs.next() is true), we can use the `getString`

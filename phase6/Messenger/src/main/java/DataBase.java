@@ -1,8 +1,10 @@
 import org.postgresql.ds.PGSimpleDataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.*;
 
 public class DataBase {
     final String url =
@@ -52,12 +54,15 @@ public class DataBase {
         stmt.setString(2,userName);
         stmt.execute();
     }
-    public void sendMessage (String destination , String userName, String filePath , String message ) throws SQLException {
+
+    public void sendMessage (int destination , String userName, String filePath , String message ) throws SQLException, IOException {
+        if(!isInChat(userName, destination).getBoolean("isInChat"))
+            System.out.println("U ARE NOT IN THIS CHAT");
         PreparedStatement stmt = conn.prepareStatement("Insert into Messages(\"content\", textMessage, Sender, Destination, sendAt) Values(?, ?, ?, ?, CURRENT_TIMESTAMP);");
-        stmt.setString(1,destination);
+        stmt.setBytes(1,convertToByte(filePath));
         stmt.setString(2,message);
         stmt.setString(3,userName);
-        stmt.setString(4,destination);
+        stmt.setInt(4,destination);
         stmt.execute();
     }
     public void editMessage (int messageID , String newText) throws SQLException {
@@ -72,5 +77,16 @@ public class DataBase {
         ResultSet s = stmt.executeQuery();
         s.last();
         return s.getRow();
+
+    private byte[] convertToByte(String filePath) throws IOException {
+        Path path = Paths.get(filePath);
+        return Files.readAllBytes(path);
+    }
+
+    private ResultSet isInChat(String userName, int chatID) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("? in (select \"user\" from \"Member\" where \"Member\".chat = ?) as isInChat");
+        stmt.setString(1,userName);
+        stmt.setInt(2,chatID);
+        return stmt.executeQuery();
     }
 }
