@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class DataBase {
     final String url =
-            "jdbc:postgresql://localhost:5432/Messanger?user=postgres&password=26561343";
+            "jdbc:postgresql://localhost:5432/MyDatabase?user=postgres&password=ADMIN";
     final PGSimpleDataSource dataSource = new PGSimpleDataSource();
     Connection conn;
 
@@ -53,12 +53,24 @@ public class DataBase {
         stmt.execute();
     }
     public void sendMessage (String destination , String userName, String filePath , String message ) throws SQLException {
-
         PreparedStatement stmt = conn.prepareStatement("Insert into Messages(\"content\", textMessage, Sender, Destination, sendAt) Values(?, ?, ?, ?, CURRENT_TIMESTAMP);");
         stmt.setString(1,destination);
         stmt.setString(2,message);
         stmt.setString(3,userName);
         stmt.setString(4,destination);
         stmt.execute();
+    }
+    public void editMessage (int messageID , String newText) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("Update Messages set textMessage = ? where MessageID = ?;");
+        stmt.setString(1 , newText);
+        stmt.setInt(2 , messageID);
+        stmt.execute();
+    }
+    public int getAllMessagesFromOneUser (String userName) throws SQLException {
+        PreparedStatement stmt = conn.prepareStatement("SELECT MessageID FROM messages WHERE Sender = ?;" , ResultSet.TYPE_SCROLL_SENSITIVE , ResultSet.CONCUR_UPDATABLE);
+        stmt.setString( 1 , userName);
+        ResultSet s = stmt.executeQuery();
+        s.last();
+        return s.getRow();
     }
 }

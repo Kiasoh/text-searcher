@@ -10,7 +10,8 @@ public class Main {
 // Execute the query, and store the results in the ResultSet instance
 //        ResultSet rs = (new DataBase()).logIn("kimik","13");
 //        dataBase.signup("boz","kimia","hosseini","09330418759","boz","123");
-            dataBase.changeBio("boz", "new boz");
+//            dataBase.changeBio("boz", "new boz");
+        System.out.println(dataBase.getAllMessagesFromOneUser("kimik"));
 //        dataBase.deleteAccount("kimik","123");
         //        while (rs.next()) {
 //            // Now that `rs` points to a valid row (rs.next() is true), we can use the `getString`
