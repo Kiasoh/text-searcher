@@ -56,12 +56,12 @@ public class Main {
 //        }catch (Exception e){
 //            System.out.println(e.getMessage());
 //        }
-//        try {
-//            User.signup(session,"user2","k","h","09330418759",
-//                    "bio","Kimia123","C:\\Users\\Lenovo\\Desktop\\default.jpg");
-//        }catch (Exception e){
-//            System.out.println(e.getMessage());
-//        }
+        try {
+            User.signup(session,"user2","k","h","09330418759",
+                    "bio","Kimia123","C:\\Users\\Lenovo\\Desktop\\default.jpg");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
 //
 //        User.seeALlUsers(session);
 
@@ -83,6 +83,10 @@ public class Main {
 
 //        Messages.sendMessage(session, 1, "user1","C:\\Users\\Lenovo\\Desktop\\default.jpg" , "msg2 from user1 in g1");
 
-        Messages.getAllMessagesFromOneUser(session, "user1");
+//        Messages.getAllMessagesFromOneUser(session, "user1");
+
+//        Member.joinChat(session,1,"user3",false);
+//        Chat.addPVChat(session,"user1","user2",null);
+        System.out.println(Member.usersHasRelationshipWithOneUser(session, "user1"));
     }
 }

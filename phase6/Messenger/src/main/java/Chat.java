@@ -34,21 +34,21 @@ public class Chat
 
     private String Type;
 
-    public static int addChat (Session session , String title, String profilePath, String type) throws SQLException, IOException {
+    public static void addChat (Session session , String title, String profilePath, String type) throws SQLException, IOException {
         Chat chat = new Chat();
         chat.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
         chat.setProfilePhotoID(File.addFile(profilePath));
         chat.setTitle(title);
         chat.setType(type);
         Main.Create(session , chat);
-        return chat.getChatID();
     }
 
-    public void addPVChat(Session session, String username1, String username2, String profilePath) throws SQLException, IOException {
+    public static void addPVChat(Session session, String username1, String username2, String profilePath) throws SQLException, IOException {
         Chat chat = new Chat();
         chat.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
         chat.setProfilePhotoID(File.addFile(profilePath));
         chat.setType("pv");
+        Main.Create(session,chat);
         Member.joinChat(session, chat.getChatID(), username1, true);
         Member.joinChat(session, chat.getChatID(), username2, true);
     }

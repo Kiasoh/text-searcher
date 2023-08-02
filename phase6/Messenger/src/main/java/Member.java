@@ -2,6 +2,11 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Session;
 
+import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -37,4 +42,25 @@ public class Member {
         Main.Create(session , member);
     }
 
+    public static List<Chat> getChatsOfOneUser(Session session, String userName) {
+        Query query = session.createQuery("select m.chat FROM Member m where m.user.UserName =:username", Chat.class);
+        query.setParameter("username",userName);
+        return query.getResultList();
+    }
+
+    public static Set<String> usersHasRelationshipWithOneUser(Session session, String username) throws SQLException {
+        Set<String> result = new HashSet<>();
+        List<Chat> chats = getChatsOfOneUser(session,username);
+        Query query = session.createQuery("select m.user from Member m where m.chat.ChatID =:chatID",User.class);
+        for (Chat chat : chats){
+            query.setParameter("chatID", chat.getChatID());
+            List<User> users = query.getResultList();
+            for (User user : users){
+                String foundUsername = user.getUserName();
+                if(!foundUsername.equals(username))
+                    result.add(foundUsername);
+            }
+        }
+        return result;
+    }
 }
