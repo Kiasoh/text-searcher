@@ -1,23 +1,23 @@
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
-import java.sql.PreparedStatement;
-
-@AllArgsConstructor
-@NoArgsConstructor
-@Entity
-@Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String UserName;
-    private String FirstName;
-    private String LastName;
-    private String PhoneNumber;
-    private String Bio;
-    private String password;
-    private int ProfilePhotoID;
+//import jakarta.persistence.*;
+//import lombok.AllArgsConstructor;
+//import lombok.NoArgsConstructor;
+//
+//import java.sql.PreparedStatement;
+//
+//@AllArgsConstructor
+//@NoArgsConstructor
+//@Entity
+//@Table(name = "users")
+//public class User {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private String UserName;
+//    private String FirstName;
+//    private String LastName;
+//    private String PhoneNumber;
+//    private String Bio;
+//    private String password;
+//    private int ProfilePhotoID;
 
 //    public void signup(String userName, String firstName, String lastName, String phoneNumber, String bio, String pass, String path) throws Exception {
 //        User user = new User(userName, firstName, lastName, phoneNumber, bio, pass, path);
@@ -34,4 +34,4 @@ public class User {
 //        stmt.setInt(7, addFile(path));
 //        stmt.execute();
 //    }
-}
+//}
