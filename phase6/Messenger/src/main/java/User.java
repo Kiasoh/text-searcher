@@ -28,9 +28,12 @@ public class User {
     private String PhoneNumber;
     private String Bio;
     private String password;
-    private int ProfilePhotoID;
 
-    public void seeALlUsers(Session session){
+    @OneToOne
+    @JoinColumn(name = "ProfilePhotoID", referencedColumnName = "FileID")
+    private File ProfilePhotoID;
+
+    public static void seeALlUsers(Session session){
         List<User> users = session.createQuery("FROM User ", User.class).list();
         for (User user : users) {
             System.out.println("username: " + user.getUserName()

@@ -1,4 +1,3 @@
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -38,7 +36,7 @@ public class File {
         return Files.readAllBytes(path);
     }
 
-    public static Integer addFile(String path) throws IOException, SQLException {
+    public static File addFile(String path) throws IOException, SQLException {
         if (path == null)
             return null;
         Session session = Main.sessionFactory.openSession();
@@ -51,7 +49,6 @@ public class File {
         try{
             transaction = session.beginTransaction();
             session.persist(content);
-            x(session);
             transaction.commit();
         }
         catch (Exception e) {
@@ -61,13 +58,11 @@ public class File {
         finally {
             session.close();
         }
-        return content.getFileID();
+        return content;
     }
 
-    public static void x(Session session){
+    public static void printAllFileNames(Session session){
         List<File> contentList = session.createQuery("FROM File ", File.class).list();
-
-        // Display the retrieved employees
         for (File c : contentList) {
             System.out.println(c.getFileID() + " " + c.getFileName());
         }
