@@ -12,6 +12,9 @@ public class Main {
 
 
     public static void main(String[] args) throws Exception {
-        Content.addFile("C:\\Users\\Lenovo\\Desktop\\default.jpg");
+        Session session = sessionFactory.openSession();
+//        File.addFile("C:\\Users\\Lenovo\\Desktop\\default.jpg");
+        User.signup(session,"user1","k","h","09330418759",
+                "bio","Kimia123","C:\\Users\\Lenovo\\Desktop\\default.jpg");
     }
 }

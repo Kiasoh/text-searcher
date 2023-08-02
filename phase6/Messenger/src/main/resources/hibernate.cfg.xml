@@ -22,10 +22,11 @@
         <property name="format_sql">true</property> <!-- Show SQL formatted -->
 
 <!--        <mapping class="User"/>-->
-        <mapping class="Content"/>
-<!--        <mapping class="Chat"/>-->
-<!--        <mapping class="Member"/>-->
-<!--        <mapping class="Messages"/>-->
+        <mapping class="File"/>
+        <mapping class="Chat"/>
+        <mapping class="Member"/>
+        <mapping class="Messages"/>
+        <mapping class="User"/>
 
     </session-factory>
 </hibernate-configuration>

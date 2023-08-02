@@ -11,8 +11,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -23,7 +21,7 @@ import java.util.List;
 @Getter
 @Table(name="File",
         uniqueConstraints={@UniqueConstraint(columnNames={"FileID"})})
-public class Content {
+public class File {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="FileID", nullable=false, unique=true)
@@ -46,13 +44,13 @@ public class Content {
         Session session = Main.sessionFactory.openSession();
         Transaction transaction = null;
 
-        Content content = new Content();
+        File content = new File();
         content.setFileName(path.substring(path.lastIndexOf('\\') + 1));
         content.setContent(convertToByte(path));
 
         try{
             transaction = session.beginTransaction();
-            session.save(content);
+            session.persist(content);
             x(session);
             transaction.commit();
         }
@@ -63,15 +61,14 @@ public class Content {
         finally {
             session.close();
         }
-
         return content.getFileID();
     }
 
     public static void x(Session session){
-        List<Content> contentList = session.createQuery("FROM Content", Content.class).list();
+        List<File> contentList = session.createQuery("FROM File ", File.class).list();
 
         // Display the retrieved employees
-        for (Content c : contentList) {
+        for (File c : contentList) {
             System.out.println(c.getFileID() + " " + c.getFileName());
         }
     }
