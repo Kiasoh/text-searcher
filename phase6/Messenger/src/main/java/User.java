@@ -73,13 +73,6 @@ public class User {
         User user =session.get(User.class , userName);
         user.Bio = bio;
         Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            session.update(user);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            throw e;
-        }
+        Main.Update(session , user.Bio , bio);
     }
 }

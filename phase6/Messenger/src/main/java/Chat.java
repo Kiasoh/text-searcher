@@ -39,18 +39,8 @@ public class Chat
         chat.setProfilePhotoID(File.addFile(profilePath));
         chat.setTitle(title);
         chat.setType(type);
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            session.persist(chat);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            throw e;
-        }
+        Main.Create(session , chat);
         return chat.getChatID();
     }
-    public static void joinChat (Session session, int chatID , String username, boolean isAdmin) {
 
-    }
 }

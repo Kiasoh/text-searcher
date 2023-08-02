@@ -1,7 +1,6 @@
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Session;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,5 +22,19 @@ public class Member {
     private Chat chat;
 
     private boolean isAdmin;
+    @Setter
     private int lastSeenMessage;
+
+    public static void joinChat (Session session, int chatID , String username, boolean isAdmin) {
+        //conditions
+//      if (!userExists(username) || isInChat(username, chatID))
+//            return;
+        Member member = new Member();
+        member.user = session.get(User.class , username);
+        member.chat = session.get(Chat.class , chatID);
+        member.isAdmin = isAdmin;
+        member.lastSeenMessage = 0;
+        Main.Create(session , member);
+    }
+
 }

@@ -1,5 +1,6 @@
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.postgresql.ds.PGSimpleDataSource;
 
@@ -9,6 +10,28 @@ import java.sql.*;
 public class Main {
     public static final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
+    public static <T> void Create(Session session , T target) {
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.persist(target);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            throw e;
+        }
+    }
+    public static <T> void Update(Session session , T oldMan , T newKid) {
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            oldMan = newKid;
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            throw e;
+        }
+    }
 
 
     public static void main(String[] args) throws Exception {

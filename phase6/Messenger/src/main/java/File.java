@@ -46,18 +46,10 @@ public class File {
         content.setFileName(path.substring(path.lastIndexOf('\\') + 1));
         content.setContent(convertToByte(path));
 
-        try{
-            transaction = session.beginTransaction();
-            session.persist(content);
-            transaction.commit();
-        }
-        catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            throw e;
-        }
-        finally {
-            session.close();
-        }
+        Main.Create(session , content);
+//        finally {
+//            session.close();
+//        }
         return content;
     }
 
