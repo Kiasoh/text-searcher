@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 public class Chat
 {
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="ChatID", nullable=false, unique=true)
     public int ChatID;
     public String Title;
     public java.sql.Timestamp CreatedAt;

@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 public class Messages
 {
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="MessageID", nullable=false, unique=true)
     private int MessageID;
     @OneToOne
     @JoinColumn(name = "File", referencedColumnName = "FileID")
