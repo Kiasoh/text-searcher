@@ -43,4 +43,12 @@ public class Chat
         return chat.getChatID();
     }
 
+    public void addPVChat(Session session, String username1, String username2, String profilePath) throws SQLException, IOException {
+        Chat chat = new Chat();
+        chat.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+        chat.setProfilePhotoID(File.addFile(profilePath));
+        chat.setType("pv");
+        Member.joinChat(session, chat.getChatID(), username1, true);
+        Member.joinChat(session, chat.getChatID(), username2, true);
+    }
 }

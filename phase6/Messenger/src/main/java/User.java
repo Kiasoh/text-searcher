@@ -54,15 +54,7 @@ public class User {
         if(userExists(session, userName))
             throw new Exception("Duplicate username");
         User user = new User(userName, firstName, lastName, phoneNumber, bio, pass, File.addFile(path));
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            session.persist(user);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            throw e;
-        }
+        Main.Create(session, user);
     }
     public static void changeBio(Session session, String userName, String bio) throws Exception {
         if(!userExists(session, userName))
@@ -97,14 +89,6 @@ public class User {
         User user = login(session, userName, password);
         if(user == null)
             throw new Exception("Invalid info");
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            session.delete(user);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            throw e;
-        }
+        Main.Delete(session, user);
     }
 }
