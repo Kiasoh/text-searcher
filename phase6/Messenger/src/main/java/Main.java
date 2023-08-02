@@ -32,6 +32,17 @@ public class Main {
             throw e;
         }
     }
+    public static <T> void Delete (Session session , T target) {
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.remove(target);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            throw e;
+        }
+    }
 
 
     public static void main(String[] args) throws Exception {

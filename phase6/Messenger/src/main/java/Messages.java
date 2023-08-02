@@ -1,4 +1,10 @@
 import jakarta.persistence.*;
+import org.hibernate.Session;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="Messages",
@@ -11,7 +17,7 @@ public class Messages
     private int MessageID;
     @OneToOne
     @JoinColumn(name = "File", referencedColumnName = "FileID")
-    private File File;
+    private File attachedFile;
     private String textMessage;
 
     @ManyToOne
@@ -23,4 +29,23 @@ public class Messages
     private Chat Destination;
 
     private java.sql.Timestamp sendAt;
+    public static void sendMessage (Session session ,int destination, String userName, String filePath, String message ) throws SQLException, IOException {
+        //condition
+//        if (!isInChat(userName, destination))
+//            System.out.println("U ARE NOT IN THIS CHAT");
+        Messages messages = new Messages();
+        messages.Destination = session.get(Chat.class ,destination);
+        messages.sendAt = Timestamp.valueOf(LocalDateTime.now());
+        messages.textMessage = message;
+        messages.Sender = session.get(User.class , userName);
+        messages.attachedFile = File.addFile(filePath);
+        Main.Create(session , messages);
+    }
+    public static void editMessage(Session session, int messageID, String newText) {
+        Messages messages = session.get(Messages.class , messageID);
+        Main.Update(session , messages.textMessage , newText);
+    }
+    public static void deleteMessage (Session session , int messageID) {
+        Main.Delete(session , session.get(Messages.class , messageID));
+    }
 }
