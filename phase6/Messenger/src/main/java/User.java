@@ -67,4 +67,19 @@ public class User {
             throw e;
         }
     }
+    public static void changeBio(Session session, String userName, String bio) throws Exception {
+        if(userExists(session, userName))
+            throw new Exception("Duplicate username");
+        User user =session.get(User.class , userName);
+        user.Bio = bio;
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.update(user);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            throw e;
+        }
+    }
 }
