@@ -68,8 +68,8 @@ public class User {
         }
     }
     public static void changeBio(Session session, String userName, String bio) throws Exception {
-        if(userExists(session, userName))
-            throw new Exception("Duplicate username");
+        if(!userExists(session, userName))
+            throw new Exception("No user found!");
         User user =session.get(User.class , userName);
         user.Bio = bio;
         Transaction transaction = null;
