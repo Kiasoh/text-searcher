@@ -1,14 +1,24 @@
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name="Messages",
+        uniqueConstraints={@UniqueConstraint(columnNames={"MessageID"})})
 public class Messages
 {
     @Id
-    public int MessageID;
-    public int File;
-    public String textMessage;
-    public String Sender;
-    public int Destination;
-    public java.sql.Timestamp sendAt;
+    private int MessageID;
+    @OneToOne
+    @JoinColumn(name = "File", referencedColumnName = "FileID")
+    private File File;
+    private String textMessage;
+
+    @ManyToOne
+    @JoinColumn(name = "Sender", referencedColumnName = "UserName")
+    private User Sender;
+
+    @ManyToOne
+    @JoinColumn(name = "Destination", referencedColumnName = "ChatID")
+    private Chat Destination;
+
+    private java.sql.Timestamp sendAt;
 }

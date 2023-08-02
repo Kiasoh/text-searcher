@@ -12,23 +12,23 @@ public class Main {
 
 
     public static void main(String[] args) throws Exception {
-        Session session = sessionFactory.openSession();
-//        File.addFile("C:\\Users\\Lenovo\\Desktop\\default.jpg");
-
-
-        try {
-            User.signup(session,"user1","k","h","09330418759",
-                    "bio","Kimia123","C:\\Users\\Lenovo\\Desktop\\default.jpg");
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        try {
-            User.signup(session,"user2","k","h","09330418759",
-                    "bio","Kimia123","C:\\Users\\Lenovo\\Desktop\\default.jpg");
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-
-        User.seeALlUsers(session);
+//        Session session = sessionFactory.openSession();
+////        File.addFile("C:\\Users\\Lenovo\\Desktop\\default.jpg");
+//
+//
+//        try {
+//            User.signup(session,"user1","k","h","09330418759",
+//                    "bio","Kimia123","C:\\Users\\Lenovo\\Desktop\\default.jpg");
+//        }catch (Exception e){
+//            System.out.println(e.getMessage());
+//        }
+//        try {
+//            User.signup(session,"user2","k","h","09330418759",
+//                    "bio","Kimia123","C:\\Users\\Lenovo\\Desktop\\default.jpg");
+//        }catch (Exception e){
+//            System.out.println(e.getMessage());
+//        }
+//
+//        User.seeALlUsers(session);
     }
 }
