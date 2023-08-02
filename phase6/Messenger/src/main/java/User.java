@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Queue;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -80,6 +81,22 @@ public class User {
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
             throw e;
+        }
+    }
+
+    public static void login(Session session, String userName, String password){
+        Query query = session.createQuery("FROM User where UserName = :username and password = :pass", User.class);
+        query.setParameter("username",userName);
+        query.setParameter("pass",password);
+        List<User> users = query.getResultList();
+        if(users.isEmpty())
+            System.out.println("Invalid username or password");
+        for (User user : users) {
+            System.out.println("username: " + user.getUserName()
+                    + "\nfirst name: " + user.getFirstName()
+                    + "\nlast name: " +user.getLastName()
+                    + "\nphone number: " + user.getPhoneNumber()
+                    + "\nbio: " + user.getBio() + "\n**********");
         }
     }
 }

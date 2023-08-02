@@ -12,7 +12,7 @@ public class Main {
 
 
     public static void main(String[] args) throws Exception {
-//        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.openSession();
 ////        File.addFile("C:\\Users\\Lenovo\\Desktop\\default.jpg");
 //
 //
@@ -30,5 +30,7 @@ public class Main {
 //        }
 //
 //        User.seeALlUsers(session);
+
+//        User.login(session, "user1", "Kimia123");
     }
 }
