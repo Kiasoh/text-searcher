@@ -55,5 +55,12 @@ public class Main {
 //        User.seeALlUsers(session);
 
 //        User.login(session, "user1", "Kimia123");
+
+//        try {
+//            User.deleteUser(session, "user2","Kimia123");
+//            User.deleteUser(session, "user1","Kimia12");
+//        }catch (Exception e){
+//            System.out.println(e.getMessage());
+//        }
     }
 }

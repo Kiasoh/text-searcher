@@ -34,14 +34,10 @@ public class User {
     @JoinColumn(name = "ProfilePhotoID", referencedColumnName = "FileID")
     private File ProfilePhotoID;
 
-    public static void seeALlUsers(Session session){
+    public static void seeALlUsers(Session session) throws Exception {
         List<User> users = session.createQuery("FROM User ", User.class).list();
         for (User user : users) {
-            System.out.println("username: " + user.getUserName()
-                    + "\nfirst name: " + user.getFirstName()
-                    + "\nlast name: " +user.getLastName()
-                    + "\nphone number: " + user.getPhoneNumber()
-                    + "\nbio: " + user.getBio() + "\n**********");
+            printUser(user);
         }
     }
     public static boolean userExists(Session session, String username) throws SQLException {
@@ -77,19 +73,38 @@ public class User {
         Main.Update(session , user.Bio , bio);
     }
 
-    public static void login(Session session, String userName, String password){
+    public static User login(Session session, String userName, String password) throws Exception {
         Query query = session.createQuery("FROM User where UserName = :username and password = :pass", User.class);
         query.setParameter("username",userName);
         query.setParameter("pass",password);
         List<User> users = query.getResultList();
         if(users.isEmpty())
-            System.out.println("Invalid username or password");
-        for (User user : users) {
-            System.out.println("username: " + user.getUserName()
-                    + "\nfirst name: " + user.getFirstName()
-                    + "\nlast name: " +user.getLastName()
-                    + "\nphone number: " + user.getPhoneNumber()
-                    + "\nbio: " + user.getBio() + "\n**********");
+            return null;
+        return users.get(0);
+    }
+
+    private static void printUser(User user) throws Exception{
+        if(user == null)
+            throw new Exception("Invalid info");
+        System.out.println("username: " + user.getUserName()
+                + "\nfirst name: " + user.getFirstName()
+                + "\nlast name: " +user.getLastName()
+                + "\nphone number: " + user.getPhoneNumber()
+                + "\nbio: " + user.getBio() + "\n**********");
+    }
+
+    public static void deleteUser(Session session, String userName, String password) throws Exception{
+        User user = login(session, userName, password);
+        if(user == null)
+            throw new Exception("Invalid info");
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.delete(user);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            throw e;
         }
     }
 }
