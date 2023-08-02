@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @NoArgsConstructor
 @Entity
@@ -50,5 +51,18 @@ public class Chat
         chat.setType("pv");
         Member.joinChat(session, chat.getChatID(), username1, true);
         Member.joinChat(session, chat.getChatID(), username2, true);
+    }
+
+    public static void seeAllChats(Session session) throws SQLException {
+        List<Chat> chats = session.createQuery("FROM Chat ", Chat.class).list();
+        for (Chat chat : chats) {
+            printChat(chat);
+        }
+    }
+
+    private static void printChat(Chat chat){
+        System.out.println("Title: " + chat.getTitle()
+                + "\ntype: " + chat.getType()
+                + "\ncreated at: " + chat.getCreatedAt() + "\n**********");
     }
 }
