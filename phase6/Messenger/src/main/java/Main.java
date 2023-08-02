@@ -73,5 +73,13 @@ public class Main {
 //        }catch (Exception e){
 //            System.out.println(e.getMessage());
 //        }
+
+//        Chat.addChat(session,"g1",null,"group");
+//        Member.joinChat(session, 1, "user1", true);
+//        Messages.sendMessage(session, 1, "user1", null, "msg1 from user1 in g1");
+//        System.out.println(Messages.getNumMessagesFromOneUser(session, "user1"));
+        Messages.sendMessage(session, 1, "user1", null, "msg2 from user1 in g1");
+        System.out.println(Messages.getNumMessagesFromOneUser(session, "user1"));
+
     }
 }

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name="Messages",
@@ -48,4 +49,11 @@ public class Messages
     public static void deleteMessage (Session session , int messageID) {
         Main.Delete(session , session.get(Messages.class , messageID));
     }
+
+    public static Long getNumMessagesFromOneUser(Session session, String userName) throws SQLException {
+        Query query = session.createQuery("select count(*) FROM Messages where Sender.UserName = :username", Messages.class);
+        query.setParameter("username",userName);
+        return (Long) query.getSingleResult();
+    }
+
 }
