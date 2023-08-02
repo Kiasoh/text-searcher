@@ -1,11 +1,6 @@
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-import org.postgresql.ds.PGSimpleDataSource;
-
-import java.io.IOException;
-import java.sql.*;
 
 public class Main {
     public static final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -87,6 +82,9 @@ public class Main {
 
 //        Member.joinChat(session,1,"user3",false);
 //        Chat.addPVChat(session,"user1","user2",null);
-        System.out.println(Member.usersHasRelationshipWithOneUser(session, "user1"));
+//        System.out.println(Member.usersHaveRelationshipWithOneUser(session, "user1"));
+
+        Messages.sendMessage(session, 1, "user2","C:\\Users\\Lenovo\\Desktop\\default.jpg" , "msg2 from user1 in g1");
+        System.out.println(Messages.getAvgNumberMessagesOfOneUser(session,"user1"));
     }
 }

@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -93,4 +94,12 @@ public class Messages
         System.out.println("***********\n\n");
     }
 
+    public static double getAvgNumberMessagesOfOneUser(Session session, String userName) throws SQLException {
+        Query query = session.createQuery("select count(*) FROM Messages where Sender.UserName = :username", Messages.class);
+        query.setParameter("username",userName);
+        Long numTargets =  (Long) query.getSingleResult();
+        query = session.createQuery("select count(*) FROM Messages", Messages.class);
+        Long numTotal = (Long) query.getSingleResult();
+        return numTargets * 1.0 / numTotal;
+    }
 }

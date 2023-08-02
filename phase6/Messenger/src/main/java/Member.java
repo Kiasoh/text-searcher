@@ -48,7 +48,7 @@ public class Member {
         return query.getResultList();
     }
 
-    public static Set<String> usersHasRelationshipWithOneUser(Session session, String username) throws SQLException {
+    public static Set<String> usersHaveRelationshipWithOneUser(Session session, String username) throws SQLException {
         Set<String> result = new HashSet<>();
         List<Chat> chats = getChatsOfOneUser(session,username);
         Query query = session.createQuery("select m.user from Member m where m.chat.ChatID =:chatID",User.class);
