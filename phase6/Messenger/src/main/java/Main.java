@@ -78,8 +78,11 @@ public class Main {
 //        Member.joinChat(session, 1, "user1", true);
 //        Messages.sendMessage(session, 1, "user1", null, "msg1 from user1 in g1");
 //        System.out.println(Messages.getNumMessagesFromOneUser(session, "user1"));
-        Messages.sendMessage(session, 1, "user1", null, "msg2 from user1 in g1");
-        System.out.println(Messages.getNumMessagesFromOneUser(session, "user1"));
+//        Messages.sendMessage(session, 1, "user1", null, "msg2 from user1 in g1");
+//        System.out.println(Messages.getNumMessagesFromOneUser(session, "user1"));
 
+//        Messages.sendMessage(session, 1, "user1","C:\\Users\\Lenovo\\Desktop\\default.jpg" , "msg2 from user1 in g1");
+
+        Messages.getAllMessagesFromOneUser(session, "user1");
     }
 }

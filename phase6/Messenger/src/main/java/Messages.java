@@ -1,6 +1,10 @@
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.Session;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -8,6 +12,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
 @Table(name="Messages",
         uniqueConstraints={@UniqueConstraint(columnNames={"MessageID"})})
 public class Messages
@@ -56,4 +62,34 @@ public class Messages
         return (Long) query.getSingleResult();
     }
 
+    public static void getAllMessagesFromOneUser(Session session, String userName) throws IOException {
+        Query query = session.createQuery("select m FROM Messages m left outer join File f on m.Sender.UserName = :username " +
+                "and f.FileID = m.attachedFile.FileID", Messages.class);
+        query.setParameter("username", userName);
+        List<Messages> result = query.getResultList();
+        java.io.File directory = new java.io.File("./Contents/");
+        directory.mkdir();
+        FileOutputStream fileOutputStream;
+        for (Messages messages : result){
+            printMessage(messages);
+            File content = messages.getAttachedFile();
+            if(content == null)
+                continue;
+            byte[] bytes = content.content;
+            java.io.File file = new java.io.File("./Contents/" + content.getFileName());
+            fileOutputStream = new FileOutputStream(file);
+            fileOutputStream.write(bytes);
+        }
+    }
+
+    private static void printMessage(Messages messages){
+        System.out.println("Sender: " + messages.getSender().getUserName() +
+                "\nchatID:" + messages.getDestination().getChatID() +
+                    "\nsend at: " + messages.getSendAt() + "\ntext: " +
+                    messages.getTextMessage());
+        if(messages.getAttachedFile() != null){
+            System.out.println("file name : " + messages.getAttachedFile().getFileName() + "\nand see the content in Content directory");
+        }
+        System.out.println("***********\n\n");
+    }
 }
