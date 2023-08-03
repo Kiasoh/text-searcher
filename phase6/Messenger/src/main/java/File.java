@@ -4,12 +4,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.SQLException;
 import java.util.List;
 
 @AllArgsConstructor
@@ -17,18 +15,19 @@ import java.util.List;
 @Entity
 @Setter
 @Getter
-@Table(name="File",
-        uniqueConstraints={@UniqueConstraint(columnNames={"FileID"})})
+@Table(name = "File",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"FileID"})})
 public class File {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="FileID", nullable=false, unique=true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "FileID", nullable = false, unique = true)
     public int FileID;
 
-    @Column(name="content")
+    @Column(name = "content")
     public byte[] content;
 
-    @Column(name="fileName")
+    @Column(name = "fileName")
     public String fileName;
 
     private static byte[] convertToByte(String filePath) throws IOException {
@@ -36,24 +35,18 @@ public class File {
         return Files.readAllBytes(path);
     }
 
-    public static File addFile(String path) throws IOException, SQLException {
+    public static File addFile(Session session, String path) throws IOException{
         if (path == null)
             return null;
-        Session session = Main.sessionFactory.openSession();
-        Transaction transaction = null;
-
         File content = new File();
         content.setFileName(path.substring(path.lastIndexOf('\\') + 1));
         content.setContent(convertToByte(path));
 
-        Main.Create(session , content);
-//        finally {
-//            session.close();
-//        }
+        Main.Create(session, content);
         return content;
     }
 
-    public static void printAllFileNames(Session session){
+    public static void printAllFileNames(Session session) {
         List<File> contentList = session.createQuery("FROM File ", File.class).list();
         for (File c : contentList) {
             System.out.println(c.getFileID() + " " + c.getFileName());

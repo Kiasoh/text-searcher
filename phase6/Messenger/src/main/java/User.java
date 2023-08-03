@@ -6,28 +6,29 @@ import jakarta.persistence.criteria.Root;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.persister.collection.mutation.RowMutationOperations;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.Queue;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Getter
+@Setter
 @Table(name = "users")
 public class User {
+
     @Id
     private String UserName;
+
     private String FirstName;
+
     private String LastName;
+
     private String PhoneNumber;
+
     private String Bio;
+
     private String password;
 
     @OneToOne
@@ -40,7 +41,8 @@ public class User {
             printUser(user);
         }
     }
-    public static boolean userExists(Session session, String username) throws SQLException {
+
+    public static boolean userExists(Session session, String username) {
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
         Root<User> root = criteriaQuery.from(User.class);
@@ -51,43 +53,43 @@ public class User {
     }
 
     public static void signup(Session session, String userName, String firstName, String lastName, String phoneNumber, String bio, String pass, String path) throws Exception {
-        if(userExists(session, userName))
+        if (userExists(session, userName))
             throw new Exception("Duplicate username");
-        User user = new User(userName, firstName, lastName, phoneNumber, bio, pass, File.addFile(path));
+        User user = new User(userName, firstName, lastName, phoneNumber, bio, pass, File.addFile(session, path));
         Main.Create(session, user);
     }
+
     public static void changeBio(Session session, String userName, String bio) throws Exception {
-        if(!userExists(session, userName))
+        if (!userExists(session, userName))
             throw new Exception("No user found!");
-        User user =session.get(User.class , userName);
+        User user = session.get(User.class, userName);
         user.Bio = bio;
-        Transaction transaction = null;
-        Main.Update(session , user.Bio , bio);
+        Main.Update(session, user);
     }
 
-    public static User login(Session session, String userName, String password) throws Exception {
+    public static User login(Session session, String userName, String password) {
         Query query = session.createQuery("FROM User where UserName = :username and password = :pass", User.class);
-        query.setParameter("username",userName);
-        query.setParameter("pass",password);
+        query.setParameter("username", userName);
+        query.setParameter("pass", password);
         List<User> users = query.getResultList();
-        if(users.isEmpty())
+        if (users.isEmpty())
             return null;
         return users.get(0);
     }
 
-    private static void printUser(User user) throws Exception{
-        if(user == null)
+    public static void printUser(User user) throws Exception {
+        if (user == null)
             throw new Exception("Invalid info");
         System.out.println("username: " + user.getUserName()
                 + "\nfirst name: " + user.getFirstName()
-                + "\nlast name: " +user.getLastName()
+                + "\nlast name: " + user.getLastName()
                 + "\nphone number: " + user.getPhoneNumber()
                 + "\nbio: " + user.getBio() + "\n**********");
     }
 
-    public static void deleteUser(Session session, String userName, String password) throws Exception{
+    public static void deleteUser(Session session, String userName, String password) throws Exception {
         User user = login(session, userName, password);
-        if(user == null)
+        if (user == null)
             throw new Exception("Invalid info");
         Main.Delete(session, user);
     }
