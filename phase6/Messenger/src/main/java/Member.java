@@ -31,9 +31,8 @@ public class Member {
     private int lastSeenMessage;
 
     public static void joinChat(Session session, int chatID, String username, boolean isAdmin) {
-        //conditions
-//      if (!userExists(username) || isInChat(username, chatID))
-//            return;
+        if (!isInChat(session , username , chatID))
+            return;
         Member member = new Member();
         member.user = session.get(User.class, username);
         member.chat = session.get(Chat.class, chatID);
@@ -41,7 +40,12 @@ public class Member {
         member.lastSeenMessage = 0;
         Main.Create(session, member);
     }
-
+    public static boolean isInChat (Session session , String userName , int chatID) {
+        Query query = session.createQuery("select m.chat FROM Member m where m.user.UserName =:username and m.chat.ChatID =:chat ", Chat.class);
+        query.setParameter("username", userName);
+        query.setParameter("chat" , chatID);
+        return query.getResultList().size() > 0;
+    }
     public static List<Chat> getChatsOfOneUser(Session session, String userName) {
         Query query = session.createQuery("select m.chat FROM Member m where m.user.UserName =:username", Chat.class);
         query.setParameter("username", userName);
@@ -65,8 +69,8 @@ public class Member {
     }
 
     public static void setLastSeenMessage(Session session, String username, int chatID, int messageID) {
-//        if (!isInChat(username, chatID) || !userExists(username))
-//            return;
+        if (!isInChat(session , username , chatID))
+            return;
         Query query = session.createQuery("select m from Member m where m.user.UserName =: username and m.chat.ChatID =: chatID", Member.class);
         query.setParameter("username", username);
         query.setParameter("chatID", chatID);
